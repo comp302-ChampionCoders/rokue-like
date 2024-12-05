@@ -13,8 +13,8 @@ public class Hero {
 
     public void move(String direction) {
         switch (direction) {
-            case "up": y--; break;
-            case "down": y++; break;
+            case "up": y++; break; // check again maybe its the opposite way
+            case "down": y--; break;
             case "left": x--; break;
             case "right": x++; break;
         }
@@ -30,10 +30,6 @@ public class Hero {
     
     public void displayInventory() {
         inventory.displayInventory();
-    }
-
-    public void useEnchantment(String enchantment) {
-    //    inventory.use(enchantment);
     }
 
     // Getters and setters for x, y, lives
@@ -55,4 +51,5 @@ public class Hero {
     public void reduceLife(){
         this.lives -= 1;
     }
+    
 }
