@@ -1,4 +1,4 @@
-package src.main.java;
+package src.main.java.ui.swing;
 import javax.swing.*;
 
 public class MainMenu {

@@ -1,5 +1,6 @@
-package src.main.java;
+package src.main.java.domain.enchantments;
 
+import src.main.java.domain.gameobjects.*;
 public class CloakOfProtection extends Enchantment {
     private static final int DURATION = 20; // duration in seconds
 

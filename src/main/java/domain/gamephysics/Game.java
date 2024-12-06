@@ -1,6 +1,10 @@
-package src.main.java;
+package src.main.java.domain.gamephysics;
 import java.util.ArrayList;
 import java.util.List;
+import src.main.java.domain.gameobjects.*;
+import src.main.java.domain.enchantments.*;
+import src.main.java.domain.monsters.*;
+import src.main.java.technicalservices.*;
 
 public class Game {
     private Hero hero;

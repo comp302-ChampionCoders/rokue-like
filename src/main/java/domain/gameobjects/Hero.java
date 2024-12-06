@@ -1,4 +1,4 @@
-package src.main.java;
+package src.main.java.domain.gameobjects;
 public class Hero {
     private int x, y;
     private int lives;

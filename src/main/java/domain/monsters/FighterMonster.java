@@ -1,4 +1,7 @@
-package src.main.java;
+package src.main.java.domain.monsters;
+
+import src.main.java.domain.gameobjects.*;
+import src.main.java.domain.enchantments.*;
 
 public class FighterMonster extends Monster {
 

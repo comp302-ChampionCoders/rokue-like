@@ -1,4 +1,4 @@
-package src.main.java;
+package src.main.java.technicalservices;
 
 public class Timer {
     private int remainingTime; // Time left in seconds

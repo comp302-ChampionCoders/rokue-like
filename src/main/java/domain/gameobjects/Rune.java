@@ -1,4 +1,4 @@
-package src.main.java;
+package src.main.java.domain.gameobjects;
 
 public class Rune {
     private int x; 

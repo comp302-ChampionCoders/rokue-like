@@ -1,5 +1,6 @@
-package src.main.java;
+package src.main.java.domain.gameobjects;
 
+import src.main.java.domain.monsters.*;
 import java.util.ArrayList;
 import java.util.List;
 

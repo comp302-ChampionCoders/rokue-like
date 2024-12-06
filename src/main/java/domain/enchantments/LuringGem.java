@@ -1,5 +1,6 @@
-package src.main.java;
+package src.main.java.domain.enchantments;
 
+import src.main.java.domain.gameobjects.*;
 public class LuringGem extends Enchantment {
     public LuringGem() {
         super("Luring Gem");
