@@ -1,133 +1,153 @@
 package src.main.java.domain.gameobjects;
 
 import src.main.java.domain.monsters.*;
-import java.util.ArrayList;
-import java.util.List;
+import src.main.java.domain.behaviors.Direction;
+import java.util.*;
 
 public class Hall {
-    private int width;
-    private int height;
-    private char[][] grid; // 2D array to represent the layout of the hall
-    private Hero hero;
-    private List<Monster> monsters; 
+    private final int width;
+    private final int height;
+    private final char[][] grid;
+    private final Hero hero;
+    private final List<Monster> monsters;
+    private final Map<Point, GameObject> objects;
     private Rune rune;
     private Door door;
+    private boolean isLocked;
 
-    public Hall(int width, int height, Hero hero) { // size should be fixed
+    public Hall(int width, int height, Hero hero) {
         this.width = width;
         this.height = height;
         this.hero = hero;
-        this.grid = new char[height][width]; // Initialize the grid
+        this.grid = new char[height][width];
         this.monsters = new ArrayList<>();
-        initializeLayout();
+        this.objects = new HashMap<>();
+        this.isLocked = true;
+        initializeGrid();
     }
-    
-    // First imagining the game in 2D, before involving with the UI
-    private void initializeLayout() {
+
+    private void initializeGrid() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                grid[i][j] = '.';         // Fill the grid with default values
+                grid[i][j] = '.';
+            }
+        }
+        updateGridWithHero();
+    }
+
+    public boolean addObject(GameObject object, int x, int y) {
+        Point position = new Point(x, y);
+        if (isValidPosition(x, y) && !objects.containsKey(position)) {
+            objects.put(position, object);
+            updateGrid(x, y, getObjectSymbol(object));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeObject(int x, int y) {
+        Point position = new Point(x, y);
+        if (objects.containsKey(position)) {
+            objects.remove(position);
+            updateGrid(x, y, '.');
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isValidPosition(int x, int y) {
+        return x >= 0 && x < width && y >= 0 && y < height && 
+               grid[y][x] == '.' && !isPositionOccupied(x, y);
+    }
+
+    private boolean isPositionOccupied(int x, int y) {
+        Point position = new Point(x, y);
+        return objects.containsKey(position) || 
+               monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) ||
+               (hero.getX() == x && hero.getY() == y);
+    }
+
+    public void updateState() {
+        updateMonsters();
+        checkCollisions();
+        updateGrid();
+    }
+
+    private void updateMonsters() {
+        for (Monster monster : monsters) {
+            if (monster.isActive()) {
+                monster.performAction(hero);
+            }
+        }
+    }
+
+    private void checkCollisions() {
+        // Check hero-monster collisions
+        for (Monster monster : monsters) {
+            if (monster.isActive() && monster.isAdjacentToHero(hero)) {
+                handleMonsterCollision(monster);
             }
         }
 
-        // Place the hero on the grid
+        // Check if hero found rune
+        Point heroPosition = new Point(hero.getX(), hero.getY());
+        if (objects.get(heroPosition) instanceof Rune) {
+            handleRuneCollection();
+        }
+    }
+
+    private void handleMonsterCollision(Monster monster) {
+        if (monster instanceof FighterMonster) {
+            hero.reduceLife();
+        }
+    }
+
+    private void handleRuneCollection() {
+        rune.collect();
+        isLocked = false;
+        // Update door state
+    }
+
+    private void updateGrid() {
+        // Clear grid
+        initializeGrid();
+        
+        // Update with objects
+        for (Map.Entry<Point, GameObject> entry : objects.entrySet()) {
+            Point p = entry.getKey();
+            updateGrid(p.x, p.y, getObjectSymbol(entry.getValue()));
+        }
+
+        // Update with monsters
+        for (Monster monster : monsters) {
+            if (monster.isActive()) {
+                updateGrid(monster.getX(), monster.getY(), 'M');
+            }
+        }
+
+        // Update with hero
+        updateGridWithHero();
+    }
+
+    private void updateGridWithHero() {
         grid[hero.getY()][hero.getX()] = 'H';
-
-        // Place a rune in the hall
-        rune = new Rune(generateRandomPosition());
-        grid[rune.getY()][rune.getX()] = 'R';
-
-        // Place a door in the hall // maybe the door should have restrictions for its location, ex: border // revisit
-        door = new Door(generateRandomPosition());
-        grid[door.getY()][door.getX()] = 'D';
     }
 
-    // Generate a random valid position on the grid
-    private int[] generateRandomPosition() {
-        int x, y;
-        do {
-            x = (int) (Math.random() * width);
-            y = (int) (Math.random() * height);
-        } while (grid[y][x] != '.'); // Ensure the position is empty
-        return new int[]{x, y};
-    }
-
-    public void addMonster(Monster monster) {
-        monsters.add(monster);
-        int[] position = generateRandomPosition();
-        monster.setX(position[0]);
-        monster.setY(position[1]);
-        grid[monster.getY()][monster.getX()] = 'M';
-    }
-
-    // Update State for hero and monster movements // #TODO: needs more detailed implementation
-    public void updateState(String heroMoveDirection) {
-        // Move hero
-        int oldX = hero.getX();
-        int oldY = hero.getY();
-        hero.move(heroMoveDirection);
-
-        if (isValidMove(hero.getX(), hero.getY())) {
-            // Update hero position in the grid
-            grid[oldY][oldX] = '.'; // replace hero "H" with "."
-            grid[hero.getY()][hero.getX()] = 'H';
-
-            checkInteractions();
-        } else {
-            // Revert move if wrong
-            hero.setX(oldX);
-            hero.setY(oldY);
-        }
-
-        // Update Monster Location, 
-        for (Monster monster : monsters) {
-            int oldMonsterX = monster.getX();
-            int oldMonsterY = monster.getY();
-            // monster.moveRandomly(); #TODO: Monster movement implementation
-
-            if (isValidMove(monster.getX(), monster.getY())) {
-                grid[oldMonsterY][oldMonsterX] = '.';
-                grid[monster.getY()][monster.getX()] = 'M';
-            } else {
-                monster.setX(oldMonsterX);
-                monster.setY(oldMonsterY);
-            }
+    private void updateGrid(int x, int y, char symbol) {
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+            grid[y][x] = symbol;
         }
     }
 
-    // Check if a move is valid [out of bounds]
-    private boolean isValidMove(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height && grid[y][x] == '.';
+    private char getObjectSymbol(GameObject object) {
+        if (object instanceof Rune) return 'R';
+        if (object instanceof Door) return 'D';
+        return 'O'; // Generic object
     }
 
-    private void checkInteractions() {
-        // Check if the hero is on the same position as the rune // #TODO: recheck implementation
-        if (hero.getX() == rune.getX() && hero.getY() == rune.getY()) {
-            rune.collect();
-            door.unlock();
-        }
-
-        if (hero.getX() == door.getX() && hero.getY() == door.getY() && door.isUnlocked()) {
-            System.out.println("Hero enters the next hall!");
-            // Transfer logic here
-        }
-
-        for (Monster monster : monsters) {
-            if (hero.getX() == monster.getX() && hero.getY() == monster.getY()) {
-                // hero.loseLife();
-                System.out.println("Hero attacked by a monster!"); // only if by fightermonster
-            }
-        }
-    }
-
-    // Display the hall's grid // for debugging 
-    public void displayHall() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                System.out.print(grid[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
+    // Getters
+    public boolean isLocked() { return isLocked; }
+    public char[][] getGrid() { return grid; }
+    public List<Monster> getMonsters() { return new ArrayList<>(monsters); }
+    public Map<Point, GameObject> getObjects() { return new HashMap<>(objects); }
 }
-

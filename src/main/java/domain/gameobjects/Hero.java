@@ -1,36 +1,52 @@
 package src.main.java.domain.gameobjects;
-public class Hero {
+
+import src.main.java.domain.behaviors.Moveable;
+
+public class Hero implements Moveable {
     private int x, y;
     private int lives;
     private Inventory inventory;
-
+    private boolean isVisible;
+    
     public Hero(int x, int y) {
         this.x = x;
         this.y = y;
         this.lives = 3;
         this.inventory = new Inventory();
+        this.isVisible = true;
     }
 
-    public void move(String direction) {
-        switch (direction) {
-            case "up": y++; break; // check again maybe its the opposite way
-            case "down": y--; break;
-            case "left": x--; break;
-            case "right": x++; break;
+    @Override
+    public boolean move(Direction direction) { // find a way to call the enum inside the moveable
+        int newX = x + direction.getDx();
+        int newY = y + direction.getDy();
+        
+        if (isValidMove(newX, newY)) {
+            updatePosition(newX, newY);
+            return true;
         }
+        return false;
     }
 
-    public void collectItem(String itemName) {
-        inventory.addItem(itemName);
+    @Override
+    public boolean isValidMove(int newX, int newY) {
+        // Basic boundary check - actual implementation will use Hall's validation
+        return true;
     }
-    
-    public boolean useItem(String itemName) {
-        return inventory.useItem(itemName);
+
+    @Override
+    public void updatePosition(int newX, int newY) {
+        this.x = newX;
+        this.y = newY;
     }
-    
-    public void displayInventory() {
-        inventory.displayInventory();
+
+    public void toggleVisibility() {
+        this.isVisible = !this.isVisible;
     }
+
+    public boolean isVisible() {
+        return isVisible;
+    }   
 
     // Getters and setters for x, y, lives
     public int getX() {

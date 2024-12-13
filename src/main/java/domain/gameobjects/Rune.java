@@ -1,32 +1,30 @@
 package src.main.java.domain.gameobjects;
 
-public class Rune {
-    private int x; 
-    private int y; 
+public class Rune extends GameObject {
     private boolean isCollected;
 
-    public Rune(int[] position) {
-        this.x = position[0];
-        this.y = position[1];
+    public Rune(int x, int y) {
+        super(x, y, 'R', "Rune");
         this.isCollected = false;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    @Override
+    public void interact(Hero hero) {
+        if (!isCollected) {
+            collect();
+            // Notify the hall that rune was collected (this could be done through an observer pattern)
+            System.out.println("Rune collected! The door is now unlocked.");
+        }
     }
 
     public boolean isCollected() {
         return isCollected;
     }
 
-    public void collect() { // this method should revoke door.unlock()
+    public void collect() {
         if (!isCollected) {
             isCollected = true;
-            System.out.println("Rune collected! The door is now unlocked.");
+            setInteractable(false);
         }
     }
 }
