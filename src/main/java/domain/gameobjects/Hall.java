@@ -1,7 +1,7 @@
-package src.main.java.domain.gameobjects;
+package domain.gameobjects;
 
-import src.main.java.domain.monsters.*;
-import src.main.java.domain.behaviors.Direction;
+import domain.monsters.*;
+//import domain.behaviors.Direction;
 import java.util.*;
 
 public class Hall {

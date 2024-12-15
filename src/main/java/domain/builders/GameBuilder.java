@@ -1,6 +1,6 @@
-package src.main.java.domain.builders;
+package domain.builders;
 
-import src.main.java.domain.gameobjects.*;
+import domain.gameobjects.*;
 import java.util.HashMap;
 import java.util.Map;
 

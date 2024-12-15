@@ -1,7 +1,7 @@
-package src.main.java.domain.monsters;
+package domain.monsters;
 
-import src.main.java.domain.gameobjects.*;
-import src.main.java.domain.enchantments.*;
+import domain.gameobjects.*;
+import domain.enchantments.*;
 
 public class ArcherMonster extends Monster {
 

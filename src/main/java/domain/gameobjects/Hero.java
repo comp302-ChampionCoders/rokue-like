@@ -1,6 +1,6 @@
-package src.main.java.domain.gameobjects;
+package domain.gameobjects;
 
-import src.main.java.domain.behaviors.Moveable;
+import domain.behaviors.Moveable;
 
 public class Hero implements Moveable {
     private int x, y;

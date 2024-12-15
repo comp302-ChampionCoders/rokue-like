@@ -1,4 +1,4 @@
-package src.main.java.domain.gameobjects;
+package domain.gameobjects;
 
 public class Door extends GameObject {
     private boolean isUnlocked;

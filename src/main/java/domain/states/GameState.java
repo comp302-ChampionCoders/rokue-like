@@ -1,6 +1,6 @@
-package src.main.java.domain.states;
+package domain.states;
 
-import src.main.java.domain.builders.GameBuilder;
+import domain.builders.GameBuilder;
 
 public interface GameState {
     void update();

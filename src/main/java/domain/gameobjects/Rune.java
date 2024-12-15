@@ -1,4 +1,4 @@
-package src.main.java.domain.gameobjects;
+package domain.gameobjects;
 
 public class Rune extends GameObject {
     private boolean isCollected;

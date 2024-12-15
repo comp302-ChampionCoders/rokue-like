@@ -1,5 +1,5 @@
-package src.main.java.domain.enchantments;
-import src.main.java.domain.gameobjects.*;
+package domain.enchantments;
+import domain.gameobjects.*;
 
 public class Reveal extends Enchantment {
     private static final int DURATION = 10; 

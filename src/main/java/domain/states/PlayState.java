@@ -1,4 +1,4 @@
-package src.main.java.domain.states;
+package domain.states;
 
 public class PlayState implements GameState {
     private Hall currentHall;

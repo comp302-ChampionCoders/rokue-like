@@ -1,6 +1,6 @@
-package src.main.java.domain.enchantments;
+package domain.enchantments;
 
-import src.main.java.domain.gameobjects.*;
+import domain.gameobjects.*;
 public abstract class Enchantment {
     private String name; 
     private boolean isActive; 

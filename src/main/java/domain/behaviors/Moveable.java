@@ -1,6 +1,6 @@
-package src.main.java.domain.behaviors;
+package domain.behaviors;
 
-enum Direction {
+ enum Direction {
     UP(0, -1),
     DOWN(0, 1),
     LEFT(-1, 0),

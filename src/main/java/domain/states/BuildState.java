@@ -1,5 +1,5 @@
-package src.main.java.domain.states;
-import src.main.java.domain.builders.GameBuilder;
+package domain.states;
+import domain.builders.GameBuilder;
 
 public class BuildState implements GameState {
     private GameBuilder builder;

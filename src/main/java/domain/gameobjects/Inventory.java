@@ -1,4 +1,4 @@
-package src.main.java.domain.gameobjects;
+package domain.gameobjects;
 
 import java.util.HashMap;
 

@@ -1,6 +1,6 @@
-package src.main.java.domain.behaviors;
+package domain.behaviors;
 
-import src.main.java.domain.gameobjects.Hero;
+import domain.gameobjects.Hero;
 
 public interface Collectible {
     // Called when hero attempts to collect the item
