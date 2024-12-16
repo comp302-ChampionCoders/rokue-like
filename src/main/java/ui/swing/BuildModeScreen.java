@@ -34,11 +34,21 @@ public class BuildModeScreen extends JFrame {
     private BufferedImage chestImage; // Image for the object section
 
     public BuildModeScreen() {
-        setTaskbarIcon();
         setTitle("Build Mode Screen");
-        setSize(1160, 940);
+        setUndecorated(true); 
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+    
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+    
+        if (gd.isFullScreenSupported()) {
+            gd.setFullScreenWindow(this);
+        } else {
+            System.err.println("Tam ekran modu desteklenmiyor.");
+            setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        }
+    
         loadImages();
         initializeScreen();
     }
@@ -81,7 +91,7 @@ public class BuildModeScreen extends JFrame {
 
     private void initializeScreen() {
         background = new JPanel(); 
-        background.setBounds(0, 0, 1160, 940);
+        background.setBounds(0, 0, getWidth(), getHeight());
         background.setLayout(null);
         background.setBackground(new Color(62, 41, 52)); // Set the background color
         add(background);
