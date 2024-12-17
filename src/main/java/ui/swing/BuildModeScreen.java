@@ -1,6 +1,9 @@
 package ui.swing;
 
 import javax.swing.*;
+
+import domain.gameobjects.Hall;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,28 +13,36 @@ import java.io.File;
 import java.io.IOException;
 
 public class BuildModeScreen extends JFrame {
-    private final int GRID_CELL_SIZE = 31; // Grid cell size
-    private final int GRID_START_X = 128; // Starting X coordinate for the grid
-    private final int GRID_START_Y = 115; // Starting Y coordinate for the grid
-    private final int GRID_COLUMNS = 11; // Number of grid columns
-    private final int GRID_ROWS = 9; // Number of grid rows
+    private final int GRID_CELL_SIZE = 31; 
+    private final int GRID_START_X = 128; 
+    private final int GRID_START_Y = 90; 
+    private final int GRID_COLUMNS = 11; 
+    private final int GRID_ROWS = 9; 
 
-    private final int OBJECT_SECTION_START_X = 950; // Starting X coordinate for the object section
-    private final int OBJECT_SECTION_START_Y = GRID_START_Y; // Starting Y coordinate for the object section
-    private final int OBJECT_SECTION_WIDTH = 150; // Width of the object section
-    private final int OBJECT_SECTION_HEIGHT = 403 + GRID_ROWS * GRID_CELL_SIZE; // Height of the object section
-    private boolean gridVisible = false; // Visibility of the grid
+    private final int SCREEN_WIDTH = 1200;  
+    private final int SCREEN_HEIGHT = 850;  
+
+
+    private final int OBJECT_SECTION_WIDTH = 150; 
+    private final int OBJECT_SECTION_HEIGHT = SCREEN_HEIGHT - GRID_START_Y - 100;
+    private final int OBJECT_SECTION_START_X = SCREEN_WIDTH - OBJECT_SECTION_WIDTH - 100;; 
+    private final int OBJECT_SECTION_START_Y = GRID_START_Y + 25; 
+    
+    private boolean gridVisible = false; 
+    //private Hall earthHall = new Hall(9, 11, null);
 
     private final String[] spriteFiles = {
             "src/main/resources/rokue-like assets/chest.png",
             "src/main/resources/rokue-like assets/skull.png",
             "src/main/resources/rokue-like assets/box.png",
             "src/main/resources/rokue-like assets/pipe.png",
-            "src/main/resources/rokue-like assets/stair.png"
+            "src/main/resources/rokue-like assets/stair.png",
+            "src/main/resources/rokue-like assets/object.png",
+            "src/main/resources/rokue-like assets/elixir.png"
     };
 
-    private BufferedImage topWallImage; // Image for the top wall
-    private BufferedImage chestImage; // Image for the object section
+    private BufferedImage topWallImage; 
+    private BufferedImage chestImage; 
 
     public BuildModeScreen() {
         setTitle("Build Mode Screen");
@@ -48,7 +59,8 @@ public class BuildModeScreen extends JFrame {
             System.err.println("Tam ekran modu desteklenmiyor.");
             setSize(Toolkit.getDefaultToolkit().getScreenSize());
         }
-    
+        
+        setTaskbarIcon();
         loadImages();
         initializeScreen();
     }
@@ -115,8 +127,6 @@ public class BuildModeScreen extends JFrame {
     }
 
     
-    // Add the top wall and side wall images outside and above the grid
-    // Add the top wall and thin side wall images outside and above the grid
     private void addTopWallAndSideWalls(JPanel parent) {
         int wallOffset = 8;
         int topWallWidth = GRID_COLUMNS * GRID_CELL_SIZE; // Topwall genişliği
@@ -202,43 +212,51 @@ public class BuildModeScreen extends JFrame {
                 if (chestImage != null) {
                     int chestWidth = OBJECT_SECTION_WIDTH;
                     int chestHeight = OBJECT_SECTION_HEIGHT;
-
+    
                     int topHeight = chestImage.getHeight() / 2;
                     int bottomHeight = chestImage.getHeight() / 2;
                     int middleHeight = chestHeight - topHeight - bottomHeight;
-
+    
                     BufferedImage top = chestImage.getSubimage(0, 0, chestImage.getWidth(), topHeight);
                     BufferedImage bottom = chestImage.getSubimage(0, chestImage.getHeight() - bottomHeight, chestImage.getWidth(), bottomHeight);
                     BufferedImage middle = chestImage.getSubimage(0, topHeight, chestImage.getWidth(), chestImage.getHeight() - topHeight - bottomHeight);
-
+    
                     g.drawImage(top, 0, 0, chestWidth, topHeight, null);
                     g.drawImage(middle, 0, topHeight, chestWidth, middleHeight, null);
                     g.drawImage(bottom, 0, topHeight + middleHeight, chestWidth, bottomHeight, null);
                 }
             }
         };
-
+    
         objectSection.setBounds(OBJECT_SECTION_START_X, OBJECT_SECTION_START_Y, OBJECT_SECTION_WIDTH, OBJECT_SECTION_HEIGHT);
-        objectSection.setLayout(new GridLayout(0, 1, 0, 15));
-
+        objectSection.setLayout(new GridLayout(0, 1, 0, 5)); 
+    
+        JPanel spacerPanel = new JPanel();
+        spacerPanel.setOpaque(false);
+        objectSection.add(spacerPanel);
+    
         for (String spriteFile : spriteFiles) {
             try {
                 BufferedImage sprite = ImageIO.read(new File(spriteFile));
                 Image resizedImage = sprite.getScaledInstance(GRID_CELL_SIZE, GRID_CELL_SIZE, Image.SCALE_SMOOTH);
-
-                JLabel itemLabel = new JLabel(new ImageIcon(resizedImage));
+                Image resizedImageChest = sprite.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
+    
+                JLabel itemLabel = new JLabel(new ImageIcon(resizedImageChest));
                 itemLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 makeDraggableCopyOnPress(itemLabel, resizedImage);
                 objectSection.add(itemLabel);
-
+    
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
+        JPanel bottomSpacerPanel = new JPanel();
+        bottomSpacerPanel.setOpaque(false);
+        objectSection.add(bottomSpacerPanel);
+    
         parent.add(objectSection);
     }
-
+    
     private void addHallLabels(JPanel parent) {
         // Define positions for the labels (adjusted downwards by +40 pixels)
         int[][] labelPositions = {
