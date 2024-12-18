@@ -56,4 +56,8 @@ public abstract class Monster extends GameObject implements Moveable {
         if (hero.getY() > getY()) move(Direction.DOWN);
         else if (hero.getY() < getY()) move(Direction.UP);
     }
+    protected Direction getRandomDirection() {
+        Direction[] directions = Direction.values();
+        return directions[(int)(Math.random() * directions.length)];
+    }
 }
