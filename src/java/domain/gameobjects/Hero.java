@@ -1,16 +1,16 @@
 package domain.gameobjects;
 
+import domain.behaviors.Direction;
 import domain.behaviors.Moveable;
 
-public class Hero implements Moveable {
-    private int x, y;
+public class Hero extends GameObject implements Moveable {
+    
     private int lives;
     private Inventory inventory;
     private boolean isVisible;
     
     public Hero(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y, "Hero");
         this.lives = 3;
         this.inventory = new Inventory();
         this.isVisible = true;
@@ -18,8 +18,8 @@ public class Hero implements Moveable {
 
     @Override
     public boolean move(Direction direction) { // find a way to call the enum inside the moveable
-        int newX = x + direction.getDx();
-        int newY = y + direction.getDy();
+        int newX = getX() + direction.getDx();
+        int newY = getY() + direction.getDy();
         
         if (isValidMove(newX, newY)) {
             updatePosition(newX, newY);
@@ -36,8 +36,7 @@ public class Hero implements Moveable {
 
     @Override
     public void updatePosition(int newX, int newY) {
-        this.x = newX;
-        this.y = newY;
+        setPosition(newX, newY);
     }
 
     public void toggleVisibility() {
@@ -48,24 +47,13 @@ public class Hero implements Moveable {
         return isVisible;
     }   
 
-    // Getters and setters for x, y, lives
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
     public void reduceLife(){
-        this.lives -= 1;
+        this.lives--;
+        if (this.lives <= 0){
+            setActive(false);
+        }
     }
+    public int getLives(){return lives;}
+    public Inventory getInventory(){return inventory;}
     
 }
