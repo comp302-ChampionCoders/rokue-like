@@ -32,13 +32,13 @@ public class BuildModeScreen extends JFrame {
     //private Hall earthHall = new Hall(9, 11, null);
 
     private final String[] spriteFiles = {
-            "src/main/resources/rokue-like assets/chest.png",
-            "src/main/resources/rokue-like assets/skull.png",
-            "src/main/resources/rokue-like assets/box.png",
-            "src/main/resources/rokue-like assets/pipe.png",
-            "src/main/resources/rokue-like assets/stair.png",
-            "src/main/resources/rokue-like assets/object.png",
-            "src/main/resources/rokue-like assets/elixir.png"
+            "src/resources/rokue-like assets/chest.png",
+            "src/resources/rokue-like assets/skull.png",
+            "src/resources/rokue-like assets/box.png",
+            "src/resources/rokue-like assets/pipe.png",
+            "src/resources/rokue-like assets/stair.png",
+            "src/resources/rokue-like assets/object.png",
+            "src/resources/rokue-like assets/elixir.png"
     };
 
     private BufferedImage topWallImage; 
@@ -68,7 +68,7 @@ public class BuildModeScreen extends JFrame {
     // Set application icon in the window and taskbar
     private void setAppIcon() {
         try {
-            BufferedImage logoImage = ImageIO.read(new File("src/main/resources/rokue-like assets/Rokue-like logo 4.png"));
+            BufferedImage logoImage = ImageIO.read(new File("src/resources/rokue-like assets/Rokue-like logo 4.png"));
             setIconImage(logoImage);
         } catch (IOException e) {
             System.err.println("Failed to load the logo image: " + e.getMessage());
@@ -78,7 +78,7 @@ public class BuildModeScreen extends JFrame {
 
     private void setTaskbarIcon() {
         try {
-            BufferedImage logoImage = ImageIO.read(new File("src/main/resources/rokue-like assets/Rokue-like logo 4.png"));
+            BufferedImage logoImage = ImageIO.read(new File("src/resources/rokue-like assets/Rokue-like logo 4.png"));
             Taskbar taskbar = Taskbar.getTaskbar();
             taskbar.setIconImage(logoImage);
         } catch (UnsupportedOperationException e) {
@@ -91,8 +91,8 @@ public class BuildModeScreen extends JFrame {
     // Load images for the object section and top wall
     private void loadImages() {
         try {
-            chestImage = ImageIO.read(new File("src/main/resources/rokue-like assets/Buildmodechest.png"));
-            topWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/topwall.png"));
+            chestImage = ImageIO.read(new File("src/resources/rokue-like assets/Buildmodechest.png"));
+            topWallImage = ImageIO.read(new File("src/resources/rokue-like assets/topwall.png"));
         } catch (IOException e) {
             System.err.println("Failed to load chest image: " + e.getMessage());
             e.printStackTrace();
@@ -134,8 +134,8 @@ public class BuildModeScreen extends JFrame {
         int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 60;  // Sidewall height (grid boyunca uzanacak)
     
         try {
-            BufferedImage sideWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/sidewall.png"));
-            BufferedImage topWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/topwall.png"));
+            BufferedImage sideWallImage = ImageIO.read(new File("src/resources/rokue-like assets/sidewall.png"));
+            BufferedImage topWallImage = ImageIO.read(new File("src/resources/rokue-like assets/topwall.png"));
     
             // Top wall positions (tam grid başlangıcından başlıyor)
             int[][] topWallPositions = {
@@ -267,10 +267,10 @@ public class BuildModeScreen extends JFrame {
         };
     
         String[] labelFiles = {
-                "src/main/resources/rokue-like assets/hallofwater.png",
-                "src/main/resources/rokue-like assets/hallofearth.png",
-                "src/main/resources/rokue-like assets/halloffire.png",
-                "src/main/resources/rokue-like assets/hallofair.png"
+                "src/resources/rokue-like assets/hallofwater.png",
+                "src/resources/rokue-like assets/hallofearth.png",
+                "src/resources/rokue-like assets/halloffire.png",
+                "src/resources/rokue-like assets/hallofair.png"
         };
     
         int labelWidth = 120; // Smaller width for the labels
