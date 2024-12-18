@@ -47,7 +47,7 @@ public class BuildModeScreen extends JFrame {
     public BuildModeScreen() {
         setTitle("Build Mode Screen");
         setUndecorated(true); 
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -56,7 +56,7 @@ public class BuildModeScreen extends JFrame {
         if (gd.isFullScreenSupported()) {
             gd.setFullScreenWindow(this);
         } else {
-            System.err.println("Tam ekran modu desteklenmiyor.");
+            System.err.println("Full Screen Not Supported");
             setSize(Toolkit.getDefaultToolkit().getScreenSize());
         }
         
@@ -124,14 +124,41 @@ public class BuildModeScreen extends JFrame {
         addGrid(GRID_START_X + 403, GRID_START_Y + 403, background); // Bottom-right grid
         addObjectSection(background); // Add object section
         addTopWallAndSideWalls(background); // Add top walls
+        addBottomWalls(background);
     }
+
+    private void addBottomWalls(JPanel parent) {
+        int bottomWallY = GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE; // Bottom wall'un Y pozisyonu
+        int wallWidth = GRID_COLUMNS * GRID_CELL_SIZE + 16; // Duvarın genişliği
+    
+        int[][] hallPositions = {
+                {GRID_START_X - 8, bottomWallY},                      // Top-left grid
+                {GRID_START_X + 403 - 8, bottomWallY},                // Top-right grid
+                {GRID_START_X - 8, bottomWallY + 403},                // Bottom-left grid
+                {GRID_START_X + 403 - 8, bottomWallY + 403}           // Bottom-right grid
+        };
+    
+        try {
+            BufferedImage topWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/bottomwall.png"));
+    
+            for (int[] pos : hallPositions) {
+                JLabel bottomWall = new JLabel(new ImageIcon(topWallImage.getScaledInstance(wallWidth, GRID_CELL_SIZE + 16, Image.SCALE_SMOOTH)));
+                bottomWall.setBounds(pos[0], pos[1], wallWidth, GRID_CELL_SIZE+16);
+                parent.add(bottomWall);
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to load bottom wall image: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
 
     
     private void addTopWallAndSideWalls(JPanel parent) {
         int wallOffset = 8;
         int topWallWidth = GRID_COLUMNS * GRID_CELL_SIZE; // Topwall genişliği
         int sideWallWidth = wallOffset; // Sidewall width (8 piksel)
-        int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 60;  // Sidewall height (grid boyunca uzanacak)
+        int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 40;  // Sidewall height (grid boyunca uzanacak)
     
         try {
             BufferedImage sideWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/sidewall.png"));
@@ -205,6 +232,8 @@ public class BuildModeScreen extends JFrame {
         parent.add(gridPanel);
     }
 
+    private boolean copyInProgress = false;
+
     private void addObjectSection(JPanel parent) {
         JPanel objectSection = new JPanel() {
             protected void paintComponent(Graphics g) {
@@ -229,41 +258,60 @@ public class BuildModeScreen extends JFrame {
         };
     
         objectSection.setBounds(OBJECT_SECTION_START_X, OBJECT_SECTION_START_Y, OBJECT_SECTION_WIDTH, OBJECT_SECTION_HEIGHT);
-        objectSection.setLayout(new GridLayout(0, 1, 0, 5)); 
+        objectSection.setLayout(new GridLayout(0, 1, 10, 15));
     
         JPanel spacerPanel = new JPanel();
         spacerPanel.setOpaque(false);
         objectSection.add(spacerPanel);
-    
+
         for (String spriteFile : spriteFiles) {
             try {
                 BufferedImage sprite = ImageIO.read(new File(spriteFile));
                 Image resizedImage = sprite.getScaledInstance(GRID_CELL_SIZE, GRID_CELL_SIZE, Image.SCALE_SMOOTH);
                 Image resizedImageChest = sprite.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
     
+                JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT + OBJECT_SECTION_WIDTH, 15, 5));
+                itemPanel.setOpaque(false);
+    
                 JLabel itemLabel = new JLabel(new ImageIcon(resizedImageChest));
-                itemLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                makeDraggableCopyOnPress(itemLabel, resizedImage);
-                objectSection.add(itemLabel);
+                JButton addButton = new JButton("+");
+                addButton.setPreferredSize(new Dimension(20, 20)); 
+                addButton.setMargin(new Insets(0, 0, 0, 0));
+                addButton.setBackground(new Color(200, 200, 200));
+                addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                addButton.addActionListener(e -> {
+                    if (!copyInProgress) {
+                        copyInProgress = true;
+                        makeDraggableCopyOnPress(addButton,resizedImage);
+                    }
+                });
+
+               
+                itemPanel.add(itemLabel);
+                itemPanel.add(addButton); 
+
+                objectSection.add(itemPanel);
     
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    
         JPanel bottomSpacerPanel = new JPanel();
         bottomSpacerPanel.setOpaque(false);
         objectSection.add(bottomSpacerPanel);
-    
+
         parent.add(objectSection);
     }
     
+    
     private void addHallLabels(JPanel parent) {
-        // Define positions for the labels (adjusted downwards by +40 pixels)
+        // Define positions for the labels (adjusted downwards by +50 pixels)
         int[][] labelPositions = {
-                {GRID_START_X + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 40},        // Hall Of Water
-                {GRID_START_X + 403 + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Earth
-                {GRID_START_X + 20, GRID_START_Y + 403 + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Fire
-                {GRID_START_X + 403 + 20, GRID_START_Y + 403 + GRID_ROWS * GRID_CELL_SIZE + 40} // Hall Of Air
+                {GRID_START_X + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 50},        // Hall Of Water
+                {GRID_START_X + 403 + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Earth
+                {GRID_START_X + 20, GRID_START_Y + 403 + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Fire
+                {GRID_START_X + 403 + 20, GRID_START_Y + 403 + GRID_ROWS * GRID_CELL_SIZE + 50} // Hall Of Air
         };
     
         String[] labelFiles = {
@@ -291,28 +339,29 @@ public class BuildModeScreen extends JFrame {
         }
     }
 
-    // Add drag-and-drop functionality for items
-    private void makeDraggableCopyOnPress(JLabel staticLabel, Image image) {
-        staticLabel.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                gridVisible = true;
-                background.repaint();
-                JLabel copyLabel = new JLabel(new ImageIcon(image));
-
-                Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
-                Point frameLocation = background.getLocationOnScreen();
-
-                int adjustedX = mouseLocation.x - frameLocation.x - GRID_CELL_SIZE / 2;
-                int adjustedY = mouseLocation.y - frameLocation.y - GRID_CELL_SIZE / 2;
-
-                copyLabel.setBounds(adjustedX, adjustedY, GRID_CELL_SIZE, GRID_CELL_SIZE);
-                background.add(copyLabel);
-                background.setComponentZOrder(copyLabel, 0);
-                makeDraggableAndSnap(copyLabel);
-                background.repaint();
-            }
-        });
+    
+    private void makeDraggableCopyOnPress(JButton plusButton, Image image) {
+        JLabel copyLabel = new JLabel(new ImageIcon(image));
+    
+        Point buttonLocation = plusButton.getLocation();
+        SwingUtilities.convertPointToScreen(buttonLocation, plusButton.getParent());
+    
+        Point backgroundLocation = background.getLocationOnScreen();
+    
+        
+        int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 5; 
+        int spawnY = buttonLocation.y - backgroundLocation.y - 5;
+    
+        copyLabel.setBounds(spawnX, spawnY, GRID_CELL_SIZE, GRID_CELL_SIZE);
+        background.add(copyLabel);
+        background.setComponentZOrder(copyLabel, 0);
+    
+        makeDraggableAndSnap(copyLabel);
+        background.repaint();
     }
+    
+    
+    
 
     // Add snap-to-grid behavior
     private void makeDraggableAndSnap(JLabel label) {
@@ -339,8 +388,10 @@ public class BuildModeScreen extends JFrame {
                 } else {
                     // move back if not in grid
                     c.setLocation(lastLocation[0]);
+                    //background.remove(c);
+                    
                 }
-    
+                copyInProgress = false;
                 gridVisible = false;
                 background.repaint();
             }
@@ -372,6 +423,23 @@ public class BuildModeScreen extends JFrame {
         }
         return false;
     }
+
+    private boolean squareOccupied(Point position) {
+        Rectangle targetSquare = new Rectangle(
+                (position.x - GRID_START_X) / GRID_CELL_SIZE * GRID_CELL_SIZE + GRID_START_X,
+                (position.y - GRID_START_Y) / GRID_CELL_SIZE * GRID_CELL_SIZE + GRID_START_Y,
+                GRID_CELL_SIZE, GRID_CELL_SIZE
+        );
+    
+        
+        for (Component component : background.getComponents()) {
+            if (component instanceof JLabel && component.getBounds().intersects(targetSquare)) {
+                return true; 
+            }
+        }
+        return false;
+    }
+    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
