@@ -136,18 +136,27 @@ public class BuildModeScreen extends JFrame {
                 {GRID_START_X + 403 - 8, bottomWallY},                // Top-right grid
                 {GRID_START_X - 8, bottomWallY + 403},                // Bottom-left grid
                 {GRID_START_X + 403 - 8, bottomWallY + 403}           // Bottom-right grid
+                
         };
+
+        String[] bottomWallImages = {
+            "src/main/resources/rokue-like assets/bottomwater.png",  // Hall Of Water
+            "src/main/resources/rokue-like assets/bottomearth.png",  // Hall Of Earth
+            "src/main/resources/rokue-like assets/bottomfire.png",   // Hall Of Fire
+            "src/main/resources/rokue-like assets/bottomair.png"     // Hall Of Air
+    };
     
         try {
-            BufferedImage topWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/bottomwall.png"));
-    
-            for (int[] pos : hallPositions) {
-                JLabel bottomWall = new JLabel(new ImageIcon(topWallImage.getScaledInstance(wallWidth, GRID_CELL_SIZE + 16, Image.SCALE_SMOOTH)));
-                bottomWall.setBounds(pos[0], pos[1], wallWidth, GRID_CELL_SIZE+16);
+            for (int i = 0; i < hallPositions.length; i++) {
+                BufferedImage bottomWallImage = ImageIO.read(new File(bottomWallImages[i]));
+
+                JLabel bottomWall = new JLabel(new ImageIcon(
+                        bottomWallImage.getScaledInstance(wallWidth, GRID_CELL_SIZE + 16, Image.SCALE_SMOOTH)));
+                bottomWall.setBounds(hallPositions[i][0], hallPositions[i][1], wallWidth, GRID_CELL_SIZE + 16);
                 parent.add(bottomWall);
             }
         } catch (IOException e) {
-            System.err.println("Failed to load bottom wall image: " + e.getMessage());
+            System.err.println("Failed to load bottom wall images: " + e.getMessage());
             e.printStackTrace();
         }
     }
