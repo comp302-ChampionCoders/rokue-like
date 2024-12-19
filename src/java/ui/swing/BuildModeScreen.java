@@ -32,13 +32,13 @@ public class BuildModeScreen extends JFrame {
     //private Hall earthHall = new Hall(9, 11, null);
 
     private final String[] spriteFiles = {
-            "src/main/resources/rokue-like assets/chest.png",
-            "src/main/resources/rokue-like assets/skull.png",
-            "src/main/resources/rokue-like assets/box.png",
-            "src/main/resources/rokue-like assets/pipe.png",
-            "src/main/resources/rokue-like assets/stair.png",
-            "src/main/resources/rokue-like assets/object.png",
-            "src/main/resources/rokue-like assets/elixir.png"
+            "src/resources/images/chest.png",
+            "src/resources/images/skull.png",
+            "src/resources/images/box.png",
+            "src/resources/images/pipe.png",
+            "src/resources/images/stair.png",
+            "src/resources/images/object.png",
+            "src/resources/images/elixir.png"
     };
 
     private BufferedImage topWallImage; 
@@ -68,7 +68,7 @@ public class BuildModeScreen extends JFrame {
     // Set application icon in the window and taskbar
     private void setAppIcon() {
         try {
-            BufferedImage logoImage = ImageIO.read(new File("src/main/resources/rokue-like assets/Rokue-like logo 4.png"));
+            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-like logo 4.png"));
             setIconImage(logoImage);
         } catch (IOException e) {
             System.err.println("Failed to load the logo image: " + e.getMessage());
@@ -78,7 +78,7 @@ public class BuildModeScreen extends JFrame {
 
     private void setTaskbarIcon() {
         try {
-            BufferedImage logoImage = ImageIO.read(new File("src/main/resources/rokue-like assets/Rokue-like logo 4.png"));
+            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-like logo 4.png"));
             Taskbar taskbar = Taskbar.getTaskbar();
             taskbar.setIconImage(logoImage);
         } catch (UnsupportedOperationException e) {
@@ -91,8 +91,8 @@ public class BuildModeScreen extends JFrame {
     // Load images for the object section and top wall
     private void loadImages() {
         try {
-            chestImage = ImageIO.read(new File("src/main/resources/rokue-like assets/Buildmodechest.png"));
-            topWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/topwall.png"));
+            chestImage = ImageIO.read(new File("src/resources/images/Buildmodechest.png"));
+            topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
         } catch (IOException e) {
             System.err.println("Failed to load chest image: " + e.getMessage());
             e.printStackTrace();
@@ -140,10 +140,10 @@ public class BuildModeScreen extends JFrame {
         };
 
         String[] bottomWallImages = {
-            "src/main/resources/rokue-like assets/bottomwater.png",  // Hall Of Water
-            "src/main/resources/rokue-like assets/bottomearth.png",  // Hall Of Earth
-            "src/main/resources/rokue-like assets/bottomfire.png",   // Hall Of Fire
-            "src/main/resources/rokue-like assets/bottomair.png"     // Hall Of Air
+            "src/resources/images/bottomwater.png",  // Hall Of Water
+            "src/resources/images/bottomearth.png",  // Hall Of Earth
+            "src/resources/images/bottomfire.png",   // Hall Of Fire
+            "src/resources/images/bottomair.png"     // Hall Of Air
     };
     
         try {
@@ -170,8 +170,8 @@ public class BuildModeScreen extends JFrame {
         int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 40;  // Sidewall height (grid boyunca uzanacak)
     
         try {
-            BufferedImage sideWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/sidewall.png"));
-            BufferedImage topWallImage = ImageIO.read(new File("src/main/resources/rokue-like assets/topwall.png"));
+            BufferedImage sideWallImage = ImageIO.read(new File("src/resources/images/sidewall.png"));
+            BufferedImage topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
     
             // Top wall positions (tam grid başlangıcından başlıyor)
             int[][] topWallPositions = {
@@ -324,10 +324,10 @@ public class BuildModeScreen extends JFrame {
         };
     
         String[] labelFiles = {
-                "src/main/resources/rokue-like assets/hallofwater.png",
-                "src/main/resources/rokue-like assets/hallofearth.png",
-                "src/main/resources/rokue-like assets/halloffire.png",
-                "src/main/resources/rokue-like assets/hallofair.png"
+                "src/resources/images/hallofwater.png",
+                "src/resources/images/hallofearth.png",
+                "src/resources/images/halloffire.png",
+                "src/resources/images/hallofair.png"
         };
     
         int labelWidth = 120; // Smaller width for the labels
