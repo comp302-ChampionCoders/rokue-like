@@ -1,26 +1,32 @@
 package domain.gameobjects;
 
-public abstract class GameObject {
+import java.awt.*;
+import domain.behaviors.GridElement;
+
+public class GameObject implements GridElement {
     protected int x;
     protected int y;
     protected boolean isActive;
-    protected String type;
+    private Image image;
     
-    public GameObject(int x, int y, String type) {
+    public GameObject(int x, int y, Image image) {
         this.x = x;
         this.y = y;
-        this.type = type;
+        this.image = image;
         this.isActive = true;
     }
-    
+
+    @Override
     public int getX() {
         return x;
     }
-    
+
+    @Override
     public int getY() {
         return y;
     }
     
+    @Override
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -34,7 +40,5 @@ public abstract class GameObject {
         this.isActive = active;
     }
     
-    public String getType() {
-        return type;
-    }
+
 }
