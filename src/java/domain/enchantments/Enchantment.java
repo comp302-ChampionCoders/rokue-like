@@ -44,19 +44,11 @@ public abstract class Enchantment implements Collectible {
     }
 
     @Override
-    public int getX() {
-        return x;
-    }
-
+    public int getX() {return x;}
     @Override
-    public int getY() {
-        return y;
-    }
-
+    public int getY() {return y;}
     @Override
-    public String getType() {
-        return name;
-    }
+    public String getType() {return name;}
 
     @Override
     public boolean isAvailable() {
@@ -70,21 +62,11 @@ public abstract class Enchantment implements Collectible {
         return Math.max(0, DISAPPEAR_TIME - elapsedTime);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    protected void activate() {
-        isActive = true;
-    }
-
-    protected void deactivate() {
-        isActive = false;
-    }
+    public String getName() {return name;}
+    public boolean isActive() {return isActive;}
+    
+    protected void activate() {isActive = true;}
+    protected void deactivate() {isActive = false;}
 
     // Abstract method to define specific behavior
     public abstract void applyEffect(Hero hero);

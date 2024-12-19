@@ -1,7 +1,7 @@
 package domain.gameobjects;
 
 import domain.monsters.*;
-//import domain.behaviors.Direction;
+import domain.behaviors.Direction;
 import java.util.*;
 
 public class Hall {
