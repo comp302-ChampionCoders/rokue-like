@@ -68,7 +68,7 @@ public class BuildModeScreen extends JFrame {
     // Set application icon in the window and taskbar
     private void setAppIcon() {
         try {
-            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-like logo 4.png"));
+            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png"));
             setIconImage(logoImage);
         } catch (IOException e) {
             System.err.println("Failed to load the logo image: " + e.getMessage());
@@ -78,7 +78,7 @@ public class BuildModeScreen extends JFrame {
 
     private void setTaskbarIcon() {
         try {
-            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-like logo 4.png"));
+            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png"));
             Taskbar taskbar = Taskbar.getTaskbar();
             taskbar.setIconImage(logoImage);
         } catch (UnsupportedOperationException e) {
