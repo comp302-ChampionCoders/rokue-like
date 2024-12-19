@@ -1,8 +1,9 @@
 package domain.gameobjects;
 
 import domain.behaviors.Collectible;
+import domain.behaviors.GridElement;
 
-public class Rune extends GameObject implements Collectible {
+public class Rune extends GameObject implements Collectible,GridElement {
     private boolean isCollected;
     private boolean isAvailable;
 

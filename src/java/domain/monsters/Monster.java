@@ -4,8 +4,9 @@ import domain.gameobjects.GameObject;
 import domain.gameobjects.Hero;
 import domain.behaviors.Moveable;
 import domain.behaviors.Direction;
+import domain.behaviors.GridElement;
 
-public abstract class Monster extends GameObject implements Moveable {
+public abstract class Monster extends GameObject implements Moveable,GridElement {
     protected int detectionRange;
 
     public Monster(int x, int y, String type, int detectionRange) {

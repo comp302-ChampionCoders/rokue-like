@@ -124,7 +124,7 @@ public class Hall {
 
     public boolean isValidPosition(int x, int y) {
         return x >= 0 && x < width && y >= 0 && y < height && 
-               grid[y][x] == null && !isPositionOccupied(x, y);
+               !isPositionOccupied(x, y);
     }
 
     private boolean isPositionOccupied(int x, int y) {
@@ -227,6 +227,27 @@ public class Hall {
         if (object instanceof Door) return 'D';
         return 'O'; // Generic object
     }
+
+    public void displayGrid() {
+        System.out.println("Grid Layout:");
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (grid[y][x] == null) {
+                    System.out.print("."); // Boş hücreler için nokta
+                } else if (grid[y][x] instanceof Hero) {
+                    System.out.print("H"); // Kahraman için H
+                } else if (grid[y][x] instanceof Monster) {
+                    System.out.print("M"); // Canavar için M
+                } else if (grid[y][x] instanceof GameObject) {
+                    System.out.print("O"); // Oyun nesneleri için O
+                } else {
+                    System.out.print("?"); // Tanımlanamayan elemanlar için ?
+                }
+            }
+            System.out.println(); // Her satırın sonunda yeni bir satıra geç
+        }
+    }
+    
 
     // Getters
     public boolean isLocked() { return isLocked; }

@@ -2,6 +2,7 @@ package ui.swing;
 
 import javax.swing.*;
 
+import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hall.HallType;
 
@@ -31,10 +32,10 @@ public class BuildModeScreen extends JFrame {
     
     private boolean gridVisible = false; 
 
-    // private Hall waterHall = new Hall(9, 11, null, HallType.WATER);
-    // private Hall earthHall = new Hall(9, 11, null, HallType.EARTH);
-    // private Hall fireHall = new Hall(9, 11, null, HallType.FIRE);
-    // private Hall airHall = new Hall(9, 11, null, HallType.AIR);
+    private Hall waterHall = new Hall(11, 9, null, HallType.WATER);
+    private Hall earthHall = new Hall(11, 9, null, HallType.EARTH);
+    private Hall fireHall = new Hall(11, 9, null, HallType.FIRE);
+    private Hall airHall = new Hall(11, 9, null, HallType.AIR);
 
     private final String[] spriteFiles = {
             "src/resources/images/chest.png",
@@ -351,9 +352,23 @@ public class BuildModeScreen extends JFrame {
             }
         }
     }
+    private String getTargetHall(int x, int y) {
+        if (new Rectangle(GRID_START_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+            return "waterHall" ; 
+        } else if (new Rectangle(GRID_START_X + 403, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+            return "earthHall";
+        } else if (new Rectangle(GRID_START_X, GRID_START_Y + 403, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+            return "fireHall";
+        } else if (new Rectangle(GRID_START_X + 403, GRID_START_Y + 403, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+            return "airHall";
+        }
+        return null;
+    }
+    
 
     
     private void makeDraggableCopyOnPress(JButton plusButton, Image image) {
+
         JLabel copyLabel = new JLabel(new ImageIcon(image));
     
         Point buttonLocation = plusButton.getLocation();
@@ -364,19 +379,19 @@ public class BuildModeScreen extends JFrame {
         
         int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 5; 
         int spawnY = buttonLocation.y - backgroundLocation.y - 5;
-    
+        
         copyLabel.setBounds(spawnX, spawnY, GRID_CELL_SIZE, GRID_CELL_SIZE);
         background.add(copyLabel);
         background.setComponentZOrder(copyLabel, 0);
     
-        makeDraggableAndSnap(copyLabel);
+        makeDraggableAndSnap(copyLabel, image);
         background.repaint();
     }
     
     
     
 
-    private void makeDraggableAndSnap(JLabel label) {
+    private void makeDraggableAndSnap(JLabel label, Image image) {
         final Point[] lastLocation = {label.getLocation()}; // last location of the object
     
         label.addMouseListener(new MouseAdapter() {
@@ -396,8 +411,64 @@ public class BuildModeScreen extends JFrame {
                 if (isInsideAnyGrid(position)) {
                     int snappedX = ((position.x - GRID_START_X) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_X;
                     int snappedY = ((position.y - GRID_START_Y) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_Y;
+                    
+
                     c.setLocation(snappedX, snappedY);
-                } else {
+
+
+                    String targetedHall = getTargetHall(snappedX, snappedY);
+                    int gridX = -1;
+                    int gridY = -1;
+
+                    if(targetedHall.equals("waterHall")){
+                        gridX = (position.x - GRID_START_X) / GRID_CELL_SIZE;
+                        gridY = (position.y - GRID_START_Y) / GRID_CELL_SIZE;
+
+                        System.out.println(gridX);
+                        System.out.println(gridY);
+
+                        GameObject newobjectWater = new GameObject(gridX, gridY, image);
+
+                        System.out.println(waterHall.isValidPosition(gridX, gridY));
+                        waterHall.addObject(newobjectWater, gridX, gridY);
+                        System.out.println(waterHall.isValidPosition(gridX, gridY));
+                        System.out.println(waterHall.getObjects().entrySet());
+
+                    }
+
+                    if(targetedHall.equals("earthHall")){
+                        gridX = (snappedX - (GRID_START_X + 403)) / GRID_CELL_SIZE;
+                        gridY = (snappedY - GRID_START_Y) / GRID_CELL_SIZE;
+
+                        GameObject newobjectEarth = new GameObject(gridX, gridY, image);
+
+                        System.out.println("earthHall");
+                        earthHall.addObject(newobjectEarth, gridX, gridY);
+                        earthHall.displayGrid();
+                    }
+
+                    if(targetedHall.equals("fireHall")){
+                        gridX = (snappedX - GRID_START_X) / GRID_CELL_SIZE;
+                        gridY = (snappedY - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
+
+                        GameObject newobjectFire = new GameObject(gridX, gridY, image);
+
+                        fireHall.addObject(newobjectFire, gridX, gridY);
+                        fireHall.displayGrid();
+                    }
+
+                    if(targetedHall.equals("airHall")){
+                        gridX = (snappedX - (GRID_START_X + 403)) / GRID_CELL_SIZE;
+                        gridY = (snappedY - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
+
+                        GameObject newobject = new GameObject(gridX, gridY, image);
+
+                        airHall.addObject(newobject, gridX, gridY);
+                        airHall.displayGrid();
+                    }
+                    
+                } 
+                else {
                     // move back if not in grid
                     c.setLocation(lastLocation[0]);
                     //background.remove(c);
