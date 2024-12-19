@@ -11,7 +11,6 @@ public class LuringGem extends Enchantment {
 
     public LuringGem() {
         super("Luring Gem");
-        this.hasThrowLocation = false;
     }
 
     public void throwGem(Direction direction, int distance) {
