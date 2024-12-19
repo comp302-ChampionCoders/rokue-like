@@ -19,6 +19,9 @@ public class Hall {
             return minObjects;
         }
     }
+
+    private final HallType hallType; 
+
     private final int width;
     private final int height;
     private final char[][] grid;
@@ -156,7 +159,7 @@ public class Hall {
     }
 
     private void handleRuneCollection() {
-        rune.collect();
+        //rune.collect();
         isLocked = false;
         // Update door state
     }

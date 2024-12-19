@@ -3,6 +3,7 @@ package ui.swing;
 import javax.swing.*;
 
 import domain.gameobjects.Hall;
+import domain.gameobjects.Hall.HallType;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -29,7 +30,11 @@ public class BuildModeScreen extends JFrame {
     private final int OBJECT_SECTION_START_Y = GRID_START_Y + 25; 
     
     private boolean gridVisible = false; 
-    //private Hall earthHall = new Hall(9, 11, null);
+
+    private Hall waterHall = new Hall(9, 11, null, HallType.WATER);
+    private Hall earthHall = new Hall(9, 11, null, HallType.EARTH);
+    private Hall fireHall = new Hall(9, 11, null, HallType.FIRE);
+    private Hall airHall = new Hall(9, 11, null, HallType.AIR);
 
     private final String[] spriteFiles = {
             "src/resources/images/chest.png",
@@ -65,7 +70,7 @@ public class BuildModeScreen extends JFrame {
         initializeScreen();
     }
 
-    // Set application icon in the window and taskbar
+
     private void setAppIcon() {
         try {
             BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png"));
@@ -99,13 +104,13 @@ public class BuildModeScreen extends JFrame {
         }
     }
 
-    private JPanel background; // Background panel for the entire screen
+    private JPanel background; 
 
     private void initializeScreen() {
         background = new JPanel(); 
         background.setBounds(0, 0, getWidth(), getHeight());
         background.setLayout(null);
-        background.setBackground(new Color(62, 41, 52)); // Set the background color
+        background.setBackground(new Color(62, 41, 52)); 
         add(background);
 
         // Hide grid when clicking the background
@@ -117,19 +122,19 @@ public class BuildModeScreen extends JFrame {
             }
         });
 
-        addHallLabels(background); // Add hall labels
+        addHallLabels(background); 
         addGrid(GRID_START_X, GRID_START_Y, background); // Top-left grid
         addGrid(GRID_START_X + 403, GRID_START_Y, background); // Top-right grid
         addGrid(GRID_START_X, GRID_START_Y + 403, background); // Bottom-left grid
         addGrid(GRID_START_X + 403, GRID_START_Y + 403, background); // Bottom-right grid
-        addObjectSection(background); // Add object section
-        addTopWallAndSideWalls(background); // Add top walls
+        addObjectSection(background); 
+        addTopWallAndSideWalls(background); 
         addBottomWalls(background);
     }
 
     private void addBottomWalls(JPanel parent) {
-        int bottomWallY = GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE; // Bottom wall'un Y pozisyonu
-        int wallWidth = GRID_COLUMNS * GRID_CELL_SIZE + 16; // Duvarın genişliği
+        int bottomWallY = GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE; 
+        int wallWidth = GRID_COLUMNS * GRID_CELL_SIZE + 16; 
     
         int[][] hallPositions = {
                 {GRID_START_X - 8, bottomWallY},                      // Top-left grid
@@ -140,10 +145,10 @@ public class BuildModeScreen extends JFrame {
         };
 
         String[] bottomWallImages = {
-            "src/resources/images/bottomwater.png",  // Hall Of Water
-            "src/resources/images/bottomearth.png",  // Hall Of Earth
-            "src/resources/images/bottomfire.png",   // Hall Of Fire
-            "src/resources/images/bottomair.png"     // Hall Of Air
+            "src/resources/images/bottomwater.png", 
+            "src/resources/images/bottomearth.png",  
+            "src/resources/images/bottomfire.png",   
+            "src/resources/images/bottomair.png"     
     };
     
         try {
@@ -165,7 +170,7 @@ public class BuildModeScreen extends JFrame {
     
     private void addTopWallAndSideWalls(JPanel parent) {
         int wallOffset = 8;
-        int topWallWidth = GRID_COLUMNS * GRID_CELL_SIZE; // Topwall genişliği
+        int topWallWidth = GRID_COLUMNS * GRID_CELL_SIZE; 
         int sideWallWidth = wallOffset; // Sidewall width (8 piksel)
         int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 40;  // Sidewall height (grid boyunca uzanacak)
     
@@ -217,7 +222,6 @@ public class BuildModeScreen extends JFrame {
 
     
 
-    // Draw the grid lines dynamically
     private void addGrid(int x, int y, JPanel parent) {
         JPanel gridPanel = new JPanel(new GridLayout(GRID_ROWS, GRID_COLUMNS)) {
             @Override
@@ -330,8 +334,8 @@ public class BuildModeScreen extends JFrame {
                 "src/resources/images/hallofair.png"
         };
     
-        int labelWidth = 120; // Smaller width for the labels
-        int labelHeight = 30; // Smaller height for the labels
+        int labelWidth = 120; 
+        int labelHeight = 30; 
     
         for (int i = 0; i < labelFiles.length; i++) {
             try {
@@ -372,7 +376,6 @@ public class BuildModeScreen extends JFrame {
     
     
 
-    // Add snap-to-grid behavior
     private void makeDraggableAndSnap(JLabel label) {
         final Point[] lastLocation = {label.getLocation()}; // last location of the object
     
@@ -415,7 +418,6 @@ public class BuildModeScreen extends JFrame {
         });
     }
     
-    // check grid boundaries
     private boolean isInsideAnyGrid(Point position) {
         Rectangle[] gridBounds = {
                 new Rectangle(GRID_START_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE), // Top-left
