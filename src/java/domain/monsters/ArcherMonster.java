@@ -1,7 +1,7 @@
 package domain.monsters;
 
 import domain.gameobjects.*;
-import domain.behaviors.Direction;
+// import domain.behaviors.Direction;
 
 public class ArcherMonster extends Monster {
     private static final int SHOOT_RANGE = 4;
