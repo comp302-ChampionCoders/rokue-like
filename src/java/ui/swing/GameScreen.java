@@ -18,8 +18,8 @@ import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
 
 public class GameScreen extends JFrame {
-    private final int GRID_ROWS = 9;
-    private final int GRID_COLUMNS = 11;
+    private final int GRID_ROWS = 11;
+    private final int GRID_COLUMNS = 9;
     private final int CELL_SIZE = 50; // Grid cell size
     private Hero hero; // Hero nesnesi
     private List<Monster> monsters; // Monster listesi

@@ -222,12 +222,6 @@ public class Hall {
         }
     }
 
-    private char getObjectSymbol(GameObject object) {
-        if (object instanceof Rune) return 'R';
-        if (object instanceof Door) return 'D';
-        return 'O'; // Generic object
-    }
-
     public void displayGrid() {
         System.out.println("Grid Layout:");
         for (int y = 0; y < height; y++) {

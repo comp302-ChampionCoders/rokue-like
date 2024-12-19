@@ -424,15 +424,12 @@ public class BuildModeScreen extends JFrame {
                         gridX = (position.x - GRID_START_X) / GRID_CELL_SIZE;
                         gridY = (position.y - GRID_START_Y) / GRID_CELL_SIZE;
 
-                        System.out.println(gridX);
-                        System.out.println(gridY);
-
                         GameObject newobjectWater = new GameObject(gridX, gridY, image);
 
-                        System.out.println(waterHall.isValidPosition(gridX, gridY));
                         waterHall.addObject(newobjectWater, gridX, gridY);
-                        System.out.println(waterHall.isValidPosition(gridX, gridY));
-                        System.out.println(waterHall.getObjects().entrySet());
+                        System.out.println("Water Hall");
+                        waterHall.displayGrid();
+                        System.out.println(waterHall.getObjects());
 
                     }
 
@@ -442,9 +439,11 @@ public class BuildModeScreen extends JFrame {
 
                         GameObject newobjectEarth = new GameObject(gridX, gridY, image);
 
-                        System.out.println("earthHall");
+                        
                         earthHall.addObject(newobjectEarth, gridX, gridY);
+                        System.out.println("Earth Hall");
                         earthHall.displayGrid();
+                        System.out.println(earthHall.getObjects());
                     }
 
                     if(targetedHall.equals("fireHall")){
@@ -454,7 +453,10 @@ public class BuildModeScreen extends JFrame {
                         GameObject newobjectFire = new GameObject(gridX, gridY, image);
 
                         fireHall.addObject(newobjectFire, gridX, gridY);
+
+                        System.out.println("Fire Hall");
                         fireHall.displayGrid();
+                        System.out.println(fireHall.getObjects());
                     }
 
                     if(targetedHall.equals("airHall")){
@@ -464,7 +466,9 @@ public class BuildModeScreen extends JFrame {
                         GameObject newobject = new GameObject(gridX, gridY, image);
 
                         airHall.addObject(newobject, gridX, gridY);
+                        System.out.println("Air hall");
                         airHall.displayGrid();
+                        System.out.println(airHall.getObjects());
                     }
                     
                 } 
