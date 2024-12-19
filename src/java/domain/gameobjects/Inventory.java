@@ -18,7 +18,7 @@ public class Inventory {
     public boolean useItem(String type) {
         List<Collectible> itemList = items.get(type);
         if (itemList != null && !itemList.isEmpty()) {
-            Collectible item = itemList.remove(0);
+            Collectible item = itemList.remove(0); // TODO: needs proper implementation
             if (itemList.isEmpty()) {
                 items.remove(type);
             }
