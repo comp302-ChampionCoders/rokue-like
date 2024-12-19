@@ -1,19 +1,38 @@
 package domain.monsters;
 
-import domain.gameobjects.GameObject;
+import domain.behaviors.GridElement;
 import domain.gameobjects.Hero;
 import domain.behaviors.Moveable;
 import domain.behaviors.Direction;
 
-public abstract class Monster extends GameObject implements Moveable {
+public abstract class Monster implements Moveable, GridElement {
+    protected int x, y;
     protected int detectionRange;
+    protected boolean isActive;
+    protected String type;
 
     public Monster(int x, int y, String type, int detectionRange) {
-        super(x ,y, type);
+        this.x = x;
+        this.y = y;
+        this.type = type;
         this.detectionRange = detectionRange;
+        this.isActive = true;
     }
 
-    public abstract void performAction(Hero hero); // Abstract method to be implemented by subclasses
+    public abstract void performAction(Hero hero); // Abstract method to be implemented by subclasse
+    
+    // GridElement implementation
+    @Override
+    public int getX() { return x; }
+
+    @Override
+    public int getY() { return y; }
+
+    @Override
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     @Override
     public boolean move(Direction direction) {
@@ -60,4 +79,7 @@ public abstract class Monster extends GameObject implements Moveable {
         Direction[] directions = Direction.values();
         return directions[(int)(Math.random() * directions.length)];
     }
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean active) { this.isActive = active; }
+    public String getType() { return type; }
 }

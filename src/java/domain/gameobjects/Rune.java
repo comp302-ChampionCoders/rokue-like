@@ -1,15 +1,36 @@
 package domain.gameobjects;
 
 import domain.behaviors.Collectible;
+import domain.behaviors.GridElement;
 
-public class Rune extends GameObject implements Collectible {
+public class Rune implements Collectible, GridElement {
+    private int x;
+    private int y;
     private boolean isCollected;
     private boolean isAvailable;
 
     public Rune(int x, int y) {
-        super(x, y, "Rune");
+        this.x = x;
+        this.y = y;
         this.isAvailable = true;
         this.isCollected = false;
+    }
+
+    // GridElement interface implementation
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -17,7 +38,6 @@ public class Rune extends GameObject implements Collectible {
         if (!isCollected && isAvailable) {
             isCollected = true;
             isAvailable = false;
-            setActive(false);
             // hall will handle the unlocking the door
         }
     }

@@ -2,8 +2,9 @@ package domain.enchantments;
 
 import domain.gameobjects.*;
 import domain.behaviors.Collectible;
+import domain.behaviors.GridElement;
 
-public abstract class Enchantment implements Collectible {
+public abstract class Enchantment implements Collectible, GridElement {
     private String name; 
     private boolean isActive;
     private boolean isAvailable;
@@ -42,13 +43,19 @@ public abstract class Enchantment implements Collectible {
     public void disappear() {
         this.isAvailable = false;
     }
-
+    @Override
+    public String getType() { return name; }
+    // GridElement Interface implementation
     @Override
     public int getX() {return x;}
     @Override
     public int getY() {return y;}
+    
     @Override
-    public String getType() {return name;}
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     @Override
     public boolean isAvailable() {
