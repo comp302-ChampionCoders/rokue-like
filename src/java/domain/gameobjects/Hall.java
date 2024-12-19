@@ -2,7 +2,11 @@ package domain.gameobjects;
 
 import domain.monsters.*;
 import domain.behaviors.Direction;
+import domain.behaviors.GridElement;
+
+import java.awt.Point;
 import java.util.*;
+import java.util.function.IntFunction;
 
 public class Hall {
     // Hall type enumeration
@@ -24,7 +28,7 @@ public class Hall {
 
     private final int width;
     private final int height;
-    private final char[][] grid;
+    private final GridElement[][] grid;
     private final Hero hero;
     private final List<Monster> monsters;
     private final Map<Point, GameObject> objects;
@@ -39,21 +43,28 @@ public class Hall {
         this.height = height;
         this.hero = hero;
         this.hallType = hallType;
-        this.grid = new char[height][width];
+        this.grid = new GridElement[height][width];
         this.monsters = new ArrayList<>();
         this.objects = new HashMap<>();
         this.isLocked = true;
         initializeGrid();
-        setupMonsterSpawner();
+        //setupMonsterSpawner();
     }
 
     private void initializeGrid() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                grid[i][j] = '.';
+                grid[i][j] = null;
             }
         }
         updateGridWithHero();
+    }
+
+    private boolean isHeroNull(){
+        if(hero == null){
+            return true;
+        }
+        return false;
     }
 
     private void setupMonsterSpawner() {
@@ -95,7 +106,7 @@ public class Hall {
         Point position = new Point(x, y);
         if (isValidPosition(x, y) && !objects.containsKey(position)) {
             objects.put(position, object);
-            updateGrid(x, y, getObjectSymbol(object));
+            updateGrid(x, y, object);
             return true;
         }
         return false;
@@ -105,7 +116,7 @@ public class Hall {
         Point position = new Point(x, y);
         if (objects.containsKey(position)) {
             objects.remove(position);
-            updateGrid(x, y, '.');
+            updateGrid(x, y, null);
             return true;
         }
         return false;
@@ -113,19 +124,27 @@ public class Hall {
 
     public boolean isValidPosition(int x, int y) {
         return x >= 0 && x < width && y >= 0 && y < height && 
-               grid[y][x] == '.' && !isPositionOccupied(x, y);
+               grid[y][x] == null && !isPositionOccupied(x, y);
     }
 
     private boolean isPositionOccupied(int x, int y) {
-        Point position = new Point(x, y);
-        return objects.containsKey(position) || 
-               monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) ||
-               (hero.getX() == x && hero.getY() == y);
+        if(!isHeroNull()){
+            Point position = new Point(x, y);
+            return objects.containsKey(position) || 
+                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) ||
+                    (hero.getX() == x && hero.getY() == y);
+        }
+        else{
+            Point position = new Point(x, y);
+            return objects.containsKey(position) || 
+                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y);
+        }
+        
     }
 
     public void updateState() {
         updateMonsters();
-        checkCollisions();
+        //checkCollisions();
         updateGrid();
     }
 
@@ -137,7 +156,7 @@ public class Hall {
         }
     }
 
-    private void checkCollisions() {
+    /*private void checkCollisions() {
         // Check hero-monster collisions
         for (Monster monster : monsters) {
             if (monster.isActive() && monster.isAdjacentToHero(hero)) {
@@ -146,23 +165,28 @@ public class Hall {
         }
 
         // Check if hero found rune
-        Point heroPosition = new Point(hero.getX(), hero.getY());
-        if (objects.get(heroPosition) instanceof Rune) {
-            handleRuneCollection();
+        if(hero.equals(null)){
+            ;
+        }else{
+            Point heroPosition = new Point(hero.getX(), hero.getY());
+            if (objects.get(heroPosition) instanceof Rune) {
+                handleRuneCollection();
         }
-    }
+        }
+        
+    }*/
 
-    private void handleMonsterCollision(Monster monster) {
+   /* private void handleMonsterCollision(Monster monster) {
         if (monster instanceof FighterMonster) {
             hero.reduceLife();
         }
-    }
+    }*/
 
-    private void handleRuneCollection() {
+   /*  private void handleRuneCollection() {
         //rune.collect();
         isLocked = false;
         // Update door state
-    }
+    }*/
 
     private void updateGrid() {
         // Clear grid
@@ -171,13 +195,13 @@ public class Hall {
         // Update with objects
         for (Map.Entry<Point, GameObject> entry : objects.entrySet()) {
             Point p = entry.getKey();
-            updateGrid(p.x, p.y, getObjectSymbol(entry.getValue()));
+            updateGrid(p.x, p.y, objects.get(p));
         }
 
         // Update with monsters
         for (Monster monster : monsters) {
             if (monster.isActive()) {
-                updateGrid(monster.getX(), monster.getY(), 'M');
+                updateGrid(monster.getX(), monster.getY(), monster);
             }
         }
 
@@ -186,12 +210,15 @@ public class Hall {
     }
 
     private void updateGridWithHero() {
-        grid[hero.getY()][hero.getX()] = 'H';
+        if(!isHeroNull()){
+            grid[hero.getY()][hero.getX()] = hero;
+        }
+        
     }
 
-    private void updateGrid(int x, int y, char symbol) {
+    private void updateGrid(int x, int y, GridElement elm) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            grid[y][x] = symbol;
+            grid[y][x] = elm;
         }
     }
 
@@ -203,7 +230,7 @@ public class Hall {
 
     // Getters
     public boolean isLocked() { return isLocked; }
-    public char[][] getGrid() { return grid; }
+    public GridElement[][] getGrid() { return grid; }
     public List<Monster> getMonsters() { return new ArrayList<>(monsters); }
     public Map<Point, GameObject> getObjects() { return new HashMap<>(objects); }
 }
