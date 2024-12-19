@@ -1,49 +1,48 @@
 package domain.gameobjects;
 
-import java.util.HashMap;
-
+import java.util.*;
+import domain.behaviors.Collectible;
 public class Inventory {
-    private HashMap<String, Integer> items;
+    private HashMap<String, List<Collectible>> items;
 
     public Inventory() {
-        items = new HashMap<>();
+        this.items = new HashMap<>();
     }
 
     // Add an item to the inventory
-    public void addItem(String itemName) {
-        items.put(itemName, items.getOrDefault(itemName, 0) + 1);
-        System.out.println(itemName + " added to inventory. Count: " + items.get(itemName));
+    public void addItem(Collectible item) {
+        String type = item.getType();
+        items.computeIfAbsent(type, k -> new ArrayList<>()).add(item);
     }
 
-    // Remove an item from the inventory
-    public boolean useItem(String itemName) {
-        if (items.containsKey(itemName) && items.get(itemName) > 0) {
-            items.put(itemName, items.get(itemName) - 1);
-            System.out.println(itemName + " used. Remaining: " + items.get(itemName));
-            if (items.get(itemName) == 0) {
-                items.remove(itemName);
+    public boolean useItem(String type) {
+        List<Collectible> itemList = items.get(type);
+        if (itemList != null && !itemList.isEmpty()) {
+            Collectible item = itemList.remove(0); // TODO: needs proper implementation
+            if (itemList.isEmpty()) {
+                items.remove(type);
             }
             return true;
-        } else {
-            System.out.println("No " + itemName + " in inventory.");
-            return false;
         }
+        return false;
     }
 
-    // Get count of a specific item
-    public int getItemCount(String itemName) {
-        return items.getOrDefault(itemName, 0);
+    public int getItemCount(String type) {
+        List<Collectible> itemList = items.get(type);
+        return itemList != null ? itemList.size() : 0;
     }
 
-    // Display inventory contents
-    public void displayInventory() {
-        if (items.isEmpty()) {
-            System.out.println("Inventory is empty.");
-        } else {
-            System.out.println("Inventory contents:");
-            for (String item : items.keySet()) {
-                System.out.println("- " + item + ": " + items.get(item));
-            }
-        }
+    public List<Collectible> getItems(String type) {
+        return items.getOrDefault(type, new ArrayList<>());
+    }
+
+    public Map<String, Integer> getInventoryContents() {
+        Map<String, Integer> contents = new HashMap<>();
+        items.forEach((type, list) -> contents.put(type, list.size()));
+        return contents;
+    }
+
+    public boolean hasItem(String type) {
+        return items.containsKey(type) && !items.get(type).isEmpty();
     }
 }

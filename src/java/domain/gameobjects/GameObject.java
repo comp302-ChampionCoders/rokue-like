@@ -1,62 +1,37 @@
 package domain.gameobjects;
 
 public abstract class GameObject {
-    protected int x;
-    protected int y;
-    protected char symbol;
-    protected boolean isInteractable;
+    protected Point position;
+    protected boolean isActive;
     protected String type;
-
-    public GameObject(int x, int y, char symbol, String type) {
-        this.x = x;
-        this.y = y;
-        this.symbol = symbol;
+    
+    public GameObject(int x, int y, String type) {
+        this.position = new Point(x, y);
         this.type = type;
-        this.isInteractable = true;
+        this.isActive = true;
     }
-
+    
     public int getX() {
-        return x;
+        return position.x;
     }
-
+    
     public int getY() {
-        return y;
+        return position.y;
     }
-
-    public void setX(int x) {
-        this.x = x;
+    
+    public void setPosition(int x, int y) {
+        this.position = new Point(x, y);
     }
-
-    public void setY(int y) {
-        this.y = y;
+    
+    public boolean isActive() {
+        return isActive;
     }
-
-    public char getSymbol() {
-        return symbol;
+    
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
-
+    
     public String getType() {
         return type;
-    }
-
-    public boolean isInteractable() {
-        return isInteractable;
-    }
-
-    public void setInteractable(boolean interactable) {
-        this.isInteractable = interactable;
-    }
-
-    // Method to handle interactions with the hero
-    public abstract void interact(Hero hero);
-
-    // Method to check if this object can be placed at a specific location
-    public boolean canBePlacedAt(int x, int y, Hall hall) {
-        return hall.isValidPosition(x, y);
-    }
-
-    @Override
-    public String toString() {
-        return type + " at position (" + x + ", " + y + ")";
     }
 }

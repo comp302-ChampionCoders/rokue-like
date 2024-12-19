@@ -1,10 +1,24 @@
 package domain.gameobjects;
 
 import domain.monsters.*;
-//import domain.behaviors.Direction;
+import domain.behaviors.Direction;
 import java.util.*;
 
 public class Hall {
+    // Hall type enumeration
+    public enum HallType {
+        EARTH(6), AIR(9), WATER(13), FIRE(17);
+        
+        private final int minObjects;
+        
+        HallType(int minObjects) {
+            this.minObjects = minObjects;
+        }
+        
+        public int getMinObjects() {
+            return minObjects;
+        }
+    }
     private final int width;
     private final int height;
     private final char[][] grid;
@@ -14,16 +28,20 @@ public class Hall {
     private Rune rune;
     private Door door;
     private boolean isLocked;
+    private boolean isActive;
+    private Timer monsterSpawnTimer;
 
-    public Hall(int width, int height, Hero hero) {
+    public Hall(int width, int height, Hero hero, HallType hallType) {
         this.width = width;
         this.height = height;
         this.hero = hero;
+        this.hallType = hallType;
         this.grid = new char[height][width];
         this.monsters = new ArrayList<>();
         this.objects = new HashMap<>();
         this.isLocked = true;
         initializeGrid();
+        setupMonsterSpawner();
     }
 
     private void initializeGrid() {
@@ -33,6 +51,41 @@ public class Hall {
             }
         }
         updateGridWithHero();
+    }
+
+    private void setupMonsterSpawner() {
+        monsterSpawnTimer = new Timer();
+        monsterSpawnTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (isActive && monsters.size() < 3) {
+                    spawnRandomMonster();
+                }
+            }
+        }, 8000, 8000); // Spawn every 8 seconds
+    }
+
+    private void spawnRandomMonster() {
+        Random rand = new Random();
+        int x, y;
+        do {
+            x = rand.nextInt(width);
+            y = rand.nextInt(height);
+        } while (!isValidPosition(x, y));
+
+        Monster monster;
+        switch (rand.nextInt(3)) {
+            case 0:
+                monster = new ArcherMonster(x, y);
+                break;
+            case 1:
+                monster = new FighterMonster(x, y);
+                break;
+            default:
+                monster = new WizardMonster(x, y);
+        }
+        monsters.add(monster);
+        updateGrid();
     }
 
     public boolean addObject(GameObject object, int x, int y) {

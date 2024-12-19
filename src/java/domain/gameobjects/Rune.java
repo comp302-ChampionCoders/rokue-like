@@ -1,30 +1,52 @@
 package domain.gameobjects;
 
-public class Rune extends GameObject {
+import domain.behaviors.Collectible;
+public class Rune extends GameObject implements Collectible {
     private boolean isCollected;
+    private boolean isAvailable;
+    private Point currentPosition;
 
     public Rune(int x, int y) {
-        super(x, y, 'R', "Rune");
+        super(x, y, "Rune");
+        this.isAvailable = true;
         this.isCollected = false;
+        this.currentPosition = new Point(x,y);
     }
 
     @Override
-    public void interact(Hero hero) {
-        if (!isCollected) {
-            collect();
-            // Notify the hall that rune was collected (this could be done through an observer pattern)
-            System.out.println("Rune collected! The door is now unlocked.");
-        }
-    }
-
-    public boolean isCollected() {
-        return isCollected;
-    }
-
-    public void collect() {
-        if (!isCollected) {
+    public void collect(Hero hero) {
+        if (!isCollected && isAvailable) {
             isCollected = true;
-            setInteractable(false);
+            isAvailable = false;
+            setActive(false);
+            // hall will handle the unlocking the door
         }
     }
+    public boolean isCollected() {return isCollected;}
+    @Override
+    public boolean canBeCollected() {return !isCollected && isAvailable;}
+    @Override
+    public String getType() {return "Rune";}
+    @Override
+    public boolean isAvailable() {return isAvailable;}
+    @Override
+    public long getTimeRemaining() {return -1;} // Runes never timeout
+
+    @Override
+    public void appear(int x, int y) {
+        setPosition(x, y);
+        this.currentPosition = new Point(x, y);
+        this.isAvailable = true;
+    }
+
+    @Override
+    public void disappear() {
+        this.isAvailable = false;
+    }
+
+    // Method for Wizard Monster to teleport the rune
+    public void teleport(int newX, int newY) {
+        appear(newX, newY);
+    }
+
 }
