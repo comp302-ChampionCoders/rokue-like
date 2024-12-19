@@ -4,18 +4,21 @@ import domain.gameobjects.*;
 import domain.behaviors.Direction;
 
 public class LuringGem extends Enchantment {
-    private Point throwLocation;
+    private int throwX;
+    private int throwY;
+    private boolean hasThrowLocation;
     private static final long DURATION = 5000;
 
     public LuringGem() {
         super("Luring Gem");
+        this.hasThrowLocation = false;
     }
 
     public void throwGem(Direction direction, int distance) {
         if (!isActive()) {
-            int newX = getX() + direction.getDx() * distance;
-            int newY = getY() + direction.getDy() * distance;
-            throwLocation = new Point(newX, newY);
+            throwX = getX() + direction.getDx() * distance;
+            throwY = getY() + direction.getDy() * distance;
+            hasThrowLocation = true;
             activate();
         }
     }
@@ -40,13 +43,21 @@ public class LuringGem extends Enchantment {
     public void removeEffect(Hero hero) {
         if (isActive()) {
             deactivate();
-            throwLocation = null;
+            hasThrowLocation = false;
             System.out.println("Luring Gem's effect has ended.");
         }
     }
 
-    public Point getThrowLocation() {
-        return throwLocation;
+    public boolean hasThrowLocation() {
+        return hasThrowLocation;
+    }
+
+    public int getThrowX() {
+        return throwX;
+    }
+
+    public int getThrowY() {
+        return throwY;
     }
 
     @Override

@@ -1,16 +1,15 @@
 package domain.gameobjects;
 
 import domain.behaviors.Collectible;
+
 public class Rune extends GameObject implements Collectible {
     private boolean isCollected;
     private boolean isAvailable;
-    private Point currentPosition;
 
     public Rune(int x, int y) {
         super(x, y, "Rune");
         this.isAvailable = true;
         this.isCollected = false;
-        this.currentPosition = new Point(x,y);
     }
 
     @Override
@@ -22,20 +21,34 @@ public class Rune extends GameObject implements Collectible {
             // hall will handle the unlocking the door
         }
     }
-    public boolean isCollected() {return isCollected;}
+
+    public boolean isCollected() {
+        return isCollected;
+    }
+
     @Override
-    public boolean canBeCollected() {return !isCollected && isAvailable;}
+    public boolean canBeCollected() {
+        return !isCollected && isAvailable;
+    }
+
     @Override
-    public String getType() {return "Rune";}
+    public String getType() {
+        return "Rune";
+    }
+
     @Override
-    public boolean isAvailable() {return isAvailable;}
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
     @Override
-    public long getTimeRemaining() {return -1;} // Runes never timeout
+    public long getTimeRemaining() {
+        return -1; // Runes never timeout
+    }
 
     @Override
     public void appear(int x, int y) {
         setPosition(x, y);
-        this.currentPosition = new Point(x, y);
         this.isAvailable = true;
     }
 
@@ -48,5 +61,4 @@ public class Rune extends GameObject implements Collectible {
     public void teleport(int newX, int newY) {
         appear(newX, newY);
     }
-
 }

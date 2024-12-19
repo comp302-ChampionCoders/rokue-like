@@ -31,10 +31,10 @@ public class BuildModeScreen extends JFrame {
     
     private boolean gridVisible = false; 
 
-    private Hall waterHall = new Hall(9, 11, null, HallType.WATER);
-    private Hall earthHall = new Hall(9, 11, null, HallType.EARTH);
-    private Hall fireHall = new Hall(9, 11, null, HallType.FIRE);
-    private Hall airHall = new Hall(9, 11, null, HallType.AIR);
+    // private Hall waterHall = new Hall(9, 11, null, HallType.WATER);
+    // private Hall earthHall = new Hall(9, 11, null, HallType.EARTH);
+    // private Hall fireHall = new Hall(9, 11, null, HallType.FIRE);
+    // private Hall airHall = new Hall(9, 11, null, HallType.AIR);
 
     private final String[] spriteFiles = {
             "src/resources/images/chest.png",

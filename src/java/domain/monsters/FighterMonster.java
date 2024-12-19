@@ -5,18 +5,20 @@ import domain.behaviors.Direction;
 
 public class FighterMonster extends Monster {
     private static final int DETECTION_RANGE = 5;
-    private Point luringGemLocation = null;
+    private boolean isLured;
+    private int lureX, lureY;
     private int moveCounter = 0; // to control movement frequency
 
     public FighterMonster(int x, int y) {
         super(x, y, "Fighter", DETECTION_RANGE);
+        this.isLured = false;
     }
 
     @Override
     public void performAction(Hero hero) {
         // If luring gem is active, move towards it instead of hero
-        if (luringGemLocation != null) {
-            moveTowardsPoint(luringGemLocation.x, luringGemLocation.y);
+        if (isLured) {
+            moveTowardsPoint(lureX, lureY);
             return;
         }
 
@@ -31,7 +33,7 @@ public class FighterMonster extends Monster {
         } else {
             // random movement
             moveCounter++;
-            if (moveCounter >= 3){
+            if (moveCounter >= 3) {
                 move(getRandomDirection());
                 moveCounter = 0; // reset the counter
             }
@@ -48,10 +50,12 @@ public class FighterMonster extends Monster {
 
     // Method to be called when luring gem is used
     public void setLuringGemLocation(int x, int y) {
-        this.luringGemLocation = new Point(x, y);
+        this.lureX = x;
+        this.lureY = y;
+        this.isLured = true;
     }
 
     public void clearLuringGemEffect() {
-        this.luringGemLocation = null;
+        this.isLured = false;
     }
 }

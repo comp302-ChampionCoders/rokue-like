@@ -1,26 +1,29 @@
 package domain.gameobjects;
 
 public abstract class GameObject {
-    protected Point position;
+    protected int x;
+    protected int y;
     protected boolean isActive;
     protected String type;
     
     public GameObject(int x, int y, String type) {
-        this.position = new Point(x, y);
+        this.x = x;
+        this.y = y;
         this.type = type;
         this.isActive = true;
     }
     
     public int getX() {
-        return position.x;
+        return x;
     }
     
     public int getY() {
-        return position.y;
+        return y;
     }
     
     public void setPosition(int x, int y) {
-        this.position = new Point(x, y);
+        this.x = x;
+        this.y = y;
     }
     
     public boolean isActive() {
