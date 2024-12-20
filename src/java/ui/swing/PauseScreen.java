@@ -2,24 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-//gerekli eklentiler
-
-//play mode'da pause butonu tıklayınca buraya bağlantı
-//pause screen açıldığında timer durdurma
-//restrat denince timer sıfırlama
-//resume diyince timer devam ettirme
-
-
+import technicalservices.Timer; 
 
 public class PauseScreen extends JFrame {
     private JPanel overlayPanel;
     private JButton resumeButton;
     private JButton restartButton;
     private JButton quitButton;
+    public int objectsInCurrentHall;
 
+    private Timer gameTimer; // Reference to the game timer
 
-    public PauseScreen() {
+    public PauseScreen(Timer timer) {
+        this.gameTimer = timer;
+
         setTitle("Pause Screen");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,14 +36,14 @@ public class PauseScreen extends JFrame {
         resumeButton = new JButton("Resume");
         restartButton = new JButton("Restart");
         quitButton = new JButton("Quit");
-
+        objectsInCurrentHall = 5; // Example
 
         resumeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Resume Game");
-                dispose();
-                //******************** timer devam ettirme
+                gameTimer.resume(); // Resume the timer
+                dispose(); // Close the pause screen
             }
         });
 
@@ -55,8 +51,8 @@ public class PauseScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Restart Game");
-                dispose();
-                // ******************** timer sıfırlama
+                gameTimer.reset(objectsInCurrentHall * 5); // Calculate time
+                dispose(); // Close the pause screen
             }
         });
 
@@ -64,10 +60,9 @@ public class PauseScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Quit Game");
-                System.exit(0);
+                System.exit(0); // Exit the game
             }
         });
-
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));
@@ -81,12 +76,19 @@ public class PauseScreen extends JFrame {
     }
 
     public static void main(String[] args) {
+        // Example of usage with a Timer instance
+        Timer timer = new Timer(25); // Initialize timer with 25 seconds
+        timer.start();
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                PauseScreen pauseScreen = new PauseScreen();
+                PauseScreen pauseScreen = new PauseScreen(timer);
                 pauseScreen.setLocationRelativeTo(null);
                 pauseScreen.setVisible(true);
+
+                // Simulate pausing the timer when pause screen is shown
+                timer.pause();
             }
         });
     }
