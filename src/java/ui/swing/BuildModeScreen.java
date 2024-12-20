@@ -111,21 +111,13 @@ public class BuildModeScreen extends JFrame {
     private JPanel background; 
 
     private void initializeScreen() {
-            background = new JPanel(); 
-            background.setBounds(0, 0, getWidth(), getHeight());
-            background.setLayout(null);
-            background.setBackground(new Color(62, 41, 52)); 
-            add(background);
+        background = new JPanel(); 
+        background.setBounds(0, 0, getWidth(), getHeight());
+        background.setLayout(null);
+        background.setBackground(new Color(62, 41, 52)); 
+        add(background);
 
-            // // Hide grid when clicking the background
-            // background.addMouseListener(new MouseAdapter() {
-            //     @Override    
-            //     public void mousePressed(MouseEvent e) {
-            //         gridVisible = false; 
-            //         background.repaint(); 
-            //     }
-            // });
-            // Add exit button
+        // Add exit button
         try {
             BufferedImage exitImg = ImageIO.read(new File("src/resources/images/exit_button.png"));
             Image scaledExitImg = exitImg.getScaledInstance(EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE, Image.SCALE_SMOOTH);
@@ -565,11 +557,4 @@ public class BuildModeScreen extends JFrame {
         return false;
     }
     
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            BuildModeScreen buildModeScreen = new BuildModeScreen();
-            buildModeScreen.setVisible(true);
-        });
-    }
 }
