@@ -30,6 +30,9 @@ public class BuildModeScreen extends JFrame {
     private final int OBJECT_SECTION_START_X = SCREEN_WIDTH - OBJECT_SECTION_WIDTH - 100;; 
     private final int OBJECT_SECTION_START_Y = GRID_START_Y + 25; 
     
+    private JButton exitButton;
+    private final int EXIT_BUTTON_SIZE = 30;
+
     private boolean gridVisible = false; 
 
     private Hall waterHall = new Hall(11, 9, null, HallType.WATER);
@@ -108,20 +111,56 @@ public class BuildModeScreen extends JFrame {
     private JPanel background; 
 
     private void initializeScreen() {
-        background = new JPanel(); 
-        background.setBounds(0, 0, getWidth(), getHeight());
-        background.setLayout(null);
-        background.setBackground(new Color(62, 41, 52)); 
-        add(background);
+            background = new JPanel(); 
+            background.setBounds(0, 0, getWidth(), getHeight());
+            background.setLayout(null);
+            background.setBackground(new Color(62, 41, 52)); 
+            add(background);
 
-        // Hide grid when clicking the background
-        background.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                gridVisible = false; 
-                background.repaint(); 
-            }
-        });
+            // // Hide grid when clicking the background
+            // background.addMouseListener(new MouseAdapter() {
+            //     @Override    
+            //     public void mousePressed(MouseEvent e) {
+            //         gridVisible = false; 
+            //         background.repaint(); 
+            //     }
+            // });
+            // Add exit button
+        try {
+            BufferedImage exitImg = ImageIO.read(new File("src/resources/images/exit_button.png"));
+            Image scaledExitImg = exitImg.getScaledInstance(EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE, Image.SCALE_SMOOTH);
+            exitButton = new JButton(new ImageIcon(scaledExitImg));
+            exitButton.setBounds(OBJECT_SECTION_START_X + OBJECT_SECTION_WIDTH/2 - EXIT_BUTTON_SIZE/2, 
+                            OBJECT_SECTION_START_Y - EXIT_BUTTON_SIZE - 10, 
+                            EXIT_BUTTON_SIZE, 
+                            EXIT_BUTTON_SIZE);
+            
+            // Style the button
+            exitButton.setBorderPainted(false);
+            exitButton.setContentAreaFilled(false);
+            exitButton.setFocusPainted(false);
+            
+            // Add hover effect
+            exitButton.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                }
+                public void mouseExited(MouseEvent e) {
+                    exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            });
+            
+            // Add click action
+            exitButton.addActionListener(e -> {
+                dispose(); // Close the BuildModeScreen
+                SwingUtilities.invokeLater(() -> new MainMenu()); // Open MainMenu
+            });
+            
+            background.add(exitButton);
+        } catch (IOException e) {
+            System.err.println("Failed to load exit button image: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         addHallLabels(background); 
         addGrid(GRID_START_X, GRID_START_Y, background); // Top-left grid
