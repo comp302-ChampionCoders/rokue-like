@@ -2,6 +2,8 @@ package ui.swing;
 
 import javax.swing.*;
 
+import controller.ModeController;
+import controller.ScreenTransition;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hall.HallType;
@@ -31,6 +33,7 @@ public class BuildModeScreen extends JFrame {
     private final int OBJECT_SECTION_START_Y = GRID_START_Y + 25; 
     
     private JButton exitButton;
+    private JButton playButton;
     private final int EXIT_BUTTON_SIZE = 30;
 
     private boolean gridVisible = false; 
@@ -52,9 +55,14 @@ public class BuildModeScreen extends JFrame {
 
     private BufferedImage topWallImage; 
     private BufferedImage chestImage; 
+    private final ScreenTransition onExit;
+    private final ScreenTransition onSwitchToPlayMode;
 
-    public BuildModeScreen() {
-        setTitle("Build Mode Screen");
+    
+    public BuildModeScreen(ScreenTransition onExit, ScreenTransition onSwitchToPlayMode) {
+        this.onExit = onExit;
+        this.onSwitchToPlayMode = onSwitchToPlayMode;
+        setTitle("Build Mode");
         setUndecorated(true); 
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,17 +128,28 @@ public class BuildModeScreen extends JFrame {
         // Add exit button
         try {
             BufferedImage exitImg = ImageIO.read(new File("src/resources/images/exit_button.png"));
+            BufferedImage playImg = ImageIO.read(new File("src/resources/images/play_button.png"));
+
+
             Image scaledExitImg = exitImg.getScaledInstance(EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE, Image.SCALE_SMOOTH);
+            Image scaledPlayImg = playImg.getScaledInstance(EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE, Image.SCALE_SMOOTH);
+
+            playButton = new JButton(new ImageIcon(scaledPlayImg));
             exitButton = new JButton(new ImageIcon(scaledExitImg));
-            exitButton.setBounds(OBJECT_SECTION_START_X + OBJECT_SECTION_WIDTH/2 - EXIT_BUTTON_SIZE/2, 
-                            OBJECT_SECTION_START_Y - EXIT_BUTTON_SIZE - 10, 
-                            EXIT_BUTTON_SIZE, 
-                            EXIT_BUTTON_SIZE);
+
+            
+            int startX = OBJECT_SECTION_START_X + OBJECT_SECTION_WIDTH/2 - (EXIT_BUTTON_SIZE * 3 + 20) / 2;
+            int y = OBJECT_SECTION_START_Y - EXIT_BUTTON_SIZE - 10;
+            
+            playButton.setBounds(startX, y, EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE);
+            exitButton.setBounds(startX + (EXIT_BUTTON_SIZE + 10) * 2, y, EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE);
             
             exitButton.setBorderPainted(false);
             exitButton.setContentAreaFilled(false);
             exitButton.setFocusPainted(false);
             
+            
+
             // Add hover effect
             exitButton.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
@@ -141,13 +160,11 @@ public class BuildModeScreen extends JFrame {
                 }
             });
             
-            // Add click action
-            exitButton.addActionListener(e -> {
-                dispose(); // Close the BuildModeScreen
-                SwingUtilities.invokeLater(() -> new MainMenu()); // Open MainMenu
-            });
+            exitButton.addActionListener(e -> onExit.execute());
+            playButton.addActionListener(e -> onSwitchToPlayMode.execute());
             
             background.add(exitButton);
+            background.add(playButton);
         } catch (IOException e) {
             System.err.println("Failed to load exit button image: " + e.getMessage());
             e.printStackTrace();
@@ -589,20 +606,4 @@ public class BuildModeScreen extends JFrame {
         return false;
     }
 
-    private boolean squareOccupied(Point position) {
-        Rectangle targetSquare = new Rectangle(
-                (position.x - GRID_START_X) / GRID_CELL_SIZE * GRID_CELL_SIZE + GRID_START_X,
-                (position.y - GRID_START_Y) / GRID_CELL_SIZE * GRID_CELL_SIZE + GRID_START_Y,
-                GRID_CELL_SIZE, GRID_CELL_SIZE
-        );
-    
-        
-        for (Component component : background.getComponents()) {
-            if (component instanceof JLabel && component.getBounds().intersects(targetSquare)) {
-                return true; 
-            }
-        }
-        return false;
-    }
-    
 }
