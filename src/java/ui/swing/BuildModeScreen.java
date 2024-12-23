@@ -75,7 +75,7 @@ public class BuildModeScreen extends JFrame {
     }
 
 
-    private void setAppIcon() {
+    /*private void setAppIcon() {
         try {
             BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png"));
             setIconImage(logoImage);
@@ -83,7 +83,7 @@ public class BuildModeScreen extends JFrame {
             System.err.println("Failed to load the logo image: " + e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void setTaskbarIcon() {
         try {
@@ -127,7 +127,6 @@ public class BuildModeScreen extends JFrame {
                             EXIT_BUTTON_SIZE, 
                             EXIT_BUTTON_SIZE);
             
-            // Style the button
             exitButton.setBorderPainted(false);
             exitButton.setContentAreaFilled(false);
             exitButton.setFocusPainted(false);
