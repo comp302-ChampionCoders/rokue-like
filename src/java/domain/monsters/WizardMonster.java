@@ -1,10 +1,10 @@
 package domain.monsters;
 
-import domain.gameobjects.*;
 import domain.behaviors.Direction;
+import domain.gameobjects.Hero;
 
 public class WizardMonster extends Monster {
-    private static final int TELEPORT_RANGE = 0; // Doesn't move
+    private static final int TELEPORT_RANGE = 0; // Wizard monsters don't move
     private long lastTeleportTime;
     private static final long TELEPORT_COOLDOWN = 5000; // 5 seconds in milliseconds
 
@@ -17,17 +17,18 @@ public class WizardMonster extends Monster {
     public void performAction(Hero hero) {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastTeleportTime >= TELEPORT_COOLDOWN) {
-            System.out.println("WizardMonster teleports the rune!");
             teleportRune();
             lastTeleportTime = currentTime;
         }
     }
 
-    public void teleportRune() {
-        // This method should be implemented by the Hall class
-        // The actual rune teleportation logic will be handled there
-        // This is just a notification that it's time to teleport
-        System.out.println("Rune teleportation triggered");
+    private void teleportRune() {
+        // Example logic for teleporting the rune (replace with actual implementation)
+        int runeX = (int) (Math.random() * 11); // Assume 11 is the grid width
+        int runeY = (int) (Math.random() * 9);  // Assume 9 is the grid height
+
+        System.out.println("Rune teleported to: (" + runeX + ", " + runeY + ")");
+        // You can notify the relevant game class or update the Hall object here
     }
 
     @Override
