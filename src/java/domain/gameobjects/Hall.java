@@ -137,7 +137,7 @@ public class Hall {
         else{
             Point position = new Point(x, y);
             return objects.containsKey(position) || 
-                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y);
+                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) || objects.containsKey(position);
         }
         
     }

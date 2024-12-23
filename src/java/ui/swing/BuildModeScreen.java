@@ -442,22 +442,34 @@ public class BuildModeScreen extends JFrame {
                 if (isInsideAnyGrid(position)) {
                     int snappedX = ((position.x - GRID_START_X) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_X;
                     int snappedY = ((position.y - GRID_START_Y) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_Y;
-                    
-
-                    c.setLocation(snappedX, snappedY);
-
 
                     String targetedHall = getTargetHall(snappedX, snappedY);
                     int gridX = -1;
                     int gridY = -1;
 
+                    int lastX = -1;
+                    int lastY = -1;
+
                     if(targetedHall.equals("waterHall")){
                         gridX = (position.x - GRID_START_X) / GRID_CELL_SIZE;
                         gridY = (position.y - GRID_START_Y) / GRID_CELL_SIZE;
+                        lastX = (lastLocation[0].x - GRID_START_X) / GRID_CELL_SIZE;
+                        lastY = (lastLocation[0].y - GRID_START_Y) / GRID_CELL_SIZE;
 
                         GameObject newobjectWater = new GameObject(gridX, gridY, image);
 
-                        waterHall.addObject(newobjectWater, gridX, gridY);
+                        if(isInsideAnyGrid(lastLocation[0])){
+                            waterHall.removeObject(lastX, lastY);
+                        }
+
+                        if(waterHall.addObject(newobjectWater, gridX, gridY)){
+                            c.setLocation(snappedX, snappedY);
+                        }
+                        else{
+                            c.setLocation(lastLocation[0]);
+                            waterHall.addObject(newobjectWater, lastX, lastY);
+                        }
+
                         System.out.println("Water Hall");
                         waterHall.displayGrid();
                         System.out.println(waterHall.getObjects());
@@ -467,11 +479,23 @@ public class BuildModeScreen extends JFrame {
                     if(targetedHall.equals("earthHall")){
                         gridX = (snappedX - (GRID_START_X + 403)) / GRID_CELL_SIZE;
                         gridY = (snappedY - GRID_START_Y) / GRID_CELL_SIZE;
+                        lastX = (lastLocation[0].x - (GRID_START_X + 403)) / GRID_CELL_SIZE;
+                        lastY = (lastLocation[0].y - GRID_START_Y) / GRID_CELL_SIZE;
 
                         GameObject newobjectEarth = new GameObject(gridX, gridY, image);
 
-                        
-                        earthHall.addObject(newobjectEarth, gridX, gridY);
+                        if(isInsideAnyGrid(lastLocation[0])){
+                            earthHall.removeObject(lastX, lastY);
+                        }
+
+                        if(earthHall.addObject(newobjectEarth, gridX, gridY)){
+                            c.setLocation(snappedX, snappedY);
+                        }
+                        else{
+                            c.setLocation(lastLocation[0]);
+                            earthHall.addObject(newobjectEarth, lastX, lastY);
+                        }
+
                         System.out.println("Earth Hall");
                         earthHall.displayGrid();
                         System.out.println(earthHall.getObjects());
@@ -480,10 +504,22 @@ public class BuildModeScreen extends JFrame {
                     if(targetedHall.equals("fireHall")){
                         gridX = (snappedX - GRID_START_X) / GRID_CELL_SIZE;
                         gridY = (snappedY - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
+                        lastX = (lastLocation[0].x - GRID_START_X) / GRID_CELL_SIZE;
+                        lastY = (lastLocation[0].y - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
 
                         GameObject newobjectFire = new GameObject(gridX, gridY, image);
 
-                        fireHall.addObject(newobjectFire, gridX, gridY);
+                        if(isInsideAnyGrid(lastLocation[0])){
+                            fireHall.removeObject(lastX, lastY);
+                        }
+
+                        if(fireHall.addObject(newobjectFire, gridX, gridY)){
+                            c.setLocation(snappedX, snappedY);
+                        }
+                        else{
+                            c.setLocation(lastLocation[0]);
+                            fireHall.addObject(newobjectFire, lastX, lastY);
+                        }
 
                         System.out.println("Fire Hall");
                         fireHall.displayGrid();
@@ -493,10 +529,23 @@ public class BuildModeScreen extends JFrame {
                     if(targetedHall.equals("airHall")){
                         gridX = (snappedX - (GRID_START_X + 403)) / GRID_CELL_SIZE;
                         gridY = (snappedY - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
+                        lastX = (lastLocation[0].x - (GRID_START_X + 403)) / GRID_CELL_SIZE;
+                        lastY = (lastLocation[0].y - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
 
                         GameObject newobject = new GameObject(gridX, gridY, image);
 
-                        airHall.addObject(newobject, gridX, gridY);
+                        if(isInsideAnyGrid(lastLocation[0])){
+                            airHall.removeObject(lastX, lastY);
+                        }
+
+                        if(airHall.addObject(newobject, gridX, gridY)){
+                            c.setLocation(snappedX, snappedY);
+                        }
+                        else{
+                            c.setLocation(lastLocation[0]);
+                            airHall.addObject(newobject, lastX, lastY);
+                        }
+
                         System.out.println("Air hall");
                         airHall.displayGrid();
                         System.out.println(airHall.getObjects());
