@@ -1,6 +1,10 @@
 package ui.swing;
 
 import javax.swing.*;
+
+import controller.ModeController;
+import controller.ScreenTransition;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +19,10 @@ public class MainMenu extends JFrame {
     private JPanel mainPanel;
     private BufferedImage backgroundImage;
     private BufferedImage logoImage;
+    private final ScreenTransition onStartBuildMode;
 
-    public MainMenu() {
+    public MainMenu(ScreenTransition onStartBuildMode) {
+        this.onStartBuildMode = onStartBuildMode;
         initializeFrame();
         loadImages();
         createMainPanel();
@@ -93,7 +99,7 @@ public class MainMenu extends JFrame {
         JButton exitButton = createStyledButton("Exit");
 
         // Add action listeners
-        newGameButton.addActionListener(e -> startNewGame());
+        newGameButton.addActionListener(e -> onStartBuildMode.execute());
         helpButton.addActionListener(e -> showHelpScreen());
         exitButton.addActionListener(e -> System.exit(0));
 
@@ -134,7 +140,7 @@ public class MainMenu extends JFrame {
         return button;
     }
 
-    private void startNewGame() {
+    /*private void startNewGame() {
         // Hide main menu
         setVisible(false);
         
@@ -151,7 +157,7 @@ public class MainMenu extends JFrame {
                 setVisible(true); // Show main menu again if failed
             }
         });
-    }
+    }*/
 
     private void showHelpScreen() {
         JDialog helpDialog = new JDialog(this, "How to Play", true);
@@ -192,9 +198,5 @@ public class MainMenu extends JFrame {
         helpDialog.add(scrollPane);
         
         helpDialog.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MainMenu());
     }
 }
