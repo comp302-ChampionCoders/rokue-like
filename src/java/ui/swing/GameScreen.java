@@ -1,5 +1,6 @@
 package ui.swing;
 
+import controller.ScreenTransition;
 import domain.behaviors.Direction;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
@@ -18,8 +19,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import controller.ScreenTransition;
-
 public class GameScreen extends JFrame {
     private final int GRID_ROWS = 12;
     private final int GRID_COLUMNS = 16;
@@ -36,10 +35,10 @@ public class GameScreen extends JFrame {
     private Timer archerAttackTimer;
     private static final int ARCHER_ATTACK_DELAY = 3000; // 1 second in milliseconds
 
-    private final ScreenTransition returnToMainMenu;
+    private final ScreenTransition returnToGameOverScreen;
 
-    public GameScreen(ScreenTransition returnToToMainMenu) {
-        this.returnToMainMenu = returnToToMainMenu;
+    public GameScreen(ScreenTransition returnToGameOverScreen) {
+        this.returnToGameOverScreen = returnToGameOverScreen;
         setTitle("Game Screen");
         setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 50);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,7 +153,7 @@ public class GameScreen extends JFrame {
                 if (hero.getLives() <= 0) {
                     System.out.println("Hero has died. Returning to Main Menu...");
                     stopGame();
-                    returnToMainMenu.execute(); // Transition to main menu
+                    returnToGameOverScreen.execute(); // Transition to main menu
                 }
                 break;
             }
@@ -197,7 +196,7 @@ public class GameScreen extends JFrame {
                         if (hero.getLives() <= 0) {
                             System.out.println("Hero has died. Returning to Main Menu...");
                             stopGame();
-                            returnToMainMenu.execute();
+                            returnToGameOverScreen.execute();
                         }
                     }
                 }

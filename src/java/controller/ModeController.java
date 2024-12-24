@@ -1,6 +1,7 @@
 package controller;
 
 import ui.swing.BuildModeScreen;
+import ui.swing.GameOverScreen;
 import ui.swing.GameScreen;
 import ui.swing.MainMenu;
 
@@ -8,6 +9,7 @@ public class ModeController {
     private BuildModeScreen buildModeScreen;
     private GameScreen gameScreen;
     private MainMenu mainMenu;
+    private GameOverScreen gameOverScreen;
 
     public ModeController() {
         showMainMenu();
@@ -32,9 +34,17 @@ public class ModeController {
     public void switchToPlayMode() {
         closeActiveScreens(); 
         if (gameScreen == null) {
-            gameScreen = new GameScreen(this::showMainMenu);
+            gameScreen = new GameScreen(this::switchToGameOverScreen);
         }
         gameScreen.setVisible(true);
+    }
+
+    public void switchToGameOverScreen() {
+        closeActiveScreens(); 
+        if (gameOverScreen == null) {
+            gameOverScreen = new GameOverScreen(this::switchToPlayMode, this::showMainMenu);
+        }
+        gameOverScreen.setVisible(true);
     }
 
     private void closeActiveScreens() {
@@ -49,6 +59,10 @@ public class ModeController {
         if (gameScreen != null) {
             gameScreen.dispose();
             gameScreen = null;
+        }
+        if (gameOverScreen != null) {
+            gameOverScreen.dispose();
+            gameOverScreen = null;
         }
     }
 }
