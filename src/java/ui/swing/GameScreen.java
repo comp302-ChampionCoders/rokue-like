@@ -1,3 +1,4 @@
+
 package ui.swing;
 
 import domain.behaviors.Direction;
@@ -31,9 +32,13 @@ public class GameScreen extends JFrame {
     private Point runePosition; // Rune pozisyonu
     private BufferedImage runeImage;
 
+    private BufferedImage heartImage;
+    private JPanel heartPanel;
+
+
     public GameScreen() {
         setTitle("Game Screen");
-        setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 50);
+        setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -49,9 +54,55 @@ public class GameScreen extends JFrame {
         monsterTimer.start();
         spawnTimer.start();
         runeTimer.start();
-        add(new GamePanel());
+
+
+
+
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        GamePanel gamePanel = new GamePanel();
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.addActionListener(e -> showPauseScreen());
+
+        mainPanel.add(gamePanel, BorderLayout.CENTER);
+        mainPanel.add(pauseButton, BorderLayout.SOUTH);
+        add(mainPanel);
+
+
     }
 
+
+    private void showPauseScreen() {
+        monsterTimer.stop();
+        spawnTimer.stop();
+        runeTimer.stop();
+
+        PauseScreen pauseScreen = new PauseScreen(
+            e -> resumeGame(),
+            e -> returnToMainMenu(),
+            e -> exitGame()
+        );
+        pauseScreen.setVisible(true);
+    }
+    private void resumeGame() {
+        monsterTimer.start();
+        spawnTimer.start();
+        runeTimer.start();
+
+    }
+
+    private void returnToMainMenu() {
+        dispose(); // Close the game screen
+    
+        SwingUtilities.invokeLater(() -> {
+            MainMenu mainMenu = new MainMenu(() -> {
+                new GameScreen().setVisible(true);
+            });
+            mainMenu.setVisible(true);
+        });
+    }
+    private void exitGame() {
+        System.exit(0); 
+    }
     private void loadRuneImage() {
         try {
             runeImage = ImageIO.read(new File("src/resources/images/rune.png"));
@@ -263,3 +314,4 @@ public class GameScreen extends JFrame {
         });
     }
 }
+

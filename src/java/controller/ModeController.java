@@ -3,11 +3,13 @@ package controller;
 import ui.swing.BuildModeScreen;
 import ui.swing.GameScreen;
 import ui.swing.MainMenu;
+import ui.swing.PauseScreen;
 
 public class ModeController {
     private BuildModeScreen buildModeScreen;
     private GameScreen gameScreen;
     private MainMenu mainMenu;
+    private PauseScreen pauseScreen;
 
     public ModeController() {
         showMainMenu();
@@ -20,6 +22,14 @@ public class ModeController {
         }
         mainMenu.setVisible(true);
     }
+
+    public void pauseScreen(){
+        if (pauseScreen == null) {
+            pauseScreen = new PauseScreen(null, null, null);
+        }
+        pauseScreen.setVisible(true);
+    }
+
 
     public void switchToBuildMode() {
         closeActiveScreens();
