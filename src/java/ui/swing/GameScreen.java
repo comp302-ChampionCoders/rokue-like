@@ -1,6 +1,5 @@
 package ui.swing;
 
-import controller.ScreenTransition;
 import domain.behaviors.Direction;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
@@ -19,6 +18,8 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import controller.ScreenTransition;
+
 public class GameScreen extends JFrame {
     private final int GRID_ROWS = 9;
     private final int GRID_COLUMNS = 11;
@@ -31,11 +32,14 @@ public class GameScreen extends JFrame {
     private Timer runeTimer; // Rune yer değiştirme için timer
     private Point runePosition; // Rune pozisyonu
     private BufferedImage runeImage;
+
+    private Timer archerAttackTimer;
+    private static final int ARCHER_ATTACK_DELAY = 3000; // 1 second in milliseconds
+
     private final ScreenTransition returnToMainMenu;
 
     public GameScreen(ScreenTransition returnToToMainMenu) {
         this.returnToMainMenu = returnToToMainMenu;
-
         setTitle("Game Screen");
         setSize(GRID_COLUMNS * CELL_SIZE, GRID_ROWS * CELL_SIZE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,9 +54,11 @@ public class GameScreen extends JFrame {
         monsterTimer = new Timer(500, e -> moveMonsters()); // Timer her 500ms monster hareketi için
         spawnTimer = new Timer(8000, e -> addRandomMonster()); // Her 8 saniyede bir monster ekle
         runeTimer = new Timer(5000, e -> teleportRune()); // Her 5 saniyede rune taşı
+        archerAttackTimer = new Timer(ARCHER_ATTACK_DELAY, e -> checkArcherAttacks());
         monsterTimer.start();
         spawnTimer.start();
         runeTimer.start();
+        archerAttackTimer.start();
         add(new GamePanel());
     }
 
@@ -72,7 +78,7 @@ public class GameScreen extends JFrame {
     private void moveMonsters() {
         Direction[] directions = Direction.values(); // Get all possible directions
         for (Monster monster : monsters) {
-            if (!(monster instanceof WizardMonster)) { // WizardMonster hareket etmez
+            if ((monster instanceof FighterMonster)) { // Sadece fighter monster hareket ediyor
                 Direction randomDirection = directions[random.nextInt(directions.length)];
                 int newX = monster.getX() + randomDirection.getDx();
                 int newY = monster.getY() + randomDirection.getDy();
@@ -137,6 +143,7 @@ public class GameScreen extends JFrame {
 
     private void checkHeroMonsterCollision() {
         for (Monster monster : monsters) {
+            if ((monster instanceof FighterMonster)){
             //Find distances of x's and y's
             int dx = Math.abs(monster.getX() - hero.getX());
             int dy = Math.abs(monster.getY() - hero.getY());
@@ -144,22 +151,65 @@ public class GameScreen extends JFrame {
             if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
                 hero.reduceLife();
                 System.out.println("Hero has been attacked by a monster, " + hero.getLives() + " lives remaining");
-
                 if (hero.getLives() <= 0) {
                     System.out.println("Hero has died. Returning to Main Menu...");
                     stopGame();
                     returnToMainMenu.execute(); // Transition to main menu
                 }
-
                 break;
             }
         }
     }
-
+    }
+    // Helper method to check if there's an obstacle between archer and hero
+    private boolean isPathBlocked(int archerX, int archerY, int heroX, int heroY) {
+        // Check only if they're in the same row or column
+        if (archerX == heroX) {
+            // Check vertical path
+            int startY = Math.min(archerY, heroY);
+            int endY = Math.max(archerY, heroY);
+            for (int y = startY + 1; y < endY; y++) {
+                if (isPositionOccupied(archerX, y)) return true;
+            }
+        } else if (archerY == heroY) {
+            // Check horizontal path
+            int startX = Math.min(archerX, heroX);
+            int endX = Math.max(archerX, heroX);
+            for (int x = startX + 1; x < endX; x++) {
+                if (isPositionOccupied(x, archerY)) return true;
+            }
+        }
+        return false;
+    }
+    // Add this new method for archer attacks
+    private void checkArcherAttacks() {
+        for (Monster monster : monsters) {
+            if (monster instanceof ArcherMonster) {
+                int dx = Math.abs(monster.getX() - hero.getX());
+                int dy = Math.abs(monster.getY() - hero.getY());
+                
+                // Check if hero is in archer's range (within 2 squares horizontally OR vertically, not diagonally)
+                if ((dx <= 2 && dy == 0) || (dx == 0 && dy <= 2)) {
+                    // Only reduce life if there's no obstacle between archer and hero
+                    if (!isPathBlocked(monster.getX(), monster.getY(), hero.getX(), hero.getY())) {
+                        hero.reduceLife();
+                        System.out.println("Hero has been shot by an Archer monster, " + hero.getLives() + " lives remaining");
+                        if (hero.getLives() <= 0) {
+                            System.out.println("Hero has died. Returning to Main Menu...");
+                            stopGame();
+                            returnToMainMenu.execute();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private void stopGame() {
         monsterTimer.stop();
         spawnTimer.stop();
         runeTimer.stop();
+        archerAttackTimer.stop();  // Add this line
         dispose(); 
     }
 
@@ -192,6 +242,7 @@ public class GameScreen extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             drawGrid(g);
+            drawArcherRanges(g);
             drawHero(g);
             drawMonsters(g);
             drawRune(g);
@@ -243,6 +294,47 @@ public class GameScreen extends JFrame {
                 g.fillRect(runePosition.x * CELL_SIZE, runePosition.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
+        private void drawArcherRanges(Graphics g) {
+            g.setColor(new Color(255, 0, 0, 80));  // Semi-transparent red
+            
+            for (Monster monster : monsters) {
+                if (monster instanceof ArcherMonster) {
+                    int monsterX = monster.getX();
+                    int monsterY = monster.getY();
+                    
+                    // Check each direction (up, down, left, right) up to 2 squares
+                    for (int i = 1; i <= 2; i++) {
+                        // Up
+                        if (monsterY - i >= 0 && !isPositionOccupied(monsterX, monsterY - i)) {
+                            g.fillRect(monsterX * CELL_SIZE, 
+                                     (monsterY - i) * CELL_SIZE, 
+                                     CELL_SIZE, CELL_SIZE);
+                        }
+                        
+                        // Down
+                        if (monsterY + i < GRID_ROWS && !isPositionOccupied(monsterX, monsterY + i)) {
+                            g.fillRect(monsterX * CELL_SIZE, 
+                                     (monsterY + i) * CELL_SIZE, 
+                                     CELL_SIZE, CELL_SIZE);
+                        }
+                        
+                        // Left
+                        if (monsterX - i >= 0 && !isPositionOccupied(monsterX - i, monsterY)) {
+                            g.fillRect((monsterX - i) * CELL_SIZE, 
+                                     monsterY * CELL_SIZE, 
+                                     CELL_SIZE, CELL_SIZE);
+                        }
+                        
+                        // Right
+                        if (monsterX + i < GRID_COLUMNS && !isPositionOccupied(monsterX + i, monsterY)) {
+                            g.fillRect((monsterX + i) * CELL_SIZE, 
+                                     monsterY * CELL_SIZE, 
+                                     CELL_SIZE, CELL_SIZE);
+                        }
+                    }
+                }
+            }
+        }
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -274,7 +366,6 @@ public class GameScreen extends JFrame {
                     hero.move(direction);
                 }
             }
-
             checkHeroMonsterCollision();
 
             System.out.println("Hero Position: X=" + hero.getX() + ", Y=" + hero.getY());
@@ -290,15 +381,21 @@ public class GameScreen extends JFrame {
         public void keyTyped(KeyEvent e) {}
     }
 
+    // public static void main(String[] args) {
+    //     SwingUtilities.invokeLater(() -> {
+    //         GameScreen screen = new GameScreen();
+    //         screen.setVisible(true);
+    //     });
+    // }
     public static void main(String[] args) {
-    SwingUtilities.invokeLater(() -> {
-        GameScreen screen = new GameScreen(() -> {
-            System.out.println("Returning to Main Menu...");
-            // Add logic here to transition to the main menu, if applicable.
-            // For example, you could initialize or show the main menu frame:
-            new MainMenu(() -> System.out.println("Main Menu started!"));
+        SwingUtilities.invokeLater(() -> {
+            GameScreen screen = new GameScreen(() -> {
+                System.out.println("Returning to Main Menu...");
+                // Add logic here to transition to the main menu, if applicable.
+                // For example, you could initialize or show the main menu frame:
+                new MainMenu(() -> System.out.println("Main Menu started!"));
+            });
+            screen.setVisible(true);
         });
-        screen.setVisible(true);
-    });
-}
+    }
 }
