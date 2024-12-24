@@ -17,11 +17,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class BuildModeScreen extends JFrame {
-    private final int GRID_CELL_SIZE = 31; 
+    private final int GRID_CELL_SIZE = 24; 
     private final int GRID_START_X = 128; 
     private final int GRID_START_Y = 90; 
-    private final int GRID_COLUMNS = 11; 
-    private final int GRID_ROWS = 9; 
+    private final int GRID_COLUMNS = 16; 
+    private final int GRID_ROWS = 12; 
+    private final int RIGHT_GRID_START_FROM_X = 432;
 
     private final int SCREEN_WIDTH = 1200;  
     private final int SCREEN_HEIGHT = 850;  
@@ -29,7 +30,7 @@ public class BuildModeScreen extends JFrame {
 
     private final int OBJECT_SECTION_WIDTH = 150; 
     private final int OBJECT_SECTION_HEIGHT = SCREEN_HEIGHT - GRID_START_Y - 100;
-    private final int OBJECT_SECTION_START_X = SCREEN_WIDTH - OBJECT_SECTION_WIDTH - 100;; 
+    private final int OBJECT_SECTION_START_X = SCREEN_WIDTH - OBJECT_SECTION_WIDTH - 50; 
     private final int OBJECT_SECTION_START_Y = GRID_START_Y + 25; 
     
     private JButton exitButton;
@@ -38,10 +39,10 @@ public class BuildModeScreen extends JFrame {
 
     private boolean gridVisible = false; 
 
-    private Hall waterHall = new Hall(11, 9, null, HallType.WATER);
-    private Hall earthHall = new Hall(11, 9, null, HallType.EARTH);
-    private Hall fireHall = new Hall(11, 9, null, HallType.FIRE);
-    private Hall airHall = new Hall(11, 9, null, HallType.AIR);
+    private Hall waterHall = new Hall(16, 12, null, HallType.WATER);
+    private Hall earthHall = new Hall(16, 12, null, HallType.EARTH);
+    private Hall fireHall = new Hall(16, 12, null, HallType.FIRE);
+    private Hall airHall = new Hall(16, 12, null, HallType.AIR);
 
     private final String[] spriteFiles = {
             "src/resources/images/chest.png",
@@ -172,9 +173,9 @@ public class BuildModeScreen extends JFrame {
 
         addHallLabels(background); 
         addGrid(GRID_START_X, GRID_START_Y, background); // Top-left grid
-        addGrid(GRID_START_X + 403, GRID_START_Y, background); // Top-right grid
-        addGrid(GRID_START_X, GRID_START_Y + 403, background); // Bottom-left grid
-        addGrid(GRID_START_X + 403, GRID_START_Y + 403, background); // Bottom-right grid
+        addGrid(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y, background); // Top-right grid
+        addGrid(GRID_START_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, background); // Bottom-left grid
+        addGrid(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, background); // Bottom-right grid
         addObjectSection(background); 
         addTopWallAndSideWalls(background); 
         addBottomWalls(background);
@@ -186,9 +187,9 @@ public class BuildModeScreen extends JFrame {
     
         int[][] hallPositions = {
                 {GRID_START_X - 8, bottomWallY},                      // Top-left grid
-                {GRID_START_X + 403 - 8, bottomWallY},                // Top-right grid
-                {GRID_START_X - 8, bottomWallY + 403},                // Bottom-left grid
-                {GRID_START_X + 403 - 8, bottomWallY + 403}           // Bottom-right grid
+                {GRID_START_X + RIGHT_GRID_START_FROM_X - 8, bottomWallY},                // Top-right grid
+                {GRID_START_X - 8, bottomWallY + RIGHT_GRID_START_FROM_X},                // Bottom-left grid
+                {GRID_START_X + RIGHT_GRID_START_FROM_X - 8, bottomWallY + RIGHT_GRID_START_FROM_X}           // Bottom-right grid
                 
         };
 
@@ -229,21 +230,21 @@ public class BuildModeScreen extends JFrame {
             // Top wall positions (tam grid başlangıcından başlıyor)
             int[][] topWallPositions = {
                     {GRID_START_X, GRID_START_Y - GRID_CELL_SIZE},           // Top-left
-                    {GRID_START_X + 403, GRID_START_Y - GRID_CELL_SIZE},     // Top-right
-                    {GRID_START_X, GRID_START_Y + 403 - GRID_CELL_SIZE},     // Bottom-left
-                    {GRID_START_X + 403, GRID_START_Y + 403 - GRID_CELL_SIZE} // Bottom-right
+                    {GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y - GRID_CELL_SIZE},     // Top-right
+                    {GRID_START_X, GRID_START_Y + RIGHT_GRID_START_FROM_X - GRID_CELL_SIZE},     // Bottom-left
+                    {GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X - GRID_CELL_SIZE} // Bottom-right
             };
     
             // Side wall positions (topwall ile grid'in başlangıcından önce başlıyor)
             int[][] sideWallPositions = {
-                    {GRID_START_X - wallOffset, GRID_START_Y - 31},                       // Sol Top-left
-                    {GRID_START_X + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y - 31},    // Sağ Top-left
-                    {GRID_START_X + 403 - wallOffset, GRID_START_Y - 31},                 // Sol Top-right
-                    {GRID_START_X + 403 + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y - 31}, // Sağ Top-right
-                    {GRID_START_X - wallOffset, GRID_START_Y + 403 - 31},                 // Sol Bottom-left
-                    {GRID_START_X + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y + 403 - 31}, // Sağ Bottom-left
-                    {GRID_START_X + 403 - wallOffset, GRID_START_Y + 403 - 31},           // Sol Bottom-right
-                    {GRID_START_X + 403 + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y + 403 - 31} // Sağ Bottom-right
+                    {GRID_START_X - wallOffset, GRID_START_Y - GRID_CELL_SIZE},                       // Sol Top-left
+                    {GRID_START_X + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y - GRID_CELL_SIZE},    // Sağ Top-left
+                    {GRID_START_X + RIGHT_GRID_START_FROM_X - wallOffset, GRID_START_Y - GRID_CELL_SIZE},                 // Sol Top-right
+                    {GRID_START_X + RIGHT_GRID_START_FROM_X + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y - GRID_CELL_SIZE}, // Sağ Top-right
+                    {GRID_START_X - wallOffset, GRID_START_Y + RIGHT_GRID_START_FROM_X - GRID_CELL_SIZE},                 // Sol Bottom-left
+                    {GRID_START_X + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y + RIGHT_GRID_START_FROM_X - GRID_CELL_SIZE}, // Sağ Bottom-left
+                    {GRID_START_X + RIGHT_GRID_START_FROM_X - wallOffset, GRID_START_Y + RIGHT_GRID_START_FROM_X - GRID_CELL_SIZE},           // Sol Bottom-right
+                    {GRID_START_X + RIGHT_GRID_START_FROM_X + GRID_COLUMNS * GRID_CELL_SIZE, GRID_START_Y + RIGHT_GRID_START_FROM_X - GRID_CELL_SIZE} // Sağ Bottom-right
             };
     
             // Add top walls
@@ -370,9 +371,9 @@ public class BuildModeScreen extends JFrame {
         // Define positions for the labels (adjusted downwards by +50 pixels)
         int[][] labelPositions = {
                 {GRID_START_X + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 50},        // Hall Of Water
-                {GRID_START_X + 403 + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Earth
-                {GRID_START_X + 20, GRID_START_Y + 403 + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Fire
-                {GRID_START_X + 403 + 20, GRID_START_Y + 403 + GRID_ROWS * GRID_CELL_SIZE + 50} // Hall Of Air
+                {GRID_START_X + RIGHT_GRID_START_FROM_X + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Earth
+                {GRID_START_X + 20, GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Fire
+                {GRID_START_X + RIGHT_GRID_START_FROM_X + 20, GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE + 50} // Hall Of Air
         };
     
         String[] labelFiles = {
@@ -402,11 +403,11 @@ public class BuildModeScreen extends JFrame {
     private String getTargetHall(int x, int y) {
         if (new Rectangle(GRID_START_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "waterHall" ; 
-        } else if (new Rectangle(GRID_START_X + 403, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+        } else if (new Rectangle(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "earthHall";
-        } else if (new Rectangle(GRID_START_X, GRID_START_Y + 403, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+        } else if (new Rectangle(GRID_START_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "fireHall";
-        } else if (new Rectangle(GRID_START_X + 403, GRID_START_Y + 403, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+        } else if (new Rectangle(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "airHall";
         }
         return null;
@@ -425,7 +426,7 @@ public class BuildModeScreen extends JFrame {
     
         
         int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 5; 
-        int spawnY = buttonLocation.y - backgroundLocation.y - 5;
+        int spawnY = buttonLocation.y - backgroundLocation.y - 2;
         
         copyLabel.setBounds(spawnX, spawnY, GRID_CELL_SIZE, GRID_CELL_SIZE);
         background.add(copyLabel);
@@ -493,9 +494,9 @@ public class BuildModeScreen extends JFrame {
                     }
 
                     if(targetedHall.equals("earthHall")){
-                        gridX = (snappedX - (GRID_START_X + 403)) / GRID_CELL_SIZE;
+                        gridX = (snappedX - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
                         gridY = (snappedY - GRID_START_Y) / GRID_CELL_SIZE;
-                        lastX = (lastLocation[0].x - (GRID_START_X + 403)) / GRID_CELL_SIZE;
+                        lastX = (lastLocation[0].x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
                         lastY = (lastLocation[0].y - GRID_START_Y) / GRID_CELL_SIZE;
 
                         GameObject newobjectEarth = new GameObject(gridX, gridY, image);
@@ -519,9 +520,9 @@ public class BuildModeScreen extends JFrame {
 
                     if(targetedHall.equals("fireHall")){
                         gridX = (snappedX - GRID_START_X) / GRID_CELL_SIZE;
-                        gridY = (snappedY - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
+                        gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
                         lastX = (lastLocation[0].x - GRID_START_X) / GRID_CELL_SIZE;
-                        lastY = (lastLocation[0].y - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
+                        lastY = (lastLocation[0].y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
 
                         GameObject newobjectFire = new GameObject(gridX, gridY, image);
 
@@ -543,10 +544,10 @@ public class BuildModeScreen extends JFrame {
                     }
 
                     if(targetedHall.equals("airHall")){
-                        gridX = (snappedX - (GRID_START_X + 403)) / GRID_CELL_SIZE;
-                        gridY = (snappedY - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
-                        lastX = (lastLocation[0].x - (GRID_START_X + 403)) / GRID_CELL_SIZE;
-                        lastY = (lastLocation[0].y - (GRID_START_Y + 403)) / GRID_CELL_SIZE;
+                        gridX = (snappedX - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                        gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                        lastX = (lastLocation[0].x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                        lastY = (lastLocation[0].y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
 
                         GameObject newobject = new GameObject(gridX, gridY, image);
 
@@ -592,9 +593,9 @@ public class BuildModeScreen extends JFrame {
     private boolean isInsideAnyGrid(Point position) {
         Rectangle[] gridBounds = {
                 new Rectangle(GRID_START_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE), // Top-left
-                new Rectangle(GRID_START_X + 403, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE), // Top-right
-                new Rectangle(GRID_START_X, GRID_START_Y + 403, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE), // Bottom-left
-                new Rectangle(GRID_START_X + 403, GRID_START_Y + 403, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE) // Bottom-right
+                new Rectangle(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE), // Top-right
+                new Rectangle(GRID_START_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE), // Bottom-left
+                new Rectangle(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE) // Bottom-right
         };
     
         // check if new position is in the grid
