@@ -21,8 +21,8 @@ import javax.swing.*;
 import controller.ScreenTransition;
 
 public class GameScreen extends JFrame {
-    private final int GRID_ROWS = 9;
-    private final int GRID_COLUMNS = 11;
+    private final int GRID_ROWS = 12;
+    private final int GRID_COLUMNS = 16;
     private final int CELL_SIZE = 50; // Grid cell size
     private Hero hero; // Hero nesnesi
     private List<Monster> monsters; // Monster listesi
