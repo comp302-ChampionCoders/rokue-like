@@ -32,7 +32,7 @@ public class ModeController {
     public void switchToPlayMode() {
         closeActiveScreens(); 
         if (gameScreen == null) {
-            gameScreen = new GameScreen();
+            gameScreen = new GameScreen(this::showMainMenu);
         }
         gameScreen.setVisible(true);
     }

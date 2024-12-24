@@ -1,5 +1,6 @@
 package ui.swing;
 
+import controller.ScreenTransition;
 import domain.behaviors.Direction;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
@@ -30,8 +31,11 @@ public class GameScreen extends JFrame {
     private Timer runeTimer; // Rune yer değiştirme için timer
     private Point runePosition; // Rune pozisyonu
     private BufferedImage runeImage;
+    private final ScreenTransition returnToMainMenu;
 
-    public GameScreen() {
+    public GameScreen(ScreenTransition returnToToMainMenu) {
+        this.returnToMainMenu = returnToToMainMenu;
+
         setTitle("Game Screen");
         setSize(GRID_COLUMNS * CELL_SIZE, GRID_ROWS * CELL_SIZE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -129,6 +133,34 @@ public class GameScreen extends JFrame {
             System.out.println("Rune teleported to: X=" + x + ", Y=" + y);
             repaint();
         }
+    }
+
+    private void checkHeroMonsterCollision() {
+        for (Monster monster : monsters) {
+            //Find distances of x's and y's
+            int dx = Math.abs(monster.getX() - hero.getX());
+            int dy = Math.abs(monster.getY() - hero.getY());
+    
+            if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
+                hero.reduceLife();
+                System.out.println("Hero has been attacked by a monster, " + hero.getLives() + " lives remaining");
+
+                if (hero.getLives() <= 0) {
+                    System.out.println("Hero has died. Returning to Main Menu...");
+                    stopGame();
+                    returnToMainMenu.execute(); // Transition to main menu
+                }
+
+                break;
+            }
+        }
+    }
+
+    private void stopGame() {
+        monsterTimer.stop();
+        spawnTimer.stop();
+        runeTimer.stop();
+        dispose(); 
     }
 
     private class GamePanel extends JPanel implements KeyListener {
@@ -243,6 +275,8 @@ public class GameScreen extends JFrame {
                 }
             }
 
+            checkHeroMonsterCollision();
+
             System.out.println("Hero Position: X=" + hero.getX() + ", Y=" + hero.getY());
             repaint();
         }
@@ -257,9 +291,14 @@ public class GameScreen extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GameScreen screen = new GameScreen();
-            screen.setVisible(true);
+    SwingUtilities.invokeLater(() -> {
+        GameScreen screen = new GameScreen(() -> {
+            System.out.println("Returning to Main Menu...");
+            // Add logic here to transition to the main menu, if applicable.
+            // For example, you could initialize or show the main menu frame:
+            new MainMenu(() -> System.out.println("Main Menu started!"));
         });
-    }
+        screen.setVisible(true);
+    });
+}
 }

@@ -1,5 +1,10 @@
 {
-    "java.project.sourcePaths": ["src/java"],
-    "java.project.resourcePaths": ["src/resources"]
+    "java.project.sourcePaths": [
+        "src\\java"
+    ],
+    "java.project.resourcePaths": [
+        "src/resources"
+    ],
+    "java.project.referencedLibraries": []
     
 }
