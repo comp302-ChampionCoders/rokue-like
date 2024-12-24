@@ -41,7 +41,7 @@ public class GameScreen extends JFrame {
     public GameScreen(ScreenTransition returnToToMainMenu) {
         this.returnToMainMenu = returnToToMainMenu;
         setTitle("Game Screen");
-        setSize(GRID_COLUMNS * CELL_SIZE, GRID_ROWS * CELL_SIZE);
+        setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 50);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -49,7 +49,7 @@ public class GameScreen extends JFrame {
         monsters = new ArrayList<>();
         random = new Random();
         runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
-        loadRuneImage();
+       //loadRuneImage();
         spawnMonsters();
         monsterTimer = new Timer(500, e -> moveMonsters()); // Timer her 500ms monster hareketi için
         spawnTimer = new Timer(8000, e -> addRandomMonster()); // Her 8 saniyede bir monster ekle
