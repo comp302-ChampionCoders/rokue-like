@@ -43,7 +43,7 @@ public class GameScreen extends JFrame {
     public GameScreen(ScreenTransition returnToGameOverScreen) {
         this.returnToGameOverScreen = returnToGameOverScreen;
         setTitle("Game Screen");
-        setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 100);
+        setSize(GRID_COLUMNS * CELL_SIZE + 30, GRID_ROWS * CELL_SIZE + 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -66,14 +66,26 @@ public class GameScreen extends JFrame {
 
 
         JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel centerWrapperPanel = new JPanel(new GridBagLayout()); //----
         GamePanel gamePanel = new GamePanel();
+
+        int panelWidth = GRID_COLUMNS * CELL_SIZE;
+        int panelHeight = GRID_ROWS * CELL_SIZE;
+        gamePanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
+
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(e -> showPauseScreen());
 
-        mainPanel.add(gamePanel, BorderLayout.CENTER);
-        mainPanel.add(pauseButton, BorderLayout.SOUTH);
-        add(mainPanel);
+        centerWrapperPanel.add(gamePanel); // -----
 
+        //mainPanel.add(gamePanel, BorderLayout.CENTER);
+        //mainPanel.add(pauseButton, BorderLayout.SOUTH);
+
+        mainPanel.add(centerWrapperPanel, BorderLayout.NORTH);
+        mainPanel.add(pauseButton, BorderLayout.SOUTH);
+
+        add(mainPanel);
+        
 
     }
 

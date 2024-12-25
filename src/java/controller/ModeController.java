@@ -10,11 +10,8 @@ public class ModeController {
     private BuildModeScreen buildModeScreen;
     private GameScreen gameScreen;
     private MainMenu mainMenu;
-<<<<<<< HEAD
     private PauseScreen pauseScreen;
-=======
     private GameOverScreen gameOverScreen;
->>>>>>> origin/main
 
     public ModeController() {
         showMainMenu();
