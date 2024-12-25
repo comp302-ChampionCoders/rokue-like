@@ -448,6 +448,30 @@ public class BuildModeScreen extends JFrame {
         background.repaint();
     }
     
+    private void removeAfterDrag(Point position, Point exPosition ,String lastHall, int lastX, int lastY){
+        if(isInsideAnyGrid(exPosition)){
+            if(lastHall.equals("waterHall")){
+                lastX = (exPosition.x - GRID_START_X) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - GRID_START_Y) / GRID_CELL_SIZE;
+                waterHall.removeObject(lastX, lastY);
+            }
+            else if(lastHall.equals("earthHall")){
+                lastX = (exPosition.x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - GRID_START_Y) / GRID_CELL_SIZE;
+                earthHall.removeObject(lastX, lastY);
+            }
+            else if(lastHall.equals("fireHall")){
+                lastX = (exPosition.x - GRID_START_X) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                fireHall.removeObject(lastX, lastY);
+            }
+            else if(lastHall.equals("airHall")){
+                lastX = (exPosition.x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                airHall.removeObject(lastX, lastY);
+            }     
+        }
+    }
     
     
 
@@ -462,35 +486,35 @@ public class BuildModeScreen extends JFrame {
                 lastLocation[0] = label.getLocation(); // save last location
             }
     
+            
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 Component c = e.getComponent();
                 Point position = c.getLocation();
     
+
                 // check
                 if (isInsideAnyGrid(position)) {
                     int snappedX = ((position.x - GRID_START_X) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_X;
                     int snappedY = ((position.y - GRID_START_Y) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_Y;
 
                     String targetedHall = getTargetHall(snappedX, snappedY);
+                    String lastHall = getTargetHall(lastLocation[0].x,lastLocation[0].y);
+
                     int gridX = -1;
                     int gridY = -1;
 
                     int lastX = -1;
                     int lastY = -1;
-
+                
                     if(targetedHall.equals("waterHall")){
                         gridX = (position.x - GRID_START_X) / GRID_CELL_SIZE;
                         gridY = (position.y - GRID_START_Y) / GRID_CELL_SIZE;
-                        lastX = (lastLocation[0].x - GRID_START_X) / GRID_CELL_SIZE;
-                        lastY = (lastLocation[0].y - GRID_START_Y) / GRID_CELL_SIZE;
+                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
 
                         GameObject newobjectWater = new GameObject(gridX, gridY, image);
-
-                        if(isInsideAnyGrid(lastLocation[0])){
-                            waterHall.removeObject(lastX, lastY);
-                        }
-
+                        
                         if(waterHall.addObject(newobjectWater, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
                         }
@@ -508,14 +532,10 @@ public class BuildModeScreen extends JFrame {
                     if(targetedHall.equals("earthHall")){
                         gridX = (snappedX - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
                         gridY = (snappedY - GRID_START_Y) / GRID_CELL_SIZE;
-                        lastX = (lastLocation[0].x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                        lastY = (lastLocation[0].y - GRID_START_Y) / GRID_CELL_SIZE;
+                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
 
                         GameObject newobjectEarth = new GameObject(gridX, gridY, image);
 
-                        if(isInsideAnyGrid(lastLocation[0])){
-                            earthHall.removeObject(lastX, lastY);
-                        }
 
                         if(earthHall.addObject(newobjectEarth, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
@@ -533,14 +553,9 @@ public class BuildModeScreen extends JFrame {
                     if(targetedHall.equals("fireHall")){
                         gridX = (snappedX - GRID_START_X) / GRID_CELL_SIZE;
                         gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                        lastX = (lastLocation[0].x - GRID_START_X) / GRID_CELL_SIZE;
-                        lastY = (lastLocation[0].y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
+                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
 
                         GameObject newobjectFire = new GameObject(gridX, gridY, image);
-
-                        if(isInsideAnyGrid(lastLocation[0])){
-                            fireHall.removeObject(lastX, lastY);
-                        }
 
                         if(fireHall.addObject(newobjectFire, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
@@ -558,14 +573,9 @@ public class BuildModeScreen extends JFrame {
                     if(targetedHall.equals("airHall")){
                         gridX = (snappedX - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
                         gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                        lastX = (lastLocation[0].x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                        lastY = (lastLocation[0].y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
 
+                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
                         GameObject newobject = new GameObject(gridX, gridY, image);
-
-                        if(isInsideAnyGrid(lastLocation[0])){
-                            airHall.removeObject(lastX, lastY);
-                        }
 
                         if(airHall.addObject(newobject, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
