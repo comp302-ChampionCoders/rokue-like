@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+
+import domain.gameobjects.Hall;
 import ui.swing.BuildModeScreen;
 import ui.swing.GameOverScreen;
 import ui.swing.GameScreen;
@@ -10,6 +13,7 @@ public class ModeController {
     private GameScreen gameScreen;
     private MainMenu mainMenu;
     private GameOverScreen gameOverScreen;
+    private ArrayList<Hall> allHalls;
 
     public ModeController() {
         showMainMenu();
@@ -34,7 +38,7 @@ public class ModeController {
     public void switchToPlayMode() {
         closeActiveScreens(); 
         if (gameScreen == null) {
-            gameScreen = new GameScreen(this::switchToGameOverScreen);
+            gameScreen = new GameScreen(this::switchToGameOverScreen, allHalls);
         }
         gameScreen.setVisible(true);
     }

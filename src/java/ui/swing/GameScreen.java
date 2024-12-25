@@ -2,6 +2,7 @@ package ui.swing;
 
 import controller.ScreenTransition;
 import domain.behaviors.Direction;
+import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
@@ -36,9 +37,11 @@ public class GameScreen extends JFrame {
     private static final int ARCHER_ATTACK_DELAY = 3000; // 1 second in milliseconds
 
     private final ScreenTransition returnToGameOverScreen;
+    private ArrayList<Hall> allHalls;
 
-    public GameScreen(ScreenTransition returnToGameOverScreen) {
+    public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
         this.returnToGameOverScreen = returnToGameOverScreen;
+        this.allHalls = allHalls;
         setTitle("Game Screen");
         setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 50);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -188,7 +191,7 @@ public class GameScreen extends JFrame {
                 int dy = Math.abs(monster.getY() - hero.getY());
                 
                 // Check if hero is in archer's range (within 2 squares horizontally OR vertically, not diagonally)
-                if ((dx <= 2 && dy == 0) || (dx == 0 && dy <= 2)) {
+                if ((dx <= 3 && dy == 0) || (dx == 0 && dy <= 3)) {
                     // Only reduce life if there's no obstacle between archer and hero
                     if (!isPathBlocked(monster.getX(), monster.getY(), hero.getX(), hero.getY())) {
                         hero.reduceLife();
@@ -302,7 +305,7 @@ public class GameScreen extends JFrame {
                     int monsterY = monster.getY();
                     
                     // Check each direction (up, down, left, right) up to 2 squares
-                    for (int i = 1; i <= 2; i++) {
+                    for (int i = 1; i <= 3; i++) {
                         // Up
                         if (monsterY - i >= 0 && !isPositionOccupied(monsterX, monsterY - i)) {
                             g.fillRect(monsterX * CELL_SIZE, 
@@ -387,14 +390,6 @@ public class GameScreen extends JFrame {
     //     });
     // }
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GameScreen screen = new GameScreen(() -> {
-                System.out.println("Returning to Main Menu...");
-                // Add logic here to transition to the main menu, if applicable.
-                // For example, you could initialize or show the main menu frame:
-                new MainMenu(() -> System.out.println("Main Menu started!"));
-            });
-            screen.setVisible(true);
-        });
-    }
+
+}
 }

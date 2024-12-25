@@ -21,6 +21,10 @@ public class GameObject implements GridElement {
         return x;
     }
 
+    public Image getImage(){
+        return image;
+    }
+
     @Override
     public int getY() {
         return y;

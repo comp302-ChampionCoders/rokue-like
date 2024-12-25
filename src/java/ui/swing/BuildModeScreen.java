@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BuildModeScreen extends JFrame {
     private final int GRID_CELL_SIZE = 24; 
@@ -58,6 +59,7 @@ public class BuildModeScreen extends JFrame {
     private BufferedImage chestImage; 
     private final ScreenTransition onExit;
     private final ScreenTransition onSwitchToPlayMode;
+    private ArrayList<Hall> allHalls = new ArrayList<>();
 
     
     public BuildModeScreen(ScreenTransition onExit, ScreenTransition onSwitchToPlayMode) {
@@ -77,12 +79,20 @@ public class BuildModeScreen extends JFrame {
             System.err.println("Full Screen Not Supported");
             setSize(Toolkit.getDefaultToolkit().getScreenSize());
         }
+        this.allHalls.add(earthHall);
+        this.allHalls.add(waterHall);
+        this.allHalls.add(fireHall);
+        this.allHalls.add(airHall);
         
         setTaskbarIcon();
         loadImages();
         initializeScreen();
     }
 
+    public ArrayList<Hall> getAllHalls() {
+        return allHalls;
+    }
+    
 
     /*private void setAppIcon() {
         try {
