@@ -39,7 +39,7 @@ public class GameScreen extends JFrame {
     private BufferedImage runeImage;
 
     private Timer archerAttackTimer;
-    private static final int ARCHER_ATTACK_DELAY = 3000; // 1 second in milliseconds
+    private static final int ARCHER_ATTACK_DELAY = 1000; // 1 second in milliseconds
 
     private final ScreenTransition returnToGameOverScreen;
     private ArrayList<Hall> allHalls = new ArrayList<>();
