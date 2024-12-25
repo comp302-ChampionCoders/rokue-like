@@ -48,7 +48,6 @@ public class Hall {
         this.objects = new HashMap<>();
         this.isLocked = true;
         initializeGrid();
-        //setupMonsterSpawner();
     }
 
     private void initializeGrid() {
@@ -65,41 +64,6 @@ public class Hall {
             return true;
         }
         return false;
-    }
-
-    private void setupMonsterSpawner() {
-        monsterSpawnTimer = new Timer();
-        monsterSpawnTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (isActive && monsters.size() < 3) {
-                    spawnRandomMonster();
-                }
-            }
-        }, 8000, 8000); // Spawn every 8 seconds
-    }
-
-    private void spawnRandomMonster() {
-        Random rand = new Random();
-        int x, y;
-        do {
-            x = rand.nextInt(width);
-            y = rand.nextInt(height);
-        } while (!isValidPosition(x, y));
-
-        Monster monster;
-        switch (rand.nextInt(3)) {
-            case 0:
-                monster = new ArcherMonster(x, y);
-                break;
-            case 1:
-                monster = new FighterMonster(x, y);
-                break;
-            default:
-                monster = new WizardMonster(x, y);
-        }
-        monsters.add(monster);
-        updateGrid();
     }
 
     public boolean addObject(GameObject object, int x, int y) {
@@ -144,7 +108,7 @@ public class Hall {
 
     public void updateState() {
         updateMonsters();
-        //checkCollisions();
+
         updateGrid();
     }
 
@@ -155,38 +119,6 @@ public class Hall {
             }
         }
     }
-
-    /*private void checkCollisions() {
-        // Check hero-monster collisions
-        for (Monster monster : monsters) {
-            if (monster.isActive() && monster.isAdjacentToHero(hero)) {
-                handleMonsterCollision(monster);
-            }
-        }
-
-        // Check if hero found rune
-        if(hero.equals(null)){
-            ;
-        }else{
-            Point heroPosition = new Point(hero.getX(), hero.getY());
-            if (objects.get(heroPosition) instanceof Rune) {
-                handleRuneCollection();
-        }
-        }
-        
-    }*/
-
-   /* private void handleMonsterCollision(Monster monster) {
-        if (monster instanceof FighterMonster) {
-            hero.reduceLife();
-        }
-    }*/
-
-   /*  private void handleRuneCollection() {
-        //rune.collect();
-        isLocked = false;
-        // Update door state
-    }*/
 
     private void updateGrid() {
         // Clear grid

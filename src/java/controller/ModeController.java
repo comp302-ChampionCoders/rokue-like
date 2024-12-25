@@ -36,12 +36,16 @@ public class ModeController {
     }
 
     public void switchToPlayMode() {
-        closeActiveScreens(); 
         if (gameScreen == null) {
+            if (buildModeScreen != null) {
+                allHalls = buildModeScreen.getAllHalls(); 
+                closeActiveScreens(); 
+            }
             gameScreen = new GameScreen(this::switchToGameOverScreen, allHalls);
         }
         gameScreen.setVisible(true);
     }
+    
 
     public void switchToGameOverScreen() {
         closeActiveScreens(); 

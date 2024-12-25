@@ -65,6 +65,7 @@ public class BuildModeScreen extends JFrame {
     public BuildModeScreen(ScreenTransition onExit, ScreenTransition onSwitchToPlayMode) {
         this.onExit = onExit;
         this.onSwitchToPlayMode = onSwitchToPlayMode;
+        addHalls();
         setTitle("Build Mode");
         setUndecorated(true); 
         setResizable(true);
@@ -79,11 +80,6 @@ public class BuildModeScreen extends JFrame {
             System.err.println("Full Screen Not Supported");
             setSize(Toolkit.getDefaultToolkit().getScreenSize());
         }
-        this.allHalls.add(earthHall);
-        this.allHalls.add(waterHall);
-        this.allHalls.add(fireHall);
-        this.allHalls.add(airHall);
-        
         setTaskbarIcon();
         loadImages();
         initializeScreen();
@@ -93,6 +89,12 @@ public class BuildModeScreen extends JFrame {
         return allHalls;
     }
     
+    private void addHalls(){
+        allHalls.add(earthHall);
+        allHalls.add(waterHall);
+        allHalls.add(fireHall);
+        allHalls.add(airHall);
+    }
 
     /*private void setAppIcon() {
         try {

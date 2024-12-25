@@ -2,6 +2,7 @@ package ui.swing;
 
 import controller.ScreenTransition;
 import domain.behaviors.Direction;
+import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,11 +39,25 @@ public class GameScreen extends JFrame {
     private static final int ARCHER_ATTACK_DELAY = 3000; // 1 second in milliseconds
 
     private final ScreenTransition returnToGameOverScreen;
-    private ArrayList<Hall> allHalls;
+    private ArrayList<Hall> allHalls = new ArrayList<>();
+
+    private Hall earthHall;
+    private Hall waterHall;
+    private Hall fireHall;
+    private Hall airHall;
+    private Hall currentHall;
 
     public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.allHalls = allHalls;
+
+        this.earthHall = allHalls.get(0);
+        this.waterHall = allHalls.get(1);
+        this.fireHall = allHalls.get(2);
+        this.airHall = allHalls.get(3);
+
+        this.currentHall = earthHall;
+
         setTitle("Game Screen");
         setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 50);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,6 +66,7 @@ public class GameScreen extends JFrame {
         hero = new Hero(0, 0); // Hero başlangıç konumu
         monsters = new ArrayList<>();
         random = new Random();
+        loadEarthHall();
         runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
        //loadRuneImage();
         spawnMonsters();
@@ -63,6 +80,23 @@ public class GameScreen extends JFrame {
         archerAttackTimer.start();
         add(new GamePanel());
     }
+
+    private void loadEarthHall() {
+        Map<Point, GameObject> earthObjects = earthHall.getObjects();
+    
+        for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
+            System.out.println("icinde");
+            Point position = entry.getKey();
+            GameObject gameObject = entry.getValue();
+    
+            if (gameObject.getImage() != null) {
+            } else {
+                System.err.println("Missing image for object at position: " + position);
+            }
+        }
+        repaint(); 
+    }
+    
 
     private void loadRuneImage() {
         try {
@@ -124,6 +158,11 @@ public class GameScreen extends JFrame {
         if (runePosition.x == x && runePosition.y == y) return true;
         for (Monster monster : monsters) {
             if (monster.getX() == x && monster.getY() == y) return true;
+        }
+        for(GameObject obj : currentHall.getObjects().values()){
+            if(obj.getX() == x && obj.getY() == y){
+                return true;
+            }
         }
         return false;
     }
@@ -226,6 +265,7 @@ public class GameScreen extends JFrame {
             setFocusable(true);
             addKeyListener(this);
             loadImages();
+            setBackground(new Color(62, 41, 52)); // Arka plan rengini burada ayarlayın
         }
 
         private void loadImages() {
@@ -245,6 +285,7 @@ public class GameScreen extends JFrame {
             super.paintComponent(g);
             drawGrid(g);
             drawArcherRanges(g);
+            drawEarthHallObjects(g);
             drawHero(g);
             drawMonsters(g);
             drawRune(g);
@@ -268,6 +309,26 @@ public class GameScreen extends JFrame {
                 g.fillRect(hero.getX() * CELL_SIZE, hero.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
+
+
+        private void drawEarthHallObjects(Graphics g) {
+            Map<Point, GameObject> earthObjects = earthHall.getObjects();
+            for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
+                Point position = entry.getKey();
+                GameObject gameObject = entry.getValue();
+                if (gameObject.getImage() != null) {
+                    g.drawImage(
+                        gameObject.getImage(),
+                        position.x * CELL_SIZE,
+                        position.y * CELL_SIZE,
+                        CELL_SIZE,
+                        CELL_SIZE,
+                        this
+                    );
+                }
+            }
+        }
+        
 
         private void drawMonsters(Graphics g) {
             for (Monster monster : monsters) {
@@ -389,7 +450,5 @@ public class GameScreen extends JFrame {
     //         screen.setVisible(true);
     //     });
     // }
-    public static void main(String[] args) {
-
-}
+ 
 }
