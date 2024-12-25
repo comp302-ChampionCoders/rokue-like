@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class GameScreen extends JFrame {
+    private GamePanel gamePanel;
     private final int GRID_ROWS = 12;
     private final int GRID_COLUMNS = 16;
     private final int CELL_SIZE = 50; // Grid cell size
@@ -51,23 +52,11 @@ public class GameScreen extends JFrame {
         monsters = new ArrayList<>();
         random = new Random();
         runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
-       //loadRuneImage();
-        spawnMonsters();
-        monsterTimer = new Timer(500, e -> moveMonsters()); // Timer her 500ms monster hareketi için
-        spawnTimer = new Timer(8000, e -> addRandomMonster()); // Her 8 saniyede bir monster ekle
-        runeTimer = new Timer(5000, e -> teleportRune()); // Her 5 saniyede rune taşı
-        archerAttackTimer = new Timer(ARCHER_ATTACK_DELAY, e -> checkArcherAttacks());
-        monsterTimer.start();
-        spawnTimer.start();
-        runeTimer.start();
-        archerAttackTimer.start();
-
-
-
+        initializeTimers();
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        JPanel centerWrapperPanel = new JPanel(new GridBagLayout()); //----
-        GamePanel gamePanel = new GamePanel();
+        JPanel centerWrapperPanel = new JPanel(new GridBagLayout());
+        gamePanel = new GamePanel(); // Assign to the class-level field
 
         int panelWidth = GRID_COLUMNS * CELL_SIZE;
         int panelHeight = GRID_ROWS * CELL_SIZE;
@@ -76,42 +65,55 @@ public class GameScreen extends JFrame {
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(e -> showPauseScreen());
 
-        centerWrapperPanel.add(gamePanel); // -----
-
-        //mainPanel.add(gamePanel, BorderLayout.CENTER);
-        //mainPanel.add(pauseButton, BorderLayout.SOUTH);
+        centerWrapperPanel.add(gamePanel);
 
         mainPanel.add(centerWrapperPanel, BorderLayout.NORTH);
         mainPanel.add(pauseButton, BorderLayout.SOUTH);
 
         add(mainPanel);
-        
-
     }
 
+    private void initializeTimers() {
+        monsterTimer = new Timer(500, e -> moveMonsters());
+        spawnTimer = new Timer(8000, e -> addRandomMonster());
+        runeTimer = new Timer(5000, e -> teleportRune());
+        archerAttackTimer = new Timer(ARCHER_ATTACK_DELAY, e -> checkArcherAttacks());
+        startTimers();
+    }
+
+    private void startTimers() {
+        if (monsterTimer != null) monsterTimer.start();
+        if (spawnTimer != null) spawnTimer.start();
+        if (runeTimer != null) runeTimer.start();
+        if (archerAttackTimer != null) archerAttackTimer.start();
+    }
+
+    private void stopTimers() {
+        if (monsterTimer != null) monsterTimer.stop();
+        if (spawnTimer != null) spawnTimer.stop();
+        if (runeTimer != null) runeTimer.stop();
+        if (archerAttackTimer != null) archerAttackTimer.stop();
+    }
 
     private void showPauseScreen() {
-        monsterTimer.stop();
-        spawnTimer.stop();
-        runeTimer.stop();
+        stopTimers();
 
         PauseScreen pauseScreen = new PauseScreen(
-            e -> resumeGame(),
-            e -> returnToMainMenu(),
-            e -> exitGame()
+                e -> resumeGame(),
+                e -> returnToMainMenu(),
+                e -> exitGame()
         );
         pauseScreen.setVisible(true);
     }
     private void resumeGame() {
-        monsterTimer.start();
-        spawnTimer.start();
-        runeTimer.start();
-
+        startTimers();
+        // Ensure the game panel captures key events after resuming
+        gamePanel.requestFocusInWindow();
     }
 
     private void returnToMainMenu() {
-        dispose(); 
-    
+        dispose();
+
         SwingUtilities.invokeLater(() -> {
             MainMenu mainMenu = new MainMenu(() -> {
                 new GameScreen(returnToGameOverScreen).setVisible(true);
@@ -120,7 +122,7 @@ public class GameScreen extends JFrame {
         });
     }
     private void exitGame() {
-        System.exit(0); 
+        System.exit(0);
     }
     private void loadRuneImage() {
         try {
@@ -204,22 +206,22 @@ public class GameScreen extends JFrame {
     private void checkHeroMonsterCollision() {
         for (Monster monster : monsters) {
             if ((monster instanceof FighterMonster)){
-            //Find distances of x's and y's
-            int dx = Math.abs(monster.getX() - hero.getX());
-            int dy = Math.abs(monster.getY() - hero.getY());
-    
-            if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
-                hero.reduceLife();
-                System.out.println("Hero has been attacked by a monster, " + hero.getLives() + " lives remaining");
-                if (hero.getLives() <= 0) {
-                    System.out.println("Hero has died. Returning to Main Menu...");
-                    stopGame();
-                    returnToGameOverScreen.execute(); // Transition to main menu
+                //Find distances of x's and y's
+                int dx = Math.abs(monster.getX() - hero.getX());
+                int dy = Math.abs(monster.getY() - hero.getY());
+
+                if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
+                    hero.reduceLife();
+                    System.out.println("Hero has been attacked by a monster, " + hero.getLives() + " lives remaining");
+                    if (hero.getLives() <= 0) {
+                        System.out.println("Hero has died. Returning to Main Menu...");
+                        stopGame();
+                        returnToGameOverScreen.execute(); // Transition to main menu
+                    }
+                    break;
                 }
-                break;
             }
         }
-    }
     }
     // Helper method to check if there's an obstacle between archer and hero
     private boolean isPathBlocked(int archerX, int archerY, int heroX, int heroY) {
@@ -247,7 +249,7 @@ public class GameScreen extends JFrame {
             if (monster instanceof ArcherMonster) {
                 int dx = Math.abs(monster.getX() - hero.getX());
                 int dy = Math.abs(monster.getY() - hero.getY());
-                
+
                 // Check if hero is in archer's range (within 2 squares horizontally OR vertically, not diagonally)
                 if ((dx <= 2 && dy == 0) || (dx == 0 && dy <= 2)) {
                     // Only reduce life if there's no obstacle between archer and hero
@@ -264,13 +266,13 @@ public class GameScreen extends JFrame {
             }
         }
     }
-    
+
     private void stopGame() {
         monsterTimer.stop();
         spawnTimer.stop();
         runeTimer.stop();
         archerAttackTimer.stop();  // Add this line
-        dispose(); 
+        dispose();
     }
 
     private class GamePanel extends JPanel implements KeyListener {
@@ -356,40 +358,40 @@ public class GameScreen extends JFrame {
         }
         private void drawArcherRanges(Graphics g) {
             g.setColor(new Color(255, 0, 0, 80));  // Semi-transparent red
-            
+
             for (Monster monster : monsters) {
                 if (monster instanceof ArcherMonster) {
                     int monsterX = monster.getX();
                     int monsterY = monster.getY();
-                    
+
                     // Check each direction (up, down, left, right) up to 2 squares
                     for (int i = 1; i <= 2; i++) {
                         // Up
                         if (monsterY - i >= 0 && !isPositionOccupied(monsterX, monsterY - i)) {
-                            g.fillRect(monsterX * CELL_SIZE, 
-                                     (monsterY - i) * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect(monsterX * CELL_SIZE,
+                                    (monsterY - i) * CELL_SIZE,
+                                    CELL_SIZE, CELL_SIZE);
                         }
-                        
+
                         // Down
                         if (monsterY + i < GRID_ROWS && !isPositionOccupied(monsterX, monsterY + i)) {
-                            g.fillRect(monsterX * CELL_SIZE, 
-                                     (monsterY + i) * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect(monsterX * CELL_SIZE,
+                                    (monsterY + i) * CELL_SIZE,
+                                    CELL_SIZE, CELL_SIZE);
                         }
-                        
+
                         // Left
                         if (monsterX - i >= 0 && !isPositionOccupied(monsterX - i, monsterY)) {
-                            g.fillRect((monsterX - i) * CELL_SIZE, 
-                                     monsterY * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect((monsterX - i) * CELL_SIZE,
+                                    monsterY * CELL_SIZE,
+                                    CELL_SIZE, CELL_SIZE);
                         }
-                        
+
                         // Right
                         if (monsterX + i < GRID_COLUMNS && !isPositionOccupied(monsterX + i, monsterY)) {
-                            g.fillRect((monsterX + i) * CELL_SIZE, 
-                                     monsterY * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect((monsterX + i) * CELL_SIZE,
+                                    monsterY * CELL_SIZE,
+                                    CELL_SIZE, CELL_SIZE);
                         }
                     }
                 }
