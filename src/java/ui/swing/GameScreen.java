@@ -12,6 +12,8 @@ import domain.monsters.WizardMonster;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +23,7 @@ import java.util.Map;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 
 public class GameScreen extends JFrame {
     private final int GRID_ROWS = 12;
@@ -67,7 +70,9 @@ public class GameScreen extends JFrame {
         monsters = new ArrayList<>();
         random = new Random();
         loadEarthHall();
-        runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
+        //runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
+        initializeRunePosition();
+
        //loadRuneImage();
         spawnMonsters();
         monsterTimer = new Timer(500, e -> moveMonsters()); // Timer her 500ms monster hareketi için
@@ -95,6 +100,24 @@ public class GameScreen extends JFrame {
             }
         }
         repaint(); 
+    }
+    
+    private void initializeRunePosition() {
+        Map<Point, GameObject> objects = currentHall.getObjects();
+    
+        if (objects.isEmpty()) {
+            System.out.println("No objects available in the hall to place the rune.");
+            runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
+            return; // No objects to place the rune on
+        }
+    
+        // Randomly select a GameObject
+        List<Point> objectPositions = new ArrayList<>(objects.keySet());
+        Point randomPosition = objectPositions.get(random.nextInt(objectPositions.size()));
+    
+        // Set the rune position to the selected object's position
+        runePosition = new Point(randomPosition);
+        System.out.println("Initial rune placed on an object at position: X=" + runePosition.x + ", Y=" + runePosition.y);
     }
     
 
@@ -179,17 +202,25 @@ public class GameScreen extends JFrame {
     private void teleportRune() {
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
         if (wizardExists) {
-            int x, y;
-            do {
-                x = random.nextInt(GRID_COLUMNS);
-                y = random.nextInt(GRID_ROWS);
-            } while (isPositionOccupied(x, y));
-
-            runePosition.setLocation(x, y);
-            System.out.println("Rune teleported to: X=" + x + ", Y=" + y);
-            repaint();
+            Map<Point, GameObject> objects = currentHall.getObjects();
+    
+            if (objects.isEmpty()) {
+                System.out.println("No objects available in the hall to teleport the rune.");
+                return; // No objects to teleport the rune to
+            }
+    
+            // Randomly select a new position from the available objects
+            List<Point> objectPositions = new ArrayList<>(objects.keySet());
+            Point randomPosition = objectPositions.get(random.nextInt(objectPositions.size()));
+    
+            // Update the rune's position
+            runePosition.setLocation(randomPosition);
+            System.out.println("Rune teleported to an object at position: X=" + randomPosition.x + ", Y=" + randomPosition.y);
+    
+            repaint(); // Update the game screen
         }
     }
+    
 
     private void checkHeroMonsterCollision() {
         for (Monster monster : monsters) {
@@ -266,7 +297,7 @@ public class GameScreen extends JFrame {
         dispose(); 
     }
 
-    private class GamePanel extends JPanel implements KeyListener {
+    private class GamePanel extends JPanel implements KeyListener, MouseListener {
         private BufferedImage heroImage;
         private BufferedImage archerImage;
         private BufferedImage fighterImage;
@@ -276,6 +307,7 @@ public class GameScreen extends JFrame {
         public GamePanel() {
             setFocusable(true);
             addKeyListener(this);
+            addMouseListener(this);
             loadImages();
             setBackground(new Color(62, 41, 52)); // Arka plan rengini burada ayarlayın
         }
@@ -410,6 +442,72 @@ public class GameScreen extends JFrame {
                 }
             }
         }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int x = e.getX() / CELL_SIZE;
+            int y = e.getY() / CELL_SIZE;
+
+            Point clickPoint = new Point(x, y);
+            Map<Point, GameObject> objects = currentHall.getObjects();
+
+            int dx = Math.abs(((int)clickPoint.getX()) - hero.getX());
+            int dy = Math.abs(((int)clickPoint.getY()) - hero.getY());
+    
+            if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)){
+
+                if (objects.containsKey(clickPoint)) {
+                    GameObject clickedObject = objects.get(clickPoint);
+                    System.out.println("Clicked on object at: (" + ((int)clickPoint.getY()) + ", " + ((int)clickPoint.getX()) + ")");
+                    handleObjectClick(clickedObject);
+                }
+            }
+            
+            
+        }
+
+        
+
+        private void handleObjectClick(GameObject clickedObject) {
+            // Determine if the object is a rune or empty
+            String message;
+            if (clickedObject.getX() == runePosition.x && clickedObject.getY() == runePosition.y) { 
+                message = "You found the rune at: (" + clickedObject.getX() + ", " + clickedObject.getY() + ")!";
+            } else {
+                message = "Rune is not here. You clicked on an empty object at: (" + clickedObject.getX() + ", " + clickedObject.getY() + ").";
+            }
+        
+            // Create a JOptionPane
+            JOptionPane optionPane = new JOptionPane(
+                message,
+                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
+                null,
+                new Object[]{}, // No buttons
+                null
+            );
+        
+            // Create a dialog with the JOptionPane
+            JDialog dialog = optionPane.createDialog(this, "Object Clicked");
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setModal(false); // Allow non-blocking behavior
+            dialog.setVisible(true);
+        
+            // Set a timer to dispose of the dialog after 2 seconds
+            Timer timer = new Timer(2000, e -> dialog.dispose());
+            timer.setRepeats(false); // Ensure the timer runs only once
+            timer.start();
+        }
+        
+
+        @Override
+        public void mousePressed(MouseEvent e) {}
+        @Override
+        public void mouseReleased(MouseEvent e) {}
+        @Override
+        public void mouseEntered(MouseEvent e) {}
+        @Override
+        public void mouseExited(MouseEvent e) {}
 
         @Override
         public void keyPressed(KeyEvent e) {
