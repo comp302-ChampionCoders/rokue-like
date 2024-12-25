@@ -38,6 +38,9 @@ public class GameScreen extends JFrame {
     private Point runePosition; // Rune pozisyonu
     private BufferedImage runeImage;
 
+    private Timer gameTimer;
+    private int timeRemaining;  
+
     private Timer archerAttackTimer;
     private static final int ARCHER_ATTACK_DELAY = 1000; // 1 second in milliseconds
 
@@ -53,7 +56,6 @@ public class GameScreen extends JFrame {
     public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.allHalls = allHalls;
-
         this.earthHall = allHalls.get(0);
         this.waterHall = allHalls.get(1);
         this.fireHall = allHalls.get(2);
@@ -83,7 +85,24 @@ public class GameScreen extends JFrame {
         spawnTimer.start();
         runeTimer.start();
         archerAttackTimer.start();
+
+        timeRemaining = 30; // every hall has 30 seconds to complete
+        gameTimer = new Timer(1000, e -> updateTime());  // Update every second
+        gameTimer.start();
         add(new GamePanel());
+    }
+
+    private void updateTime() {
+        timeRemaining--;
+        updateTitle();
+        
+        if (timeRemaining <= 0) {
+            stopGame();
+            returnToGameOverScreen.execute();
+        }
+    }
+    private void updateTitle() {
+        setTitle(String.format("Game Screen - Hero has %d remaining lives, %d seconds left", hero.getLives(), timeRemaining));
     }
 
     private void loadEarthHall() {
@@ -234,6 +253,7 @@ public class GameScreen extends JFrame {
                     hero.reduceLife();
                     hero.reduceLife();
                     hero.reduceLife();
+                    updateTitle();
                     System.out.println("Hero has been attacked by a Fighter monster, " + hero.getLives() + " lives remaining");
                     if (hero.getLives() <= 0) {
                         System.out.println("Hero has died. Returning to Main Menu...");
@@ -277,6 +297,7 @@ public class GameScreen extends JFrame {
                     // Only reduce life if there's no obstacle between archer and hero
                     if (!isPathBlocked(monster.getX(), monster.getY(), hero.getX(), hero.getY())) {
                         hero.reduceLife();
+                        updateTitle();
                         System.out.println("Hero has been shot by an Archer monster, " + hero.getLives() + " lives remaining");
                         if (hero.getLives() <= 0) {
                             System.out.println("Hero has died. Returning to Main Menu...");
@@ -293,7 +314,8 @@ public class GameScreen extends JFrame {
         monsterTimer.stop();
         spawnTimer.stop();
         runeTimer.stop();
-        archerAttackTimer.stop();  // Add this line
+        archerAttackTimer.stop();
+        gameTimer.stop();
         dispose(); 
     }
 
