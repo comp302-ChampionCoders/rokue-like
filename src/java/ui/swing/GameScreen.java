@@ -106,10 +106,13 @@ public class GameScreen extends JFrame {
             e.printStackTrace();
         }
     }
+    
+    
 
     private void spawnMonsters() {
         monsters.add(new ArcherMonster(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS)));
     }
+    
 
     private void moveMonsters() {
         Direction[] directions = Direction.values(); // Get all possible directions
@@ -125,6 +128,7 @@ public class GameScreen extends JFrame {
                 }
             }
         }
+        checkHeroMonsterCollision();
         repaint();
     }
 
@@ -135,7 +139,7 @@ public class GameScreen extends JFrame {
         do {
             x = random.nextInt(GRID_COLUMNS);
             y = random.nextInt(GRID_ROWS);
-        } while (isPositionOccupied(x, y));
+        } while (isPositionOccupied(x, y) || isWithinHeroProximity(x, y));
 
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
         int monsterType = random.nextInt(wizardExists ? 2 : 3); // 0: Archer, 1: Fighter, 2: Wizard (eğer yoksa)
@@ -151,6 +155,11 @@ public class GameScreen extends JFrame {
                 break;
         }
         repaint();
+    }
+    private boolean isWithinHeroProximity(int x, int y) {
+        int dx = Math.abs(x - hero.getX());
+        int dy = Math.abs(y - hero.getY());
+        return dx <= 3 && dy <= 3; // Hero'nun 3x3 alanını kontrol eder
     }
 
     private boolean isPositionOccupied(int x, int y) {
@@ -184,23 +193,26 @@ public class GameScreen extends JFrame {
 
     private void checkHeroMonsterCollision() {
         for (Monster monster : monsters) {
-            if ((monster instanceof FighterMonster)){
-            //Find distances of x's and y's
-            int dx = Math.abs(monster.getX() - hero.getX());
-            int dy = Math.abs(monster.getY() - hero.getY());
+            if (monster instanceof FighterMonster) {
+                // Find distances of x's and y's
+                int dx = Math.abs(monster.getX() - hero.getX());
+                int dy = Math.abs(monster.getY() - hero.getY());
     
-            if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
-                hero.reduceLife();
-                System.out.println("Hero has been attacked by a monster, " + hero.getLives() + " lives remaining");
-                if (hero.getLives() <= 0) {
-                    System.out.println("Hero has died. Returning to Main Menu...");
-                    stopGame();
-                    returnToGameOverScreen.execute(); // Transition to main menu
+                if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
+                    // FighterMonster tek vuruşta 3 can alır
+                    hero.reduceLife();
+                    hero.reduceLife();
+                    hero.reduceLife();
+                    System.out.println("Hero has been attacked by a Fighter monster, " + hero.getLives() + " lives remaining");
+                    if (hero.getLives() <= 0) {
+                        System.out.println("Hero has died. Returning to Main Menu...");
+                        stopGame();
+                        returnToGameOverScreen.execute(); // Transition to main menu
+                    }
+                    break;
                 }
-                break;
             }
         }
-    }
     }
     // Helper method to check if there's an obstacle between archer and hero
     private boolean isPathBlocked(int archerX, int archerY, int heroX, int heroY) {

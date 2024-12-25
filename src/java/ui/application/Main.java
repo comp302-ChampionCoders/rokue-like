@@ -1,7 +1,6 @@
 package ui.application;
 
 import controller.ModeController;
-import ui.swing.MainMenu;
 
 public class Main {
     public static void main(String[] args) {
