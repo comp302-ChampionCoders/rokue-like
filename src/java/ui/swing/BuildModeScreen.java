@@ -46,13 +46,13 @@ public class BuildModeScreen extends JFrame {
     private Hall airHall = new Hall(16, 12, null, HallType.AIR);
 
     private final String[] spriteFiles = {
-            "src/resources/images/chest.png",
-            "src/resources/images/skull.png",
-            "src/resources/images/box.png",
-            "src/resources/images/pipe.png",
-            "src/resources/images/stair.png",
-            "src/resources/images/object.png",
-            "src/resources/images/elixir.png"
+            "src/resources/images/chest_50x50.png",
+            "src/resources/images/skull_50x50.png",
+            "src/resources/images/box_50x50_nbg.png",
+            "src/resources/images/pipe_50x50.png",
+            "src/resources/images/stair_50x50.png",
+            "src/resources/images/object_50x50.png",
+            "src/resources/images/elixir_50x50.png"
     };
 
     private BufferedImage topWallImage; 
@@ -342,7 +342,11 @@ public class BuildModeScreen extends JFrame {
             try {
                 BufferedImage sprite = ImageIO.read(new File(spriteFile));
                 Image resizedImage = sprite.getScaledInstance(GRID_CELL_SIZE, GRID_CELL_SIZE, Image.SCALE_SMOOTH);
-                Image resizedImageChest = sprite.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
+                Image resizedImageChest = sprite.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+                int gameModeCellSize = 50;
+
+                Image gameModeVersion = sprite.getScaledInstance(gameModeCellSize, gameModeCellSize, Image.SCALE_SMOOTH);
     
                 JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT + OBJECT_SECTION_WIDTH, 15, 5));
                 itemPanel.setOpaque(false);
@@ -356,7 +360,7 @@ public class BuildModeScreen extends JFrame {
                 addButton.addActionListener(e -> {
                     if (!copyInProgress) {
                         copyInProgress = true;
-                        makeDraggableCopyOnPress(addButton,resizedImage);
+                        makeDraggableCopyOnPress(addButton,resizedImage,gameModeVersion);
                     }
                 });
 
@@ -427,7 +431,7 @@ public class BuildModeScreen extends JFrame {
     
 
     
-    private void makeDraggableCopyOnPress(JButton plusButton, Image image) {
+    private void makeDraggableCopyOnPress(JButton plusButton, Image image, Image gameImage) {
 
         JLabel copyLabel = new JLabel(new ImageIcon(image));
     
@@ -444,7 +448,7 @@ public class BuildModeScreen extends JFrame {
         background.add(copyLabel);
         background.setComponentZOrder(copyLabel, 0);
     
-        makeDraggableAndSnap(copyLabel, image);
+        makeDraggableAndSnap(copyLabel, image, gameImage);
         background.repaint();
     }
     
@@ -475,7 +479,7 @@ public class BuildModeScreen extends JFrame {
     
     
 
-    private void makeDraggableAndSnap(JLabel label, Image image) {
+    private void makeDraggableAndSnap(JLabel label, Image image, Image gameImage) {
         final Point[] lastLocation = {label.getLocation()}; // last location of the object
     
         label.addMouseListener(new MouseAdapter() {
@@ -513,7 +517,7 @@ public class BuildModeScreen extends JFrame {
                         gridY = (position.y - GRID_START_Y) / GRID_CELL_SIZE;
                         removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
 
-                        GameObject newobjectWater = new GameObject(gridX, gridY, image);
+                        GameObject newobjectWater = new GameObject(gridX, gridY,gameImage);
                         
                         if(waterHall.addObject(newobjectWater, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
@@ -534,7 +538,7 @@ public class BuildModeScreen extends JFrame {
                         gridY = (snappedY - GRID_START_Y) / GRID_CELL_SIZE;
                         removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
 
-                        GameObject newobjectEarth = new GameObject(gridX, gridY, image);
+                        GameObject newobjectEarth = new GameObject(gridX, gridY, gameImage);
 
 
                         if(earthHall.addObject(newobjectEarth, gridX, gridY)){
@@ -555,7 +559,7 @@ public class BuildModeScreen extends JFrame {
                         gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
                         removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
 
-                        GameObject newobjectFire = new GameObject(gridX, gridY, image);
+                        GameObject newobjectFire = new GameObject(gridX, gridY, gameImage);
 
                         if(fireHall.addObject(newobjectFire, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
@@ -575,7 +579,7 @@ public class BuildModeScreen extends JFrame {
                         gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
 
                         removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
-                        GameObject newobject = new GameObject(gridX, gridY, image);
+                        GameObject newobject = new GameObject(gridX, gridY, gameImage);
 
                         if(airHall.addObject(newobject, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
