@@ -62,7 +62,7 @@ public class MainMenu extends JFrame {
                 if (backgroundImage != null) {
                     g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                 } else {
-                    g.setColor(new Color(62, 41, 52)); // Same color with the buildmode
+                    g.setColor(new Color(66, 40, 53,255)); // Same color with the buildmode
                     g.fillRect(0, 0, getWidth(), getHeight());
                 }
                 // Draw logo

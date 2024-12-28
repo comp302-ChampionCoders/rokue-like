@@ -16,11 +16,12 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BuildModeScreen extends JFrame {
     private final int GRID_CELL_SIZE = 24; 
     private final int GRID_START_X = 128; 
-    private final int GRID_START_Y = 90; 
+    private final int GRID_START_Y = 70; 
     private final int GRID_COLUMNS = 16; 
     private final int GRID_ROWS = 12; 
     private final int RIGHT_GRID_START_FROM_X = 432;
@@ -135,8 +136,9 @@ public class BuildModeScreen extends JFrame {
         background = new JPanel(); 
         background.setBounds(0, 0, getWidth(), getHeight());
         background.setLayout(null);
-        background.setBackground(new Color(62, 41, 52)); 
+        background.setBackground(new Color(66, 40, 53,255)); 
         add(background);
+        addRandomizeButtonWithImage(background);
 
         // Add exit button
         try {
@@ -193,9 +195,54 @@ public class BuildModeScreen extends JFrame {
         addBottomWalls(background);
     }
 
+    private void addRandomizeButtonWithImage(JPanel parent) {
+        try {
+            BufferedImage randomizeImg = ImageIO.read(new File("src/resources/images/randomize_button.png"));
+            Image scaledRandomizeImg = randomizeImg.getScaledInstance(144, 40, Image.SCALE_DEFAULT);
+    
+            JButton randomizeButton = new JButton(new ImageIcon(scaledRandomizeImg));
+            randomizeButton.setBounds(OBJECT_SECTION_START_X + 3, OBJECT_SECTION_START_Y + 1 + OBJECT_SECTION_HEIGHT + 10, 144, 40);
+            randomizeButton.setBorderPainted(false);
+            randomizeButton.setContentAreaFilled(false);
+            randomizeButton.setFocusPainted(false);
+
+            /*JLabel buttonText = new JLabel("Randomize", SwingConstants.CENTER);
+            buttonText.setFont(new Font("", Font.BOLD, 16));
+            buttonText.setForeground(Color.WHITE);
+            randomizeButton.add(buttonText, BorderLayout.CENTER);*/
+
+    
+            //randomizeButton.addActionListener(e -> randomizeObjects());
+            parent.add(randomizeButton);
+        } catch (IOException e) {
+            System.err.println("Failed to load randomize button image: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+
+/*private void randomizeObjects() {
+    // Example logic: Randomize objects in all halls
+    Random random = new Random();
+    for (Hall hall : allHalls) {
+        hall.getObjects().forEach((position, gameObject) -> {
+            int newX = random.nextInt(GRID_COLUMNS);
+            int newY = random.nextInt(GRID_ROWS);
+            if (hall.isValidPosition(newX, newY)) {
+                hall.removeObject(gameObject.getX(), gameObject.getY());
+                gameObject.setPosition(newX, newY);
+                hall.addObject(gameObject, newX, newY);
+            }
+        });
+    }
+    System.out.println("Objects randomized!");
+    background.repaint(); // Refresh the screen
+}*/
+
+
     private void addBottomWalls(JPanel parent) {
         int bottomWallY = GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE; 
-        int wallWidth = GRID_COLUMNS * GRID_CELL_SIZE + 16; 
+        int wallWidth = GRID_COLUMNS * GRID_CELL_SIZE + 17; 
     
         int[][] hallPositions = {
                 {GRID_START_X - 8, bottomWallY},                      // Top-left grid
@@ -217,8 +264,8 @@ public class BuildModeScreen extends JFrame {
                 BufferedImage bottomWallImage = ImageIO.read(new File(bottomWallImages[i]));
 
                 JLabel bottomWall = new JLabel(new ImageIcon(
-                        bottomWallImage.getScaledInstance(wallWidth, GRID_CELL_SIZE + 16, Image.SCALE_SMOOTH)));
-                bottomWall.setBounds(hallPositions[i][0], hallPositions[i][1], wallWidth, GRID_CELL_SIZE + 16);
+                        bottomWallImage.getScaledInstance(wallWidth, GRID_CELL_SIZE + 17, Image.SCALE_SMOOTH)));
+                bottomWall.setBounds(hallPositions[i][0] - 1, hallPositions[i][1], wallWidth, GRID_CELL_SIZE + 16);
                 parent.add(bottomWall);
             }
         } catch (IOException e) {
@@ -384,23 +431,22 @@ public class BuildModeScreen extends JFrame {
     
     
     private void addHallLabels(JPanel parent) {
-        // Define positions for the labels (adjusted downwards by +50 pixels)
         int[][] labelPositions = {
-                {GRID_START_X + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 50},        // Hall Of Water
-                {GRID_START_X + RIGHT_GRID_START_FROM_X + 20, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Earth
-                {GRID_START_X + 20, GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE + 50},  // Hall Of Fire
-                {GRID_START_X + RIGHT_GRID_START_FROM_X + 20, GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE + 50} // Hall Of Air
+                {GRID_START_X , GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE+40},        // Hall Of Water
+                {GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Earth
+                {GRID_START_X , GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Fire
+                {GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE+40} // Hall Of Air
         };
     
         String[] labelFiles = {
-                "src/resources/images/hallofwater.png",
-                "src/resources/images/hallofearth.png",
-                "src/resources/images/halloffire.png",
-                "src/resources/images/hallofair.png"
+                "src/resources/images/waterlabel.png",
+                "src/resources/images/earthlabel.png",
+                "src/resources/images/firelabel.png",
+                "src/resources/images/airlabel.png"
         };
     
-        int labelWidth = 120; 
-        int labelHeight = 30; 
+        int labelWidth = 200; 
+        int labelHeight = 50; 
     
         for (int i = 0; i < labelFiles.length; i++) {
             try {

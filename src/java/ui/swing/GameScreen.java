@@ -324,14 +324,14 @@ public class GameScreen extends JFrame {
         private BufferedImage archerImage;
         private BufferedImage fighterImage;
         private BufferedImage wizardImage;
-        private boolean isKeyPressed = false; // Tek tuş kontrolü için
+        private boolean isKeyPressed = false; 
 
         public GamePanel() {
             setFocusable(true);
             addKeyListener(this);
             addMouseListener(this);
             loadImages();
-            setBackground(new Color(62, 41, 52)); // Arka plan rengini burada ayarlayın
+            setBackground(new Color(66, 40, 53,255));
         }
 
         private void loadImages() {
