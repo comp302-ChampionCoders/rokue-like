@@ -32,7 +32,7 @@ public class GameOverScreen extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(new Color(62, 41, 52));
+                g.setColor(new Color(66, 40, 53,255));
                 g.fillRect(0, 0, getWidth(), getHeight());
 
                 g.setFont(new Font("Arial", Font.BOLD, 60));
