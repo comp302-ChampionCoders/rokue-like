@@ -7,7 +7,7 @@ Url: https://totuslotus.itch.io/pixel-ui-buttons
 Cursor Icons:
 
 Author: Kenney
-Licence: Creative Commons Zero, CC0
+License: Creative Commons Zero, CC0
 Url: https://kenney-assets.itch.io/cursor-pack, https://kenney.nl/assets/cursor-pixel-pack
 
 
