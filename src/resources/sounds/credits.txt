@@ -1,3 +1,10 @@
+Hurt Sound
+
+Author: Brackeys, Asbjørn Thirslund
+License: Creative Commons Zero (CC0)
+URL: https://brackeysgames.itch.io/brackeys-platformer-bundle
+
+
 Click, Object Placement, Rollover and Switch sounds:
 
 Author: Kenney
@@ -19,3 +26,11 @@ Game Over sound:
 Author: Kenney
 License: Creative Commons Zero, CC0
 URL: https://kenney.nl/assets/music-jingles
+
+
+
+Footstep Sound:
+
+Author: Kenney
+License: Creative Commons Zero, CC0
+URL: https://kenney.nl/assets/impact-sounds
