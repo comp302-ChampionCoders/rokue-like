@@ -1,0 +1,10 @@
+Click, Object Placement, Rollover and Switch sounds:
+
+Author: Kenney
+License: Creative Commons Zero, CC0
+URL: https://kenney.nl/assets/ui-audio
+
+Misplace, Add sound:
+Author: Kenney
+License: Creative Commons Zero, CC0
+URL: https://kenney.nl/assets/interface-sounds

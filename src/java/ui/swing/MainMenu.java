@@ -5,12 +5,14 @@ import javax.swing.*;
 import controller.ModeController;
 import controller.ScreenTransition;
 import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -102,9 +104,19 @@ public class MainMenu extends JFrame {
         JButton exitButton = createStyledButton("Exit");
 
         // Add action listeners
-        newGameButton.addActionListener(e -> onStartBuildMode.execute());
-        helpButton.addActionListener(e -> showHelpScreen());
-        exitButton.addActionListener(e -> System.exit(0));
+        newGameButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            onStartBuildMode.execute();
+        });
+        helpButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            showHelpScreen();
+        }
+        );
+        exitButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            System.exit(0);
+        });
 
         // Add buttons to panel with spacing
         buttonPanel.add(Box.createVerticalGlue());
@@ -142,25 +154,6 @@ public class MainMenu extends JFrame {
         
         return button;
     }
-
-    /*private void startNewGame() {
-        // Hide main menu
-        setVisible(false);
-        
-        // Initialize game state and start build mode
-        SwingUtilities.invokeLater(() -> {
-            try {
-                BuildModeScreen buildMode = new BuildModeScreen();
-                buildMode.setVisible(true);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this,
-                    "Failed to start new game: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                setVisible(true); // Show main menu again if failed
-            }
-        });
-    }*/
 
     private void showHelpScreen() {
         JDialog helpDialog = new JDialog(this, "How to Play", true);

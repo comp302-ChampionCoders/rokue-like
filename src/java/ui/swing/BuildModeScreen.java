@@ -1,5 +1,6 @@
 package ui.swing;
 
+
 import javax.swing.*;
 
 import controller.ModeController;
@@ -8,6 +9,7 @@ import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hall.HallType;
 import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -185,8 +187,13 @@ public class BuildModeScreen extends JFrame {
                 }
             });
             
-            exitButton.addActionListener(e -> onExit.execute());
-            playButton.addActionListener(e -> onSwitchToPlayMode.execute());
+            exitButton.addActionListener(e -> {
+                SoundPlayerUtil.playClickSound();
+                onExit.execute();
+            });
+            playButton.addActionListener(e -> {
+                SoundPlayerUtil.playClickSound();
+                onSwitchToPlayMode.execute();});
             
             background.add(exitButton);
             background.add(playButton);
@@ -223,6 +230,9 @@ public class BuildModeScreen extends JFrame {
                 public void mouseExited(MouseEvent e) {
                     randomizeButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
+            });
+            randomizeButton.addActionListener(e -> {
+                SoundPlayerUtil.playClickSound();
             });
 
             parent.add(randomizeButton);
@@ -426,6 +436,8 @@ public class BuildModeScreen extends JFrame {
                 }
 
                 addButton.addActionListener(e -> {
+                    SoundPlayerUtil.playAddSound();
+
                     if (!copyInProgress) {
                         copyInProgress = true;
                         makeDraggableCopyOnPress(addButton,resizedImage,gameModeVersion);
@@ -588,10 +600,13 @@ public class BuildModeScreen extends JFrame {
                         
                         if(waterHall.addObject(newobjectWater, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             waterHall.addObject(newobjectWater, lastX, lastY);
+                            
                         }
 
                         System.out.println("Water Hall");
@@ -610,9 +625,11 @@ public class BuildModeScreen extends JFrame {
 
                         if(earthHall.addObject(newobjectEarth, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             earthHall.addObject(newobjectEarth, lastX, lastY);
                         }
 
@@ -630,9 +647,11 @@ public class BuildModeScreen extends JFrame {
 
                         if(fireHall.addObject(newobjectFire, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             fireHall.addObject(newobjectFire, lastX, lastY);
                         }
 
@@ -650,9 +669,11 @@ public class BuildModeScreen extends JFrame {
 
                         if(airHall.addObject(newobject, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             airHall.addObject(newobject, lastX, lastY);
                         }
 
@@ -664,8 +685,8 @@ public class BuildModeScreen extends JFrame {
                 } 
                 else {
                     // move back if not in grid
+                    SoundPlayerUtil.playMisplacedSound();
                     c.setLocation(lastLocation[0]);
-                    //background.remove(c);
                     
                 }
                 copyInProgress = false;

@@ -2,6 +2,7 @@ package ui.swing;
 
 import controller.ScreenTransition;
 import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 import java.awt.*;
 import javax.swing.*;
@@ -61,8 +62,13 @@ public class GameOverScreen extends JFrame {
         JButton restartButton = createStyledButton("Restart Game");
         JButton menuButton = createStyledButton("Return to Menu");
 
-        restartButton.addActionListener(e -> restartGame.execute());
-        menuButton.addActionListener(e -> returnToMenu.execute());
+        restartButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            restartGame.execute();});
+        menuButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            returnToMenu.execute();
+        });
 
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(restartButton);
