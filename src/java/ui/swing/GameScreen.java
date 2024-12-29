@@ -10,6 +10,7 @@ import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
 import domain.monsters.WizardMonster;
 import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -101,6 +102,7 @@ public class GameScreen extends JFrame {
         
         if (timeRemaining <= 0) {
             stopGame();
+            SoundPlayerUtil.playGameOverJingle();
             returnToGameOverScreen.execute();
         }
     }
@@ -112,7 +114,6 @@ public class GameScreen extends JFrame {
         Map<Point, GameObject> earthObjects = earthHall.getObjects();
     
         for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
-            System.out.println("icinde");
             Point position = entry.getKey();
             GameObject gameObject = entry.getValue();
     
@@ -261,6 +262,7 @@ public class GameScreen extends JFrame {
                     if (hero.getLives() <= 0) {
                         System.out.println("Hero has died. Returning to Main Menu...");
                         stopGame();
+                        SoundPlayerUtil.playGameOverJingle();
                         returnToGameOverScreen.execute(); // Transition to main menu
                     }
                     break;
@@ -305,6 +307,7 @@ public class GameScreen extends JFrame {
                         if (hero.getLives() <= 0) {
                             System.out.println("Hero has died. Returning to Main Menu...");
                             stopGame();
+                            SoundPlayerUtil.playGameOverJingle();
                             returnToGameOverScreen.execute();
                         }
                     }
