@@ -10,6 +10,9 @@ public class SoundPlayerUtil {
     private static final String MISPLACED_SOUND_PATH = "src/resources/sounds/misplaced.wav";
     private static final String ADD_SOUND_PATH = "src/resources/sounds/addSound.wav";
     private static final String GAME_OVER_PATH = "src/resources/sounds/gameOver.wav";
+    private static final String HERO_HURT_PATH = "src/resources/sounds/hurt.wav";
+    private static final String HERO_MOVE_PATH = "src/resources/sounds/footstep.wav";
+    
 
     public static void playClickSound() {
         playSound(CLICK_SOUND_PATH);
@@ -29,6 +32,14 @@ public class SoundPlayerUtil {
 
     public static void playGameOverJingle(){
         playSound(GAME_OVER_PATH);
+    }
+
+    public static void playHurtSound(){
+        playSound(HERO_HURT_PATH);
+    }
+
+    public static void playMoveSound(){
+        playSound(HERO_MOVE_PATH);
     }
 
     private static void playSound(String soundFilePath) {

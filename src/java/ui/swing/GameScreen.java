@@ -309,7 +309,10 @@ public class GameScreen extends JFrame {
                             stopGame();
                             SoundPlayerUtil.playGameOverJingle();
                             returnToGameOverScreen.execute();
+                        }else{
+                            SoundPlayerUtil.playHurtSound();
                         }
+                        
                     }
                 }
             }
@@ -565,6 +568,7 @@ public class GameScreen extends JFrame {
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
                     hero.move(direction);
+                    SoundPlayerUtil.playMoveSound();
                 }
             }
             checkHeroMonsterCollision();
