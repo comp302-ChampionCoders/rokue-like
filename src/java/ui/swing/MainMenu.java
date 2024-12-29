@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import controller.ModeController;
 import controller.ScreenTransition;
+import ui.utils.CursorUtils;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ public class MainMenu extends JFrame {
     private BufferedImage backgroundImage;
     private BufferedImage logoImage;
     private final ScreenTransition onStartBuildMode;
+    
 
     public MainMenu(ScreenTransition onStartBuildMode) {
         this.onStartBuildMode = onStartBuildMode;
@@ -36,6 +38,7 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
         
         // Set window icon
         try {
@@ -43,7 +46,7 @@ public class MainMenu extends JFrame {
         } catch (IOException e) {
             System.err.println("Failed to load logo: " + e.getMessage());
         }
-    }
+    }    
 
     private void loadImages() {
         try {

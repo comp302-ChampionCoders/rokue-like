@@ -7,6 +7,7 @@ import controller.ScreenTransition;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hall.HallType;
+import ui.utils.CursorUtils;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -37,7 +38,7 @@ public class BuildModeScreen extends JFrame {
     
     private JButton exitButton;
     private JButton playButton;
-    private final int EXIT_BUTTON_SIZE = 30;
+    private final int EXIT_BUTTON_SIZE = 32;
 
     private boolean gridVisible = false; 
 
@@ -139,6 +140,7 @@ public class BuildModeScreen extends JFrame {
         background.setBackground(new Color(66, 40, 53,255)); 
         add(background);
         addRandomizeButtonWithImage(background);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0168.png"));
 
         // Add exit button
         try {
@@ -164,11 +166,19 @@ public class BuildModeScreen extends JFrame {
             exitButton.setFocusPainted(false);
             
             
+            playButton.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    playButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                }
+                public void mouseExited(MouseEvent e) {
+                    playButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                } 
+            });
 
             // Add hover effect
             exitButton.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
-                    exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    exitButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
                 }
                 public void mouseExited(MouseEvent e) {
                     exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -206,13 +216,15 @@ public class BuildModeScreen extends JFrame {
             randomizeButton.setContentAreaFilled(false);
             randomizeButton.setFocusPainted(false);
 
-            /*JLabel buttonText = new JLabel("Randomize", SwingConstants.CENTER);
-            buttonText.setFont(new Font("", Font.BOLD, 16));
-            buttonText.setForeground(Color.WHITE);
-            randomizeButton.add(buttonText, BorderLayout.CENTER);*/
+            randomizeButton.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    randomizeButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                }
+                public void mouseExited(MouseEvent e) {
+                    randomizeButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            });
 
-    
-            //randomizeButton.addActionListener(e -> randomizeObjects());
             parent.add(randomizeButton);
         } catch (IOException e) {
             System.err.println("Failed to load randomize button image: " + e.getMessage());

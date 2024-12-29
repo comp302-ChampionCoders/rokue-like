@@ -9,6 +9,8 @@ import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
 import domain.monsters.WizardMonster;
+import ui.utils.CursorUtils;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -68,6 +70,7 @@ public class GameScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
         hero = new Hero(0, 0); // Hero başlangıç konumu
         monsters = new ArrayList<>();
         random = new Random();

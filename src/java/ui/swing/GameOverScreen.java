@@ -1,6 +1,8 @@
 package ui.swing;
 
 import controller.ScreenTransition;
+import ui.utils.CursorUtils;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -25,6 +27,7 @@ public class GameOverScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
     }
 
     private void createMainPanel() {

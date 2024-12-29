@@ -1,8 +1,13 @@
+cursor icons:
+Author: Kenney
+Licence: Creative Commons Zero, CC0
+Url: https://kenney-assets.itch.io/cursor-pack, https://kenney.nl/assets/cursor-pixel-pack
+
 
 randomize_button:
 
 Author: Franuka
-URL: https://franuka.itch.io/rpg-ui-pack-demo?download
+Url: https://franuka.itch.io/rpg-ui-pack-demo?download
 
 
 0x72_16x16DungeonTileset.v5
