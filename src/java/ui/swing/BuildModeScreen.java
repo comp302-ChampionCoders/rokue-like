@@ -411,11 +411,20 @@ public class BuildModeScreen extends JFrame {
                 itemPanel.setOpaque(false);
     
                 JLabel itemLabel = new JLabel(new ImageIcon(resizedImageChest));
-                JButton addButton = new JButton("+");
-                addButton.setPreferredSize(new Dimension(20, 20)); 
+                JButton addButton = new JButton();
+                addButton.setPreferredSize(new Dimension(16, 16)); 
                 addButton.setMargin(new Insets(0, 0, 0, 0));
                 addButton.setBackground(new Color(200, 200, 200));
                 addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                try {
+                    ImageIcon addIcon = new ImageIcon("src/resources/images/greenAdd.png");
+                    Image scaledImage = addIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+                    addButton.setIcon(new ImageIcon(scaledImage));
+                } catch (Exception ex) {
+                    System.err.println("Resim yüklenemedi: " + ex.getMessage());
+                }
+
                 addButton.addActionListener(e -> {
                     if (!copyInProgress) {
                         copyInProgress = true;
@@ -499,8 +508,8 @@ public class BuildModeScreen extends JFrame {
         Point backgroundLocation = background.getLocationOnScreen();
     
         
-        int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 5; 
-        int spawnY = buttonLocation.y - backgroundLocation.y - 2;
+        int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 10; 
+        int spawnY = buttonLocation.y - backgroundLocation.y - 4;
         
         copyLabel.setBounds(spawnX, spawnY, GRID_CELL_SIZE, GRID_CELL_SIZE);
         background.add(copyLabel);
