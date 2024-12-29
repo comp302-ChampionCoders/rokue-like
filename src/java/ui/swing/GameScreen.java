@@ -399,7 +399,7 @@ public class GameScreen extends JFrame {
                 e.printStackTrace();
             }
         
-            Timer resetImageTimer = new Timer(500, e -> { // Reset image and timer after delay
+            Timer resetImageTimer = new Timer(500, e -> { // Reset image and timer after 0.5 seconds
                 try {
                     heroImage = ImageIO.read(new File("src/resources/images/player.png"));
                     repaint();
