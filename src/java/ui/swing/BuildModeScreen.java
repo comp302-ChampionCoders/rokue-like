@@ -428,11 +428,11 @@ public class BuildModeScreen extends JFrame {
                 addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
                 try {
-                    ImageIcon addIcon = new ImageIcon("src/resources/images/greenAdd.png");
+                    ImageIcon addIcon = new ImageIcon("src/resources/images/blueAdd4.png");
                     Image scaledImage = addIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
                     addButton.setIcon(new ImageIcon(scaledImage));
                 } catch (Exception ex) {
-                    System.err.println("Resim yüklenemedi: " + ex.getMessage());
+                    System.err.println("Could not load the image: " + ex.getMessage());
                 }
 
                 addButton.addActionListener(e -> {
@@ -601,6 +601,7 @@ public class BuildModeScreen extends JFrame {
                         if(waterHall.addObject(newobjectWater, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
                             SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
@@ -626,6 +627,7 @@ public class BuildModeScreen extends JFrame {
                         if(earthHall.addObject(newobjectEarth, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
                             SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
@@ -648,6 +650,7 @@ public class BuildModeScreen extends JFrame {
                         if(fireHall.addObject(newobjectFire, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
                             SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
@@ -670,6 +673,7 @@ public class BuildModeScreen extends JFrame {
                         if(airHall.addObject(newobject, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
                             SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
@@ -689,7 +693,6 @@ public class BuildModeScreen extends JFrame {
                     c.setLocation(lastLocation[0]);
                     
                 }
-                copyInProgress = false;
                 gridVisible = false;
                 background.repaint();
             }

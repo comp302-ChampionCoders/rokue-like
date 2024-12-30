@@ -9,8 +9,8 @@ public class SoundPlayerUtil {
     private static final String OBJECT_PLACED_SOUND_PATH = "src/resources/sounds/objectPlaced.wav";
     private static final String MISPLACED_SOUND_PATH = "src/resources/sounds/misplaced.wav";
     private static final String ADD_SOUND_PATH = "src/resources/sounds/addSound.wav";
-    private static final String GAME_OVER_PATH = "src/resources/sounds/gameOver.wav";
-    private static final String HERO_HURT_PATH = "src/resources/sounds/hurt.wav";
+    private static final String GAME_OVER_PATH = "src/resources/sounds/gameOverSax.wav";
+    private static final String HERO_HURT_PATH = "src/resources/sounds/heroHit.wav";
     private static final String HERO_MOVE_PATH = "src/resources/sounds/footstep.wav";
     
 
