@@ -4,12 +4,15 @@ import javax.swing.*;
 
 import controller.ModeController;
 import controller.ScreenTransition;
+import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -20,6 +23,7 @@ public class MainMenu extends JFrame {
     private BufferedImage backgroundImage;
     private BufferedImage logoImage;
     private final ScreenTransition onStartBuildMode;
+    private Font customFont;
 
     public MainMenu(ScreenTransition onStartBuildMode) {
         this.onStartBuildMode = onStartBuildMode;
@@ -36,6 +40,7 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
         
         // Set window icon
         try {
@@ -43,7 +48,7 @@ public class MainMenu extends JFrame {
         } catch (IOException e) {
             System.err.println("Failed to load logo: " + e.getMessage());
         }
-    }
+    }    
 
     private void loadImages() {
         try {
@@ -94,14 +99,24 @@ public class MainMenu extends JFrame {
         buttonPanel.setOpaque(false);
         buttonPanel.setBounds(SCREEN_WIDTH/4, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/3);
 
-        JButton newGameButton = createStyledButton("Start New Game");
-        JButton helpButton = createStyledButton("Help");
-        JButton exitButton = createStyledButton("Exit");
+        JButton newGameButton = createStyledButton("START NEW GAME");
+        JButton helpButton = createStyledButton("HELP");
+        JButton exitButton = createStyledButton("EXIT");
 
         // Add action listeners
-        newGameButton.addActionListener(e -> onStartBuildMode.execute());
-        helpButton.addActionListener(e -> showHelpScreen());
-        exitButton.addActionListener(e -> System.exit(0));
+        newGameButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            onStartBuildMode.execute();
+        });
+        helpButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            showHelpScreen();
+        }
+        );
+        exitButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            System.exit(0);
+        });
 
         // Add buttons to panel with spacing
         buttonPanel.add(Box.createVerticalGlue());
@@ -117,9 +132,17 @@ public class MainMenu extends JFrame {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(200, 50));
-        button.setMaximumSize(new Dimension(200, 50));
-        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setPreferredSize(new Dimension(250, 60));
+        button.setMaximumSize(new Dimension(250, 60));
+
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/FantasyRPGtext.ttf")) .deriveFont(24f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            customFont = new Font("Arial", Font.BOLD, 16);
+        }
+
+        button.setFont(customFont);
         button.setBackground(new Color(139, 69, 19));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
@@ -140,58 +163,49 @@ public class MainMenu extends JFrame {
         return button;
     }
 
-    /*private void startNewGame() {
-        // Hide main menu
-        setVisible(false);
-        
-        // Initialize game state and start build mode
-        SwingUtilities.invokeLater(() -> {
-            try {
-                BuildModeScreen buildMode = new BuildModeScreen();
-                buildMode.setVisible(true);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this,
-                    "Failed to start new game: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                setVisible(true); // Show main menu again if failed
-            }
-        });
-    }*/
-
     private void showHelpScreen() {
         JDialog helpDialog = new JDialog(this, "How to Play", true);
         helpDialog.setSize(600, 400);
         helpDialog.setLocationRelativeTo(this);
+      
 
         JTextArea helpText = new JTextArea();
         helpText.setEditable(false);
         helpText.setWrapStyleWord(true);
         helpText.setLineWrap(true);
+        helpText.setBackground(new Color(66, 40, 53,255));
         helpText.setMargin(new Insets(10, 10, 10, 10));
-        helpText.setFont(new Font("Arial", Font.PLAIN, 14));
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/FantasyRPGtext.ttf")) .deriveFont(20f);
+            helpText.setFont(customFont);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            helpText.setFont(new Font("Arial", Font.PLAIN, 20));
+        }
+        helpText.setForeground(Color.WHITE);
         
         helpText.setText(
-            "Rokue-Like Game Instructions:\n\n" +
-            "1. Build Mode:\n" +
-            "   - Place objects in each hall (minimum requirements apply)\n" +
-            "   - Earth Hall: 6 objects\n" +
-            "   - Air Hall: 9 objects\n" +
-            "   - Water Hall: 13 objects\n" +
-            "   - Fire Hall: 17 objects\n\n" +
-            "2. Game Controls:\n" +
-            "   - Arrow keys to move the hero\n" +
-            "   - Click objects to search for runes\n" +
-            "   - Click pause button to halt the game\n\n" +
-            "3. Enchantments:\n" +
-            "   - Collect enchantments for special powers\n" +
-            "   - Use 'R' for Reveal enchantment\n" +
-            "   - Use 'P' for Cloak of Protection\n" +
-            "   - Use 'B' + direction for Luring Gem\n\n" +
-            "4. Objective:\n" +
-            "   - Find the rune in each hall\n" +
-            "   - Avoid or outsmart monsters\n" +
-            "   - Complete all halls to win!"
+            "ROKUE-LIKE GAME INSTRUCTIONS:\n\n" +
+            "1. BUILD MODE:\n" +
+            "   - PLACE OBJECTS IN EACH HALL (MINIMUM REQUIREMENTS APPLY)\n" +
+            "   - EARTH HALL: 6 OBJECTS\n" +
+            "   - AIR HALL: 9 OBJECTS\n" +
+            "   - WATER HALL: 13 OBJECTS\n" +
+            "   - FIRE HALL: 17 OBJECTS\n\n" +
+            "2. GAME CONTROLS:\n" +
+            "   - ARROW KEYS TO MOVE THE HERO\n" +
+            "   - CLICK OBJECTS TO SEARCH FOR RUNES\n" +
+            "   - CLICK PAUSE BUTTON TO HALT THE GAME\n\n" +
+            "3. ENCHANTMENTS:\n" +
+            "   - COLLECT ENCHANTMENTS FOR SPECIAL POWERS\n" +
+            "   - USE 'R' FOR REVEAL ENCHANTMENT\n" +
+            "   - USE 'P' FOR CLOAK OF PROTECTION\n" +
+            "   - USE 'B' + DIRECTION FOR LURING GEM\n\n" +
+            "4. OBJECTIVE:\n" +
+            "   - FIND THE RUNE IN EACH HALL\n" +
+            "   - AVOID OR OUTSMART MONSTERS\n" +
+            "   - COMPLETE ALL HALLS TO WIN!"
+            
         );
 
         JScrollPane scrollPane = new JScrollPane(helpText);

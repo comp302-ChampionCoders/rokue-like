@@ -1,5 +1,6 @@
 package ui.swing;
 
+
 import javax.swing.*;
 
 import controller.ModeController;
@@ -7,6 +8,8 @@ import controller.ScreenTransition;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hall.HallType;
+import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -37,7 +40,7 @@ public class BuildModeScreen extends JFrame {
     
     private JButton exitButton;
     private JButton playButton;
-    private final int EXIT_BUTTON_SIZE = 30;
+    private final int EXIT_BUTTON_SIZE = 32;
 
     private boolean gridVisible = false; 
 
@@ -75,12 +78,7 @@ public class BuildModeScreen extends JFrame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
     
-        if (gd.isFullScreenSupported()) {
-            gd.setFullScreenWindow(this);
-        } else {
-            System.err.println("Full Screen Not Supported");
-            setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        }
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setTaskbarIcon();
         loadImages();
         initializeScreen();
@@ -139,6 +137,7 @@ public class BuildModeScreen extends JFrame {
         background.setBackground(new Color(66, 40, 53,255)); 
         add(background);
         addRandomizeButtonWithImage(background);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0168.png"));
 
         // Add exit button
         try {
@@ -164,19 +163,32 @@ public class BuildModeScreen extends JFrame {
             exitButton.setFocusPainted(false);
             
             
+            playButton.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    playButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                }
+                public void mouseExited(MouseEvent e) {
+                    playButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                } 
+            });
 
             // Add hover effect
             exitButton.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
-                    exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    exitButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
                 }
                 public void mouseExited(MouseEvent e) {
                     exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             });
             
-            exitButton.addActionListener(e -> onExit.execute());
-            playButton.addActionListener(e -> onSwitchToPlayMode.execute());
+            exitButton.addActionListener(e -> {
+                SoundPlayerUtil.playClickSound();
+                onExit.execute();
+            });
+            playButton.addActionListener(e -> {
+                SoundPlayerUtil.playClickSound();
+                onSwitchToPlayMode.execute();});
             
             background.add(exitButton);
             background.add(playButton);
@@ -206,13 +218,18 @@ public class BuildModeScreen extends JFrame {
             randomizeButton.setContentAreaFilled(false);
             randomizeButton.setFocusPainted(false);
 
-            /*JLabel buttonText = new JLabel("Randomize", SwingConstants.CENTER);
-            buttonText.setFont(new Font("", Font.BOLD, 16));
-            buttonText.setForeground(Color.WHITE);
-            randomizeButton.add(buttonText, BorderLayout.CENTER);*/
+            randomizeButton.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    randomizeButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                }
+                public void mouseExited(MouseEvent e) {
+                    randomizeButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            });
+            randomizeButton.addActionListener(e -> {
+                SoundPlayerUtil.playClickSound();
+            });
 
-    
-            //randomizeButton.addActionListener(e -> randomizeObjects());
             parent.add(randomizeButton);
         } catch (IOException e) {
             System.err.println("Failed to load randomize button image: " + e.getMessage());
@@ -399,12 +416,23 @@ public class BuildModeScreen extends JFrame {
                 itemPanel.setOpaque(false);
     
                 JLabel itemLabel = new JLabel(new ImageIcon(resizedImageChest));
-                JButton addButton = new JButton("+");
-                addButton.setPreferredSize(new Dimension(20, 20)); 
+                JButton addButton = new JButton();
+                addButton.setPreferredSize(new Dimension(16, 16)); 
                 addButton.setMargin(new Insets(0, 0, 0, 0));
                 addButton.setBackground(new Color(200, 200, 200));
                 addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                try {
+                    ImageIcon addIcon = new ImageIcon("src/resources/images/blueAdd4.png");
+                    Image scaledImage = addIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+                    addButton.setIcon(new ImageIcon(scaledImage));
+                } catch (Exception ex) {
+                    System.err.println("Could not load the image: " + ex.getMessage());
+                }
+
                 addButton.addActionListener(e -> {
+                    SoundPlayerUtil.playAddSound();
+
                     if (!copyInProgress) {
                         copyInProgress = true;
                         makeDraggableCopyOnPress(addButton,resizedImage,gameModeVersion);
@@ -487,8 +515,8 @@ public class BuildModeScreen extends JFrame {
         Point backgroundLocation = background.getLocationOnScreen();
     
         
-        int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 5; 
-        int spawnY = buttonLocation.y - backgroundLocation.y - 2;
+        int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 10; 
+        int spawnY = buttonLocation.y - backgroundLocation.y - 4;
         
         copyLabel.setBounds(spawnX, spawnY, GRID_CELL_SIZE, GRID_CELL_SIZE);
         background.add(copyLabel);
@@ -567,10 +595,14 @@ public class BuildModeScreen extends JFrame {
                         
                         if(waterHall.addObject(newobjectWater, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             waterHall.addObject(newobjectWater, lastX, lastY);
+                            
                         }
 
                         System.out.println("Water Hall");
@@ -589,9 +621,12 @@ public class BuildModeScreen extends JFrame {
 
                         if(earthHall.addObject(newobjectEarth, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             earthHall.addObject(newobjectEarth, lastX, lastY);
                         }
 
@@ -609,9 +644,12 @@ public class BuildModeScreen extends JFrame {
 
                         if(fireHall.addObject(newobjectFire, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             fireHall.addObject(newobjectFire, lastX, lastY);
                         }
 
@@ -629,9 +667,12 @@ public class BuildModeScreen extends JFrame {
 
                         if(airHall.addObject(newobject, gridX, gridY)){
                             c.setLocation(snappedX, snappedY);
+                            SoundPlayerUtil.playObjectPlacedSound();
+                            copyInProgress = false;
                         }
                         else{
                             c.setLocation(lastLocation[0]);
+                            SoundPlayerUtil.playMisplacedSound();
                             airHall.addObject(newobject, lastX, lastY);
                         }
 
@@ -643,11 +684,10 @@ public class BuildModeScreen extends JFrame {
                 } 
                 else {
                     // move back if not in grid
+                    SoundPlayerUtil.playMisplacedSound();
                     c.setLocation(lastLocation[0]);
-                    //background.remove(c);
                     
                 }
-                copyInProgress = false;
                 gridVisible = false;
                 background.repaint();
             }

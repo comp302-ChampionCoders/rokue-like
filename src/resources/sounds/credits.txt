@@ -1,0 +1,36 @@
+Footstep, Hero Hit Sound:
+
+Author: Kenney
+License: Creative Commons Zero, CC0
+URL: https://kenney.nl/assets/impact-sounds
+
+
+
+Hurt Sound
+
+Author: Brackeys, Asbjørn Thirslund
+License: Creative Commons Zero (CC0)
+URL: https://brackeysgames.itch.io/brackeys-platformer-bundle
+
+
+Click, Object Placement, Rollover and Switch sounds:
+
+Author: Kenney
+License: Creative Commons Zero, CC0
+URL: https://kenney.nl/assets/ui-audio
+
+
+
+Misplace, Add sound:
+
+Author: Kenney
+License: Creative Commons Zero, CC0
+URL: https://kenney.nl/assets/interface-sounds
+
+
+
+Game Over sound:
+
+Author: Kenney
+License: Creative Commons Zero, CC0
+URL: https://kenney.nl/assets/music-jingles

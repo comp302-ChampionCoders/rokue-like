@@ -9,6 +9,9 @@ import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
 import domain.monsters.WizardMonster;
+import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -52,6 +55,8 @@ public class GameScreen extends JFrame {
     private Hall fireHall;
     private Hall airHall;
     private Hall currentHall;
+    
+    private GamePanel gamePanel;
 
     public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
         this.returnToGameOverScreen = returnToGameOverScreen;
@@ -68,6 +73,7 @@ public class GameScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
         hero = new Hero(0, 0); // Hero başlangıç konumu
         monsters = new ArrayList<>();
         random = new Random();
@@ -86,10 +92,11 @@ public class GameScreen extends JFrame {
         runeTimer.start();
         archerAttackTimer.start();
 
-        timeRemaining = 30; // every hall has 30 seconds to complete
+        timeRemaining = 50; 
         gameTimer = new Timer(1000, e -> updateTime());  // Update every second
         gameTimer.start();
-        add(new GamePanel());
+        gamePanel = new GamePanel();
+        add(gamePanel);
     }
 
     private void updateTime() {
@@ -98,6 +105,7 @@ public class GameScreen extends JFrame {
         
         if (timeRemaining <= 0) {
             stopGame();
+            SoundPlayerUtil.playGameOverJingle();
             returnToGameOverScreen.execute();
         }
     }
@@ -109,7 +117,6 @@ public class GameScreen extends JFrame {
         Map<Point, GameObject> earthObjects = earthHall.getObjects();
     
         for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
-            System.out.println("icinde");
             Point position = entry.getKey();
             GameObject gameObject = entry.getValue();
     
@@ -258,6 +265,7 @@ public class GameScreen extends JFrame {
                     if (hero.getLives() <= 0) {
                         System.out.println("Hero has died. Returning to Main Menu...");
                         stopGame();
+                        SoundPlayerUtil.playGameOverJingle();
                         returnToGameOverScreen.execute(); // Transition to main menu
                     }
                     break;
@@ -297,13 +305,18 @@ public class GameScreen extends JFrame {
                     // Only reduce life if there's no obstacle between archer and hero
                     if (!isPathBlocked(monster.getX(), monster.getY(), hero.getX(), hero.getY())) {
                         hero.reduceLife();
+                        gamePanel.showHeroDamagedEffect();
                         updateTitle();
                         System.out.println("Hero has been shot by an Archer monster, " + hero.getLives() + " lives remaining");
                         if (hero.getLives() <= 0) {
                             System.out.println("Hero has died. Returning to Main Menu...");
                             stopGame();
+                            SoundPlayerUtil.playGameOverJingle();
                             returnToGameOverScreen.execute();
+                        }else{
+                            SoundPlayerUtil.playHurtSound();
                         }
+                        
                     }
                 }
             }
@@ -375,6 +388,31 @@ public class GameScreen extends JFrame {
                 g.fillRect(hero.getX() * CELL_SIZE, hero.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
+
+        private void showHeroDamagedEffect() {
+            try {
+                BufferedImage damagedImage = ImageIO.read(new File("src/resources/images/playerDamaged.png"));
+                heroImage = damagedImage; 
+                repaint(); 
+            } catch (IOException e) {
+                System.err.println("Failed to load heroDamaged image.");
+                e.printStackTrace();
+            }
+        
+            Timer resetImageTimer = new Timer(500, e -> { // Reset image and timer after 0.5 seconds
+                try {
+                    heroImage = ImageIO.read(new File("src/resources/images/player.png"));
+                    repaint();
+                } catch (IOException ex) {
+                    System.err.println("Failed to reload player image.");
+                    ex.printStackTrace();
+                }
+            });
+            resetImageTimer.setRepeats(false); // Timer runs only once
+            resetImageTimer.start();
+        }
+        
+        
 
 
         private void drawEarthHallObjects(Graphics g) {
@@ -559,6 +597,8 @@ public class GameScreen extends JFrame {
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
                     hero.move(direction);
+
+                    SoundPlayerUtil.playMoveSound();
                 }
             }
             checkHeroMonsterCollision();

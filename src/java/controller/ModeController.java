@@ -41,6 +41,7 @@ public class ModeController {
                 allHalls = buildModeScreen.getAllHalls(); 
                 closeActiveScreens(); 
             }
+            closeActiveScreens(); 
             gameScreen = new GameScreen(this::switchToGameOverScreen, allHalls);
         }
         gameScreen.setVisible(true);
