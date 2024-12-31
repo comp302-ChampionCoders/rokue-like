@@ -78,12 +78,7 @@ public class BuildModeScreen extends JFrame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
     
-        if (gd.isFullScreenSupported()) {
-            gd.setFullScreenWindow(this);
-        } else {
-            System.err.println("Full Screen Not Supported");
-            setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        }
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setTaskbarIcon();
         loadImages();
         initializeScreen();

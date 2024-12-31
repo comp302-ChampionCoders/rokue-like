@@ -92,7 +92,7 @@ public class GameScreen extends JFrame {
         runeTimer.start();
         archerAttackTimer.start();
 
-        timeRemaining = 30; // every hall has 30 seconds to complete
+        timeRemaining = 50; 
         gameTimer = new Timer(1000, e -> updateTime());  // Update every second
         gameTimer.start();
         gamePanel = new GamePanel();
