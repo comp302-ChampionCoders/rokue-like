@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BuildModeScreen extends JFrame {
-    private final int GRID_CELL_SIZE = 20; 
+    private final int GRID_CELL_SIZE = 24; 
     private final int GRID_START_X = 128; 
     private final int GRID_START_Y = 70; 
     private final int GRID_COLUMNS = 16; 
