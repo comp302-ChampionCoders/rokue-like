@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BuildModeScreen extends JFrame {
-    private final int GRID_CELL_SIZE = 24; 
+    private final int GRID_CELL_SIZE = 20; 
     private final int GRID_START_X = 128; 
     private final int GRID_START_Y = 70; 
     private final int GRID_COLUMNS = 16; 
@@ -78,7 +78,12 @@ public class BuildModeScreen extends JFrame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
     
-        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        if (gd.isFullScreenSupported()) {
+            gd.setFullScreenWindow(this);
+        } else {
+            System.err.println("Full Screen Not Supported");
+            setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        }
         setTaskbarIcon();
         loadImages();
         initializeScreen();
