@@ -33,13 +33,14 @@ public class GameScreen extends JFrame {
     private final int GRID_ROWS = 12;
     private final int GRID_COLUMNS = 16;
     private final int CELL_SIZE = 50; // Grid cell size
-    private Hero hero; // Hero nesnesi
+
+    private Hero hero; 
     private List<Monster> monsters; // Monster listesi
     private Random random;
 
     private TimerController timerController;
 
-    private Point runePosition; // Rune pozisyonu
+    private Point runePosition;
     private BufferedImage runeImage;
 
     private int timeRemaining;
@@ -54,11 +55,11 @@ public class GameScreen extends JFrame {
     private Hall currentHall;
     
     private GamePanel gamePanel;
+    private JPanel sidePanel; // Side panel for inventory, timer, hearts, and buttons
+    private JLabel[] heartLabels; // Array of heart icons for lives
+    private JLabel timerLabel; // Timer display
 
     public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
-
-        this.timerController = TimerController.getInstance();
-        initializeTimers();
 
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.allHalls = allHalls;
@@ -68,14 +69,19 @@ public class GameScreen extends JFrame {
         this.airHall = allHalls.get(3);
 
         this.currentHall = earthHall;
+        
+        timeRemaining = 50;
+
+        this.timerController = TimerController.getInstance();
+        initializeTimers();
 
         setTitle("Game Screen");
-        setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 50);
+        setSize(GRID_COLUMNS * CELL_SIZE + 250, GRID_ROWS * CELL_SIZE + 50); // Extra width for side panel
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
-        hero = new Hero(0, 0); // Hero başlangıç konumu
+        hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
         monsters = new ArrayList<>();
         random = new Random();
         loadEarthHall();
@@ -85,11 +91,105 @@ public class GameScreen extends JFrame {
        //loadRuneImage();
         spawnMonsters();
 
-        timeRemaining = 50;
-        gamePanel = new GamePanel();
-        add(gamePanel);
+        // Initialize the game panel and side panel
+        gamePanel = new GamePanel(); // grid
+        sidePanel = new JPanel();
+        sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
+        sidePanel.setBackground(new Color(100, 70, 83)); // Lighter purple background
+        sidePanel.setPreferredSize(new Dimension(250, getHeight())); // Set width of the side pane
+        
+        // Set up the side panel
+        setupSidePanel();
+
+        // Add panels to the frame
+        add(gamePanel, BorderLayout.CENTER);
+        add(sidePanel, BorderLayout.EAST);
+
+        setVisible(true);
     }
 
+    private void setupSidePanel() {
+        sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
+        sidePanel.setBackground(new Color(100, 70, 83)); // Lighter purple background
+        sidePanel.setPreferredSize(new Dimension(250, getHeight())); // Set width of the side panel
+    
+        // Pause and exit buttons (top of the side panel)
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        buttonPanel.setBackground(new Color(100, 70, 83)); // Match side panel color
+    
+        JButton pauseButton = createButton("src/resources/images/pause_button.png", e -> {
+            // Pause button action (non-functional for now)
+            System.out.println("Pause button clicked");
+        });
+    
+        JButton exitButton = createButton("src/resources/images/exit_button.png", e -> {
+            // Exit button action
+            returnToGameOverScreen.execute();
+        });
+    
+        buttonPanel.add(pauseButton);
+        buttonPanel.add(exitButton);
+        sidePanel.add(buttonPanel);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
+    
+        // Timer display (below buttons)
+        timerLabel = new JLabel("Time: " + timeRemaining + " seconds");
+        timerLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        timerLabel.setForeground(Color.WHITE);
+        timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sidePanel.add(timerLabel);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
+    
+        // Hearts for lives (below timer)
+        JPanel heartsPanel = new JPanel();
+        heartsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        heartsPanel.setBackground(new Color(100, 70, 83)); // Match side panel color
+        heartLabels = new JLabel[4]; // Max 4 hearts
+        for (int i = 0; i < heartLabels.length; i++) {
+            heartLabels[i] = new JLabel(new ImageIcon("src/resources/images/heart_full.png")); // Default full heart
+            heartsPanel.add(heartLabels[i]);
+        }
+        updateHearts(); // Update hearts based on initial lives
+        sidePanel.add(heartsPanel);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
+    
+        // Inventory (below hearts)
+        JLabel inventoryLabel = new JLabel("Inventory");
+        inventoryLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        inventoryLabel.setForeground(Color.WHITE);
+        inventoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sidePanel.add(inventoryLabel);
+        sidePanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
+    
+        // Inventory chest icon
+        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory.png"));
+        chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sidePanel.add(chestIcon);
+        sidePanel.add(Box.createVerticalGlue()); // Push content to the top
+    }
+
+    private JButton createButton(String imagePath, java.awt.event.ActionListener actionListener) {
+        JButton button = new JButton(new ImageIcon(imagePath));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.addActionListener(actionListener);
+        return button;
+    }
+
+    private void updateHearts() {
+        int lives = hero.getLives();
+        for (int i = 0; i < heartLabels.length; i++) {
+            if (i < lives) {
+                heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_full.png"));
+            } else { // bos iconlari suanda olmayan bir seyle dolduruyor bu alana bir daha bakilmali
+                heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_empty.png")); 
+            }
+        }
+    }
+    // usage of Timer Controller, instead of declaring all the time variables we have that class
     private void initializeTimers() {
         timerController.initializeGameTimers(
             () -> moveMonsters(),
@@ -103,16 +203,13 @@ public class GameScreen extends JFrame {
 
     private void updateTime() {
         timeRemaining--;
-        updateTitle();
-        
+        timerLabel.setText("Time: " + timeRemaining + " seconds");
+
         if (timeRemaining <= 0) {
             stopGame();
             SoundPlayerUtil.playGameOverJingle();
             returnToGameOverScreen.execute();
         }
-    }
-    private void updateTitle() {
-        setTitle(String.format("Game Screen - Hero has %d remaining lives, %d seconds left", hero.getLives(), timeRemaining));
     }
 
     private void loadEarthHall() {
@@ -157,14 +254,11 @@ public class GameScreen extends JFrame {
             e.printStackTrace();
         }
     }
-    
-    
 
     private void spawnMonsters() {
         monsters.add(new ArcherMonster(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS)));
     }
     
-
     private void moveMonsters() {
         Direction[] directions = Direction.values(); // Get all possible directions
         for (Monster monster : monsters) {
@@ -207,6 +301,7 @@ public class GameScreen extends JFrame {
         }
         repaint();
     }
+
     private boolean isWithinHeroProximity(int x, int y) {
         int dx = Math.abs(x - hero.getX());
         int dy = Math.abs(y - hero.getY());
@@ -248,7 +343,6 @@ public class GameScreen extends JFrame {
             repaint(); // Update the game screen
         }
     }
-    
 
     private void checkHeroMonsterCollision() {
         for (Monster monster : monsters) {
@@ -258,11 +352,11 @@ public class GameScreen extends JFrame {
                 int dy = Math.abs(monster.getY() - hero.getY());
     
                 if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
-                    // FighterMonster tek vuruşta 3 can alır
+                    // FighterMonster tek vuruşta 3 can alır 
                     hero.reduceLife();
                     hero.reduceLife();
                     hero.reduceLife();
-                    updateTitle();
+                    updateHearts();
                     System.out.println("Hero has been attacked by a Fighter monster, " + hero.getLives() + " lives remaining");
                     if (hero.getLives() <= 0) {
                         System.out.println("Hero has died. Returning to Main Menu...");
@@ -275,6 +369,7 @@ public class GameScreen extends JFrame {
             }
         }
     }
+
     // Helper method to check if there's an obstacle between archer and hero
     private boolean isPathBlocked(int archerX, int archerY, int heroX, int heroY) {
         // Check only if they're in the same row or column
@@ -295,6 +390,7 @@ public class GameScreen extends JFrame {
         }
         return false;
     }
+
     // Add this new method for archer attacks
     private void checkArcherAttacks() {
         for (Monster monster : monsters) {
@@ -308,7 +404,7 @@ public class GameScreen extends JFrame {
                     if (!isPathBlocked(monster.getX(), monster.getY(), hero.getX(), hero.getY())) {
                         hero.reduceLife();
                         gamePanel.showHeroDamagedEffect();
-                        updateTitle();
+                        updateHearts();
                         System.out.println("Hero has been shot by an Archer monster, " + hero.getLives() + " lives remaining");
                         if (hero.getLives() <= 0) {
                             System.out.println("Hero has died. Returning to Main Menu...");
