@@ -1,6 +1,7 @@
 package ui.swing;
 
 import controller.ScreenTransition;
+import controller.TimerController;
 import domain.behaviors.Direction;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
@@ -35,17 +36,13 @@ public class GameScreen extends JFrame {
     private Hero hero; // Hero nesnesi
     private List<Monster> monsters; // Monster listesi
     private Random random;
-    private Timer monsterTimer; // Monster hareketleri için timer
-    private Timer spawnTimer; // Yeni monster oluşturmak için timer
-    private Timer runeTimer; // Rune yer değiştirme için timer
+
+    private TimerController timerController;
+
     private Point runePosition; // Rune pozisyonu
     private BufferedImage runeImage;
 
-    private Timer gameTimer;
-    private int timeRemaining;  
-
-    private Timer archerAttackTimer;
-    private static final int ARCHER_ATTACK_DELAY = 1000; // 1 second in milliseconds
+    private int timeRemaining;
 
     private final ScreenTransition returnToGameOverScreen;
     private ArrayList<Hall> allHalls = new ArrayList<>();
@@ -59,6 +56,10 @@ public class GameScreen extends JFrame {
     private GamePanel gamePanel;
 
     public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
+
+        this.timerController = TimerController.getInstance();
+        initializeTimers();
+
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.allHalls = allHalls;
         this.earthHall = allHalls.get(0);
@@ -83,20 +84,21 @@ public class GameScreen extends JFrame {
 
        //loadRuneImage();
         spawnMonsters();
-        monsterTimer = new Timer(500, e -> moveMonsters()); // Timer her 500ms monster hareketi için
-        spawnTimer = new Timer(8000, e -> addRandomMonster()); // Her 8 saniyede bir monster ekle
-        runeTimer = new Timer(5000, e -> teleportRune()); // Her 5 saniyede rune taşı
-        archerAttackTimer = new Timer(ARCHER_ATTACK_DELAY, e -> checkArcherAttacks());
-        monsterTimer.start();
-        spawnTimer.start();
-        runeTimer.start();
-        archerAttackTimer.start();
 
-        timeRemaining = 50; 
-        gameTimer = new Timer(1000, e -> updateTime());  // Update every second
-        gameTimer.start();
+        timeRemaining = 50;
         gamePanel = new GamePanel();
         add(gamePanel);
+    }
+
+    private void initializeTimers() {
+        timerController.initializeGameTimers(
+            () -> moveMonsters(),
+            () -> addRandomMonster(),
+            () -> teleportRune(),
+            () -> checkArcherAttacks(),
+            () -> updateTime()
+        );
+        timerController.startTimers();
     }
 
     private void updateTime() {
@@ -324,12 +326,8 @@ public class GameScreen extends JFrame {
     }
     
     private void stopGame() {
-        monsterTimer.stop();
-        spawnTimer.stop();
-        runeTimer.stop();
-        archerAttackTimer.stop();
-        gameTimer.stop();
-        dispose(); 
+        timerController.cleanup();
+        dispose();
     }
 
     private class GamePanel extends JPanel implements KeyListener, MouseListener {
