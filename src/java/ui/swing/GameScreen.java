@@ -1,6 +1,7 @@
 package ui.swing;
 
 import controller.ScreenTransition;
+import controller.TimerController;
 import domain.behaviors.Direction;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
@@ -15,6 +16,7 @@ import ui.utils.SoundPlayerUtil;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -31,21 +33,18 @@ import javax.swing.*;
 public class GameScreen extends JFrame {
     private final int GRID_ROWS = 12;
     private final int GRID_COLUMNS = 16;
-    private final int CELL_SIZE = 50; // Grid cell size
-    private Hero hero; // Hero nesnesi
-    private List<Monster> monsters; // Monster listesi
+    private final int CELL_SIZE = 50;
+
+    private Hero hero; 
+    private List<Monster> monsters; 
     private Random random;
-    private Timer monsterTimer; // Monster hareketleri için timer
-    private Timer spawnTimer; // Yeni monster oluşturmak için timer
-    private Timer runeTimer; // Rune yer değiştirme için timer
-    private Point runePosition; // Rune pozisyonu
+
+    private TimerController timerController;
+
+    private Point runePosition;
     private BufferedImage runeImage;
 
-    private Timer gameTimer;
-    private int timeRemaining;  
-
-    private Timer archerAttackTimer;
-    private static final int ARCHER_ATTACK_DELAY = 1000; // 1 second in milliseconds
+    private int timeRemaining;
 
     private final ScreenTransition returnToGameOverScreen;
     private ArrayList<Hall> allHalls = new ArrayList<>();
@@ -57,8 +56,13 @@ public class GameScreen extends JFrame {
     private Hall currentHall;
     
     private GamePanel gamePanel;
+    private JPanel sidePanel; // Side panel for inventory, timer, hearts, and buttons
+    private JLabel[] heartLabels; // Array of heart icons for lives
+    private JLabel timerLabel; // Timer display
+    private Font timerFont;
 
     public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
+
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.allHalls = allHalls;
         this.earthHall = allHalls.get(0);
@@ -67,14 +71,36 @@ public class GameScreen extends JFrame {
         this.airHall = allHalls.get(3);
 
         this.currentHall = earthHall;
+        
+        timeRemaining = 50;
+        this.timerController = TimerController.getInstance();
+        initializeTimers();
 
+        try {
+            timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(32f);
+        } catch (FontFormatException | IOException e1) {
+            timerFont = new Font("Arial", Font.BOLD, 24);
+            e1.printStackTrace();
+        }
+
+        setUndecorated(true); 
         setTitle("Game Screen");
-        setSize(GRID_COLUMNS * CELL_SIZE + 50, GRID_ROWS * CELL_SIZE + 50);
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+    
+        if (gd.isFullScreenSupported()) {
+            gd.setFullScreenWindow(this);
+        } else {
+            System.err.println("Full Screen Not Supported");
+            setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        }
+        //setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
-        hero = new Hero(0, 0); // Hero başlangıç konumu
+        hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
         monsters = new ArrayList<>();
         random = new Random();
         loadEarthHall();
@@ -83,34 +109,178 @@ public class GameScreen extends JFrame {
 
        //loadRuneImage();
         spawnMonsters();
-        monsterTimer = new Timer(500, e -> moveMonsters()); // Timer her 500ms monster hareketi için
-        spawnTimer = new Timer(8000, e -> addRandomMonster()); // Her 8 saniyede bir monster ekle
-        runeTimer = new Timer(5000, e -> teleportRune()); // Her 5 saniyede rune taşı
-        archerAttackTimer = new Timer(ARCHER_ATTACK_DELAY, e -> checkArcherAttacks());
-        monsterTimer.start();
-        spawnTimer.start();
-        runeTimer.start();
-        archerAttackTimer.start();
 
-        timeRemaining = 50; 
-        gameTimer = new Timer(1000, e -> updateTime());  // Update every second
-        gameTimer.start();
-        gamePanel = new GamePanel();
-        add(gamePanel);
+        gamePanel = new GamePanel(); 
+        sidePanel = new JPanel();
+
+        setupSidePanel();
+
+        add(gamePanel, BorderLayout.CENTER);
+        add(sidePanel, BorderLayout.EAST);
+
+
+        setVisible(true);
+    }
+
+    private void setupSidePanel() {
+
+        sidePanel.setLayout(null); 
+        sidePanel.setBackground(new Color(66, 40, 53)); 
+        sidePanel.setPreferredSize(new Dimension(350, getHeight()));
+
+        //sidePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 100));
+    
+        int gridHeight = GRID_ROWS * CELL_SIZE; 
+        int gridOffsetY = (getHeight() - gridHeight) / 2; 
+    
+        JPanel containerPanel = new JPanel();
+        containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
+        containerPanel.setBackground(new Color(100, 70, 83)); 
+        containerPanel.setBounds(0, gridOffsetY, 200, gridHeight);
+    
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        buttonPanel.setBackground(new Color(100, 70, 83));
+    
+        JButton pauseButton = createButton("src/resources/images/pause_button.png");
+
+        pauseButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                pauseButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+            }
+            public void mouseExited(MouseEvent e) {
+                pauseButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        pauseButton.addActionListener(e -> System.out.println("Pause button clicked"));
+    
+        JButton exitButton = createButton("src/resources/images/exit_button.png");
+
+        exitButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                exitButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+            }
+            public void mouseExited(MouseEvent e) {
+                exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        exitButton.addActionListener(e -> {
+            stopGame();
+            returnToGameOverScreen.execute();
+        });
+    
+        buttonPanel.add(pauseButton);
+        buttonPanel.add(exitButton);
+    
+        // Timer display
+        // Timer header (icon + "Time")
+        JLabel timerHeader = new JLabel();
+        //timerHeader.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        timerHeader.setIcon(resizeIcon(new ImageIcon("src/resources/images/clock_icon.png"), 32, 32));
+        
+        timerHeader.setText("TIME: ");
+        timerHeader.setFont(timerFont); 
+        timerHeader.setForeground(Color.WHITE); 
+        timerHeader.setHorizontalTextPosition(SwingConstants.RIGHT); 
+        timerHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Timer Label (kalan süre)
+        timerLabel = new JLabel(timeRemaining + " seconds");
+        timerLabel.setFont(timerFont); 
+        timerLabel.setForeground(Color.WHITE); 
+        timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    
+        // Hearts panel
+        JPanel heartsPanel = new JPanel();
+        heartsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        heartsPanel.setBackground(new Color(100, 70, 83));
+        heartLabels = new JLabel[4];
+        for (int i = 0; i < heartLabels.length; i++) {
+            heartLabels[i] = new JLabel(new ImageIcon("src/resources/images/heart_full.png"));
+            heartsPanel.add(heartLabels[i]);
+        }
+        updateHearts();
+        heartsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
+    
+        // Inventory label
+      /*   JLabel inventoryLabel = new JLabel("Inventory");
+        inventoryLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        inventoryLabel.setForeground(Color.WHITE);8
+        inventoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);*/
+    
+        // Inventory chest icon
+        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory.png"));
+        chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+
+        containerPanel.add(buttonPanel); 
+        containerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
+        containerPanel.add(timerHeader);
+        containerPanel.add(Box.createRigidArea(new Dimension(0, 5))); 
+        containerPanel.add(timerLabel);
+        containerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        containerPanel.add(heartsPanel);
+        containerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
+        //containerPanel.add(inventoryLabel);
+        //containerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
+        containerPanel.add(chestIcon);
+        containerPanel.add(Box.createVerticalGlue()); // Alt boşluk
+    
+        // SidePanel'e container panelini ekleme
+        sidePanel.add(containerPanel);
+    }
+    
+
+    private JButton createButton(String imagePath) {
+        JButton button = new JButton(new ImageIcon(imagePath));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        return button;
+    }
+
+    private Icon resizeIcon(Icon icon, int width, int height) {
+        Image img = ((ImageIcon) icon).getImage();
+        Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImg);
+    }
+    
+
+    private void updateHearts() {
+        int lives = hero.getLives();
+        for (int i = 0; i < heartLabels.length; i++) {
+            if (i < lives) {
+                heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_full.png"));
+            } else { // bos iconlari suanda olmayan bir seyle dolduruyor bu alana bir daha bakilmali
+                heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_empty.png")); 
+            }
+        }
+    }
+    // usage of Timer Controller, instead of declaring all the time variables we have that class
+    private void initializeTimers() {
+        timerController.initializeGameTimers(
+            () -> moveMonsters(),
+            () -> addRandomMonster(),
+            () -> teleportRune(),
+            () -> checkArcherAttacks(),
+            () -> updateTime()
+        );
+        timerController.startTimers();
     }
 
     private void updateTime() {
         timeRemaining--;
-        updateTitle();
-        
+        timerLabel.setText(timeRemaining + " seconds");
+
         if (timeRemaining <= 0) {
             stopGame();
             SoundPlayerUtil.playGameOverJingle();
             returnToGameOverScreen.execute();
         }
-    }
-    private void updateTitle() {
-        setTitle(String.format("Game Screen - Hero has %d remaining lives, %d seconds left", hero.getLives(), timeRemaining));
     }
 
     private void loadEarthHall() {
@@ -155,14 +325,11 @@ public class GameScreen extends JFrame {
             e.printStackTrace();
         }
     }
-    
-    
 
     private void spawnMonsters() {
         monsters.add(new ArcherMonster(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS)));
     }
     
-
     private void moveMonsters() {
         Direction[] directions = Direction.values(); // Get all possible directions
         for (Monster monster : monsters) {
@@ -205,6 +372,7 @@ public class GameScreen extends JFrame {
         }
         repaint();
     }
+
     private boolean isWithinHeroProximity(int x, int y) {
         int dx = Math.abs(x - hero.getX());
         int dy = Math.abs(y - hero.getY());
@@ -246,7 +414,6 @@ public class GameScreen extends JFrame {
             repaint(); // Update the game screen
         }
     }
-    
 
     private void checkHeroMonsterCollision() {
         for (Monster monster : monsters) {
@@ -256,11 +423,11 @@ public class GameScreen extends JFrame {
                 int dy = Math.abs(monster.getY() - hero.getY());
     
                 if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
-                    // FighterMonster tek vuruşta 3 can alır
+                    // FighterMonster tek vuruşta 3 can alır 
                     hero.reduceLife();
                     hero.reduceLife();
                     hero.reduceLife();
-                    updateTitle();
+                    updateHearts();
                     System.out.println("Hero has been attacked by a Fighter monster, " + hero.getLives() + " lives remaining");
                     if (hero.getLives() <= 0) {
                         System.out.println("Hero has died. Returning to Main Menu...");
@@ -273,6 +440,7 @@ public class GameScreen extends JFrame {
             }
         }
     }
+
     // Helper method to check if there's an obstacle between archer and hero
     private boolean isPathBlocked(int archerX, int archerY, int heroX, int heroY) {
         // Check only if they're in the same row or column
@@ -293,6 +461,7 @@ public class GameScreen extends JFrame {
         }
         return false;
     }
+
     // Add this new method for archer attacks
     private void checkArcherAttacks() {
         for (Monster monster : monsters) {
@@ -306,7 +475,7 @@ public class GameScreen extends JFrame {
                     if (!isPathBlocked(monster.getX(), monster.getY(), hero.getX(), hero.getY())) {
                         hero.reduceLife();
                         gamePanel.showHeroDamagedEffect();
-                        updateTitle();
+                        updateHearts();
                         System.out.println("Hero has been shot by an Archer monster, " + hero.getLives() + " lives remaining");
                         if (hero.getLives() <= 0) {
                             System.out.println("Hero has died. Returning to Main Menu...");
@@ -324,12 +493,8 @@ public class GameScreen extends JFrame {
     }
     
     private void stopGame() {
-        monsterTimer.stop();
-        spawnTimer.stop();
-        runeTimer.stop();
-        archerAttackTimer.stop();
-        gameTimer.stop();
-        dispose(); 
+        timerController.cleanup();
+        dispose();
     }
 
     private class GamePanel extends JPanel implements KeyListener, MouseListener {
@@ -360,32 +525,42 @@ public class GameScreen extends JFrame {
         }
 
         @Override
+ 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            drawGrid(g);
-            drawArcherRanges(g);
-            drawEarthHallObjects(g);
-            drawHero(g);
-            drawMonsters(g);
-            drawRune(g);
+
+            int panelWidth = getWidth();
+            int panelHeight = getHeight();
+
+            int offsetX = (panelWidth - (GRID_COLUMNS * CELL_SIZE)) / 2; 
+            int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2; 
+
+            drawGrid(g, offsetX, offsetY);
+            drawArcherRanges(g, offsetX, offsetY);
+            drawEarthHallObjects(g, offsetX, offsetY);
+            drawHero(g, offsetX, offsetY);
+            drawMonsters(g, offsetX, offsetY);
+            drawRune(g, offsetX, offsetY);
         }
 
-        private void drawGrid(Graphics g) {
+        // Grid çizimi için güncellenmiş metot
+        private void drawGrid(Graphics g, int offsetX, int offsetY) {
             g.setColor(Color.GRAY);
             for (int i = 0; i <= GRID_ROWS; i++) {
-                g.drawLine(0, i * CELL_SIZE, GRID_COLUMNS * CELL_SIZE, i * CELL_SIZE); // Horizontal lines
+                g.drawLine(offsetX, offsetY + i * CELL_SIZE, offsetX + GRID_COLUMNS * CELL_SIZE, offsetY + i * CELL_SIZE); 
             }
             for (int j = 0; j <= GRID_COLUMNS; j++) {
-                g.drawLine(j * CELL_SIZE, 0, j * CELL_SIZE, GRID_ROWS * CELL_SIZE); // Vertical lines
+                g.drawLine(offsetX + j * CELL_SIZE, offsetY, offsetX + j * CELL_SIZE, offsetY + GRID_ROWS * CELL_SIZE); 
             }
         }
 
-        private void drawHero(Graphics g) {
+        // Kahramanı çizerken offset kullanımı
+        private void drawHero(Graphics g, int offsetX, int offsetY) {
             if (heroImage != null) {
-                g.drawImage(heroImage, hero.getX() * CELL_SIZE, hero.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+                g.drawImage(heroImage, offsetX + hero.getX() * CELL_SIZE, offsetY + hero.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
             } else {
                 g.setColor(Color.RED);
-                g.fillRect(hero.getX() * CELL_SIZE, hero.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                g.fillRect(offsetX + hero.getX() * CELL_SIZE, offsetY + hero.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
 
@@ -413,28 +588,9 @@ public class GameScreen extends JFrame {
         }
         
         
-
-
-        private void drawEarthHallObjects(Graphics g) {
-            Map<Point, GameObject> earthObjects = earthHall.getObjects();
-            for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
-                Point position = entry.getKey();
-                GameObject gameObject = entry.getValue();
-                if (gameObject.getImage() != null) {
-                    g.drawImage(
-                        gameObject.getImage(),
-                        position.x * CELL_SIZE,
-                        position.y * CELL_SIZE,
-                        CELL_SIZE,
-                        CELL_SIZE,
-                        this
-                    );
-                }
-            }
-        }
         
 
-        private void drawMonsters(Graphics g) {
+        private void drawMonsters(Graphics g, int offsetX, int offsetY) {
             for (Monster monster : monsters) {
                 BufferedImage monsterImage = null;
                 if (monster instanceof ArcherMonster) {
@@ -445,86 +601,105 @@ public class GameScreen extends JFrame {
                     monsterImage = wizardImage;
                 }
                 if (monsterImage != null) {
-                    g.drawImage(monsterImage, monster.getX() * CELL_SIZE, monster.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+                    g.drawImage(monsterImage, offsetX + monster.getX() * CELL_SIZE, offsetY + monster.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
                 } else {
                     g.setColor(Color.BLUE);
-                    g.fillRect(monster.getX() * CELL_SIZE, monster.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                    g.fillRect(offsetX + monster.getX() * CELL_SIZE, offsetY + monster.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
         }
-
-        private void drawRune(Graphics g) {
+        
+        private void drawRune(Graphics g, int offsetX, int offsetY) {
             if (runeImage != null) {
-                g.drawImage(runeImage, runePosition.x * CELL_SIZE, runePosition.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+                g.drawImage(runeImage, offsetX + runePosition.x * CELL_SIZE, offsetY + runePosition.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
             } else {
                 g.setColor(Color.YELLOW);
-                g.fillRect(runePosition.x * CELL_SIZE, runePosition.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                g.fillRect(offsetX + runePosition.x * CELL_SIZE, offsetY + runePosition.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
-        private void drawArcherRanges(Graphics g) {
+        
+        private void drawEarthHallObjects(Graphics g, int offsetX, int offsetY) {
+            Map<Point, GameObject> earthObjects = earthHall.getObjects();
+            for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
+                Point position = entry.getKey();
+                GameObject gameObject = entry.getValue();
+                if (gameObject.getImage() != null) {
+                    g.drawImage(
+                        gameObject.getImage(),
+                        offsetX + position.x * CELL_SIZE,
+                        offsetY + position.y * CELL_SIZE,
+                        CELL_SIZE,
+                        CELL_SIZE,
+                        this
+                    );
+                }
+            }
+        }
+        
+        private void drawArcherRanges(Graphics g, int offsetX, int offsetY) {
             g.setColor(new Color(255, 0, 0, 80));  // Semi-transparent red
-            
+        
             for (Monster monster : monsters) {
                 if (monster instanceof ArcherMonster) {
                     int monsterX = monster.getX();
                     int monsterY = monster.getY();
-                    
-                    // Check each direction (up, down, left, right) up to 2 squares
+        
                     for (int i = 1; i <= 3; i++) {
                         // Up
                         if (monsterY - i >= 0 && !isPositionOccupied(monsterX, monsterY - i)) {
-                            g.fillRect(monsterX * CELL_SIZE, 
-                                     (monsterY - i) * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect(offsetX + monsterX * CELL_SIZE, offsetY + (monsterY - i) * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
-                        
                         // Down
                         if (monsterY + i < GRID_ROWS && !isPositionOccupied(monsterX, monsterY + i)) {
-                            g.fillRect(monsterX * CELL_SIZE, 
-                                     (monsterY + i) * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect(offsetX + monsterX * CELL_SIZE, offsetY + (monsterY + i) * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
-                        
                         // Left
                         if (monsterX - i >= 0 && !isPositionOccupied(monsterX - i, monsterY)) {
-                            g.fillRect((monsterX - i) * CELL_SIZE, 
-                                     monsterY * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect(offsetX + (monsterX - i) * CELL_SIZE, offsetY + monsterY * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
-                        
                         // Right
                         if (monsterX + i < GRID_COLUMNS && !isPositionOccupied(monsterX + i, monsterY)) {
-                            g.fillRect((monsterX + i) * CELL_SIZE, 
-                                     monsterY * CELL_SIZE, 
-                                     CELL_SIZE, CELL_SIZE);
+                            g.fillRect(offsetX + (monsterX + i) * CELL_SIZE, offsetY + monsterY * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
                     }
                 }
             }
         }
+        
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            int x = e.getX() / CELL_SIZE;
-            int y = e.getY() / CELL_SIZE;
+            int panelWidth = getWidth();
+            int panelHeight = getHeight();
+
+            int offsetX = (panelWidth - (GRID_COLUMNS * CELL_SIZE)) / 2 - 50; // X ofset
+            int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2;        // Y ofset
+
+            int x = (e.getX() - offsetX) / CELL_SIZE;
+            int y = (e.getY() - offsetY) / CELL_SIZE;
+
+
+            if (x < 0 || x >= GRID_COLUMNS || y < 0 || y >= GRID_ROWS) {
+
+                return;
+            }
 
             Point clickPoint = new Point(x, y);
             Map<Point, GameObject> objects = currentHall.getObjects();
 
-            int dx = Math.abs(((int)clickPoint.getX()) - hero.getX());
-            int dy = Math.abs(((int)clickPoint.getY()) - hero.getY());
-    
-            if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)){
+            int dx = Math.abs(clickPoint.x - hero.getX());
+            int dy = Math.abs(clickPoint.y - hero.getY());
 
+            // Kahramanın 1 birim yakınında olma kontrolü
+            if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
                 if (objects.containsKey(clickPoint)) {
                     GameObject clickedObject = objects.get(clickPoint);
-                    System.out.println("Clicked on object at: (" + ((int)clickPoint.getY()) + ", " + ((int)clickPoint.getX()) + ")");
+                    System.out.println("Clicked on object at: (" + clickPoint.y + ", " + clickPoint.x + ")");
                     handleObjectClick(clickedObject);
                 }
             }
-            
-            
         }
+
 
         
 
