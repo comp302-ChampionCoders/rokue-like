@@ -212,7 +212,7 @@ public class GameScreen extends JFrame {
         inventoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);*/
     
         // Inventory chest icon
-        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory.png"));
+        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x.png"));
         chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
     
 
