@@ -77,7 +77,7 @@ public class GameScreen extends JFrame {
         initializeTimers();
 
         try {
-            timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(32f);
+            timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(34f);
         } catch (FontFormatException | IOException e1) {
             timerFont = new Font("Arial", Font.BOLD, 24);
             e1.printStackTrace();
@@ -127,8 +127,6 @@ public class GameScreen extends JFrame {
         sidePanel.setLayout(null); 
         sidePanel.setBackground(new Color(66, 40, 53)); 
         sidePanel.setPreferredSize(new Dimension(350, getHeight()));
-
-        //sidePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 100));
     
         int gridHeight = GRID_ROWS * CELL_SIZE; 
         int gridOffsetY = (getHeight() - gridHeight) / 2; 
@@ -139,7 +137,7 @@ public class GameScreen extends JFrame {
         containerPanel.setBounds(0, gridOffsetY, 200, gridHeight);
     
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
         buttonPanel.setBackground(new Color(100, 70, 83));
     
         JButton pauseButton = createButton("src/resources/images/pause_button.png");
@@ -153,7 +151,10 @@ public class GameScreen extends JFrame {
             }
         });
 
-        pauseButton.addActionListener(e -> System.out.println("Pause button clicked"));
+        pauseButton.addActionListener(e -> 
+        {System.out.println("Pause button clicked");
+        SoundPlayerUtil.playClickSound();}
+        );
     
         JButton exitButton = createButton("src/resources/images/exit_button.png");
 
@@ -168,6 +169,7 @@ public class GameScreen extends JFrame {
 
         exitButton.addActionListener(e -> {
             stopGame();
+            SoundPlayerUtil.playClickSound();
             returnToGameOverScreen.execute();
         });
     
@@ -195,7 +197,7 @@ public class GameScreen extends JFrame {
     
         // Hearts panel
         JPanel heartsPanel = new JPanel();
-        heartsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        heartsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
         heartsPanel.setBackground(new Color(100, 70, 83));
         heartLabels = new JLabel[4];
         for (int i = 0; i < heartLabels.length; i++) {
@@ -203,7 +205,6 @@ public class GameScreen extends JFrame {
             heartsPanel.add(heartLabels[i]);
         }
         updateHearts();
-        heartsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
     
         // Inventory label
       /*   JLabel inventoryLabel = new JLabel("Inventory");
@@ -212,21 +213,17 @@ public class GameScreen extends JFrame {
         inventoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);*/
     
         // Inventory chest icon
-        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x.png"));
+        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x_3.png"));
         chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
     
-
+        containerPanel.add(Box.createRigidArea(new Dimension(0, 60)));
         containerPanel.add(buttonPanel); 
-        containerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
         containerPanel.add(timerHeader);
         containerPanel.add(Box.createRigidArea(new Dimension(0, 5))); 
         containerPanel.add(timerLabel);
-        containerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         containerPanel.add(heartsPanel);
-        containerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
-        //containerPanel.add(inventoryLabel);
-        //containerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Spacer
         containerPanel.add(chestIcon);
+        containerPanel.add(Box.createRigidArea(new Dimension(0, 80)));
         containerPanel.add(Box.createVerticalGlue()); // Alt boşluk
     
         // SidePanel'e container panelini ekleme
@@ -255,7 +252,7 @@ public class GameScreen extends JFrame {
         for (int i = 0; i < heartLabels.length; i++) {
             if (i < lives) {
                 heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_full.png"));
-            } else { // bos iconlari suanda olmayan bir seyle dolduruyor bu alana bir daha bakilmali
+            } else { 
                 heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_empty.png")); 
             }
         }
@@ -543,7 +540,6 @@ public class GameScreen extends JFrame {
             drawRune(g, offsetX, offsetY);
         }
 
-        // Grid çizimi için güncellenmiş metot
         private void drawGrid(Graphics g, int offsetX, int offsetY) {
             g.setColor(Color.GRAY);
             for (int i = 0; i <= GRID_ROWS; i++) {
@@ -554,7 +550,6 @@ public class GameScreen extends JFrame {
             }
         }
 
-        // Kahramanı çizerken offset kullanımı
         private void drawHero(Graphics g, int offsetX, int offsetY) {
             if (heroImage != null) {
                 g.drawImage(heroImage, offsetX + hero.getX() * CELL_SIZE, offsetY + hero.getY() * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
