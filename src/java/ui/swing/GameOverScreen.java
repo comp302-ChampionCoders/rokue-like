@@ -1,5 +1,6 @@
 package ui.swing;
 
+import controller.HallController;
 import controller.ScreenTransition;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
@@ -16,10 +17,12 @@ public class GameOverScreen extends JFrame {
     private final ScreenTransition restartGame;
     private final ScreenTransition returnToMenu;
     private Font customFont;
+    private HallController hallController;
 
-    public GameOverScreen(ScreenTransition restartGame, ScreenTransition returnToMenu) {
+    public GameOverScreen(ScreenTransition restartGame, ScreenTransition returnToMenu, HallController hallController) {
         this.restartGame = restartGame;
         this.returnToMenu = returnToMenu;
+        this.hallController = hallController;
 
         initializeFrame();
         createMainPanel();
@@ -77,6 +80,7 @@ public class GameOverScreen extends JFrame {
             SoundPlayerUtil.playClickSound();
             restartGame.execute();});
         menuButton.addActionListener(e -> {
+            hallController.resetHalls();
             SoundPlayerUtil.playClickSound();
             returnToMenu.execute();
         });

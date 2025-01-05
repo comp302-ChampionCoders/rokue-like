@@ -3,6 +3,7 @@ package ui.swing;
 
 import javax.swing.*;
 
+import controller.HallController;
 import controller.ModeController;
 import controller.ScreenTransition;
 import domain.gameobjects.GameObject;
@@ -44,11 +45,6 @@ public class BuildModeScreen extends JFrame {
 
     private boolean gridVisible = false; 
 
-    private Hall waterHall = new Hall(16, 12, null, HallType.WATER);
-    private Hall earthHall = new Hall(16, 12, null, HallType.EARTH);
-    private Hall fireHall = new Hall(16, 12, null, HallType.FIRE);
-    private Hall airHall = new Hall(16, 12, null, HallType.AIR);
-
     private final String[] spriteFiles = {
             "src/resources/images/chest_50x50.png",
             "src/resources/images/skull_50x50.png",
@@ -63,13 +59,13 @@ public class BuildModeScreen extends JFrame {
     private BufferedImage chestImage; 
     private final ScreenTransition onExit;
     private final ScreenTransition onSwitchToPlayMode;
-    private ArrayList<Hall> allHalls = new ArrayList<>();
-
+    private HallController hallController;
     
-    public BuildModeScreen(ScreenTransition onExit, ScreenTransition onSwitchToPlayMode) {
+    public BuildModeScreen(ScreenTransition onExit, ScreenTransition onSwitchToPlayMode, HallController hallController) {
         this.onExit = onExit;
         this.onSwitchToPlayMode = onSwitchToPlayMode;
-        addHalls();
+        this.hallController = hallController;
+    
         setTitle("Build Mode");
         setUndecorated(true); 
         setResizable(true);
@@ -88,27 +84,6 @@ public class BuildModeScreen extends JFrame {
         loadImages();
         initializeScreen();
     }
-
-    public ArrayList<Hall> getAllHalls() {
-        return allHalls;
-    }
-    
-    private void addHalls(){
-        allHalls.add(earthHall);
-        allHalls.add(waterHall);
-        allHalls.add(fireHall);
-        allHalls.add(airHall);
-    }
-
-    /*private void setAppIcon() {
-        try {
-            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png"));
-            setIconImage(logoImage);
-        } catch (IOException e) {
-            System.err.println("Failed to load the logo image: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }*/
 
     private void setTaskbarIcon() {
         try {
@@ -188,6 +163,7 @@ public class BuildModeScreen extends JFrame {
             });
             
             exitButton.addActionListener(e -> {
+                hallController.resetHalls();
                 SoundPlayerUtil.playClickSound();
                 onExit.execute();
             });
@@ -242,26 +218,6 @@ public class BuildModeScreen extends JFrame {
         }
     }
     
-
-/*private void randomizeObjects() {
-    // Example logic: Randomize objects in all halls
-    Random random = new Random();
-    for (Hall hall : allHalls) {
-        hall.getObjects().forEach((position, gameObject) -> {
-            int newX = random.nextInt(GRID_COLUMNS);
-            int newY = random.nextInt(GRID_ROWS);
-            if (hall.isValidPosition(newX, newY)) {
-                hall.removeObject(gameObject.getX(), gameObject.getY());
-                gameObject.setPosition(newX, newY);
-                hall.addObject(gameObject, newX, newY);
-            }
-        });
-    }
-    System.out.println("Objects randomized!");
-    background.repaint(); // Refresh the screen
-}*/
-
-
     private void addBottomWalls(JPanel parent) {
         int bottomWallY = GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE; 
         int wallWidth = GRID_COLUMNS * GRID_CELL_SIZE + 17; 
@@ -302,7 +258,7 @@ public class BuildModeScreen extends JFrame {
         int wallOffset = 8;
         int topWallWidth = GRID_COLUMNS * GRID_CELL_SIZE; 
         int sideWallWidth = wallOffset; // Sidewall width (8 piksel)
-        int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 40;  // Sidewall height (grid boyunca uzanacak)
+        int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 40;
     
         try {
             BufferedImage sideWallImage = ImageIO.read(new File("src/resources/images/sidewall.png"));
@@ -465,10 +421,10 @@ public class BuildModeScreen extends JFrame {
     
     private void addHallLabels(JPanel parent) {
         int[][] labelPositions = {
-                {GRID_START_X , GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE+40},        // Hall Of Water
-                {GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Earth
-                {GRID_START_X , GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Fire
-                {GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X + GRID_ROWS * GRID_CELL_SIZE+40} // Hall Of Air
+                {getGridStart("waterHall")[0] , getGridStart("waterHall")[1] + GRID_ROWS * GRID_CELL_SIZE+40},        // Hall Of Water
+                {getGridStart("earthHall")[0], getGridStart("earthHall")[1] + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Earth
+                {getGridStart("fireHall")[0] , getGridStart("fireHall")[1] + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Fire
+                {getGridStart("airHall")[0], getGridStart("airHall")[1]+ GRID_ROWS * GRID_CELL_SIZE+40} // Hall Of Air
         };
     
         String[] labelFiles = {
@@ -495,17 +451,48 @@ public class BuildModeScreen extends JFrame {
             }
         }
     }
+
+    private int[] getGridStart(String hall) {
+        switch (hall) {
+            case "waterHall":
+                return new int[]{GRID_START_X, GRID_START_Y};
+            case "earthHall":
+                return new int[]{GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y};
+            case "fireHall":
+                return new int[]{GRID_START_X, GRID_START_Y + RIGHT_GRID_START_FROM_X};
+            case "airHall":
+                return new int[]{GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X};
+            default:
+                return new int[]{0, 0}; // Default case (invalid hall)
+        }
+    }    
+
     private String getTargetHall(int x, int y) {
-        if (new Rectangle(GRID_START_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+        if (new Rectangle(getGridStart("waterHall")[0],getGridStart("waterHall")[1], GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "waterHall" ; 
-        } else if (new Rectangle(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+        } else if (new Rectangle(getGridStart("earthHall")[0],getGridStart("earthHall")[1], GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "earthHall";
-        } else if (new Rectangle(GRID_START_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+        } else if (new Rectangle(getGridStart("fireHall")[0],getGridStart("fireHall")[1], GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "fireHall";
-        } else if (new Rectangle(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
+        } else if (new Rectangle(getGridStart("airHall")[0],getGridStart("airHall")[1], GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE).contains(x, y)) {
             return "airHall";
         }
         return null;
+    }
+    
+    private Hall.HallType getHallTypeFromName(String hallName) {
+        switch (hallName.toLowerCase()) {
+            case "waterhall":
+                return Hall.HallType.WATER;
+            case "earthhall":
+                return Hall.HallType.EARTH;
+            case "firehall":
+                return Hall.HallType.FIRE;
+            case "airhall":
+                return Hall.HallType.AIR;
+            default:
+                throw new IllegalArgumentException("Invalid hall name: " + hallName);
+        }
     }
     
 
@@ -519,7 +506,6 @@ public class BuildModeScreen extends JFrame {
     
         Point backgroundLocation = background.getLocationOnScreen();
     
-        
         int spawnX = buttonLocation.x - backgroundLocation.x + plusButton.getWidth() + 10; 
         int spawnY = buttonLocation.y - backgroundLocation.y - 4;
         
@@ -534,164 +520,79 @@ public class BuildModeScreen extends JFrame {
     private void removeAfterDrag(Point position, Point exPosition ,String lastHall, int lastX, int lastY){
         if(isInsideAnyGrid(exPosition)){
             if(lastHall.equals("waterHall")){
-                lastX = (exPosition.x - GRID_START_X) / GRID_CELL_SIZE;
-                lastY = (exPosition.y - GRID_START_Y) / GRID_CELL_SIZE;
-                waterHall.removeObject(lastX, lastY);
+                lastX = (exPosition.x - getGridStart("waterHall")[0]) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - getGridStart("waterHall")[1]) / GRID_CELL_SIZE;
+                hallController.removeObjectFromHall(Hall.HallType.WATER, lastX, lastY);
             }
             else if(lastHall.equals("earthHall")){
-                lastX = (exPosition.x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                lastY = (exPosition.y - GRID_START_Y) / GRID_CELL_SIZE;
-                earthHall.removeObject(lastX, lastY);
+                lastX = (exPosition.x - getGridStart("earthHall")[0]) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - getGridStart("earthHall")[1]) / GRID_CELL_SIZE;
+                hallController.removeObjectFromHall(Hall.HallType.EARTH, lastX, lastY);
             }
             else if(lastHall.equals("fireHall")){
-                lastX = (exPosition.x - GRID_START_X) / GRID_CELL_SIZE;
-                lastY = (exPosition.y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                fireHall.removeObject(lastX, lastY);
+                lastX = (exPosition.x - getGridStart("fireHall")[0]) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - getGridStart("fireHall")[1]) / GRID_CELL_SIZE;
+                hallController.removeObjectFromHall(Hall.HallType.FIRE, lastX, lastY);
             }
             else if(lastHall.equals("airHall")){
-                lastX = (exPosition.x - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                lastY = (exPosition.y - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                airHall.removeObject(lastX, lastY);
+                lastX = (exPosition.x - getGridStart("airHall")[0]) / GRID_CELL_SIZE;
+                lastY = (exPosition.y - getGridStart("airHall")[1]) / GRID_CELL_SIZE;
+                hallController.removeObjectFromHall(Hall.HallType.AIR, lastX, lastY);
             }     
         }
     }
     
-    
-
     private void makeDraggableAndSnap(JLabel label, Image image, Image gameImage) {
-        final Point[] lastLocation = {label.getLocation()}; // last location of the object
+        final Point[] lastLocation = {label.getLocation()}; 
     
         label.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                gridVisible = true; 
+                gridVisible = true;
                 background.repaint();
-                lastLocation[0] = label.getLocation(); // save last location
+                lastLocation[0] = label.getLocation(); 
             }
     
-            
-
             @Override
             public void mouseReleased(MouseEvent e) {
                 Component c = e.getComponent();
                 Point position = c.getLocation();
     
-
-                // check
                 if (isInsideAnyGrid(position)) {
-                    int snappedX = ((position.x - GRID_START_X) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_X;
-                    int snappedY = ((position.y - GRID_START_Y) / GRID_CELL_SIZE) * GRID_CELL_SIZE + GRID_START_Y;
+                    String targetedHall = getTargetHall(position.x, position.y);
+                    String lastHall = getTargetHall(lastLocation[0].x, lastLocation[0].y);
+    
+                    int[] gridStart = getGridStart(targetedHall); 
+                    int[] lastGridStart = (lastHall != null) ? getGridStart(lastHall) : new int[]{0, 0}; 
+    
+                    int snappedX = ((position.x - gridStart[0]) / GRID_CELL_SIZE) * GRID_CELL_SIZE + gridStart[0];
+                    int snappedY = ((position.y - gridStart[1]) / GRID_CELL_SIZE) * GRID_CELL_SIZE + gridStart[1];
+    
+                    int gridX = (position.x - gridStart[0]) / GRID_CELL_SIZE;
+                    int gridY = (position.y - gridStart[1]) / GRID_CELL_SIZE;
+    
+                    int lastX = (lastLocation[0].x - lastGridStart[0]) / GRID_CELL_SIZE;
+                    int lastY = (lastLocation[0].y - lastGridStart[1]) / GRID_CELL_SIZE;
+    
+                    GameObject newObject = new GameObject(gridX, gridY, gameImage);
 
-                    String targetedHall = getTargetHall(snappedX, snappedY);
-                    String lastHall = getTargetHall(lastLocation[0].x,lastLocation[0].y);
-
-                    int gridX = -1;
-                    int gridY = -1;
-
-                    int lastX = -1;
-                    int lastY = -1;
-                
-                    if(targetedHall.equals("waterHall")){
-                        gridX = (position.x - GRID_START_X) / GRID_CELL_SIZE;
-                        gridY = (position.y - GRID_START_Y) / GRID_CELL_SIZE;
-                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
-
-                        GameObject newobjectWater = new GameObject(gridX, gridY,gameImage);
-                        
-                        if(waterHall.addObject(newobjectWater, gridX, gridY)){
-                            c.setLocation(snappedX, snappedY);
-                            SoundPlayerUtil.playObjectPlacedSound();
-                            copyInProgress = false;
+                    if (hallController.addObjectToHall(getHallTypeFromName(targetedHall), newObject)) {
+                        if (lastHall != null) {
+                            removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
                         }
-                        else{
-                            c.setLocation(lastLocation[0]);
-                            SoundPlayerUtil.playMisplacedSound();
-                            waterHall.addObject(newobjectWater, lastX, lastY);
-                            
-                        }
+                        System.out.println(targetedHall);
 
-                        System.out.println("Water Hall");
-                        waterHall.displayGrid();
-                        System.out.println(waterHall.getObjects());
-
+                        c.setLocation(snappedX, snappedY);
+                        SoundPlayerUtil.playObjectPlacedSound();
+                        copyInProgress = false;
+                        hallController.getHall(getHallTypeFromName(targetedHall)).displayGrid();;
+                    } else {
+                        c.setLocation(lastLocation[0]);
+                        SoundPlayerUtil.playMisplacedSound();
                     }
-
-                    if(targetedHall.equals("earthHall")){
-                        gridX = (snappedX - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                        gridY = (snappedY - GRID_START_Y) / GRID_CELL_SIZE;
-                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
-
-                        GameObject newobjectEarth = new GameObject(gridX, gridY, gameImage);
-
-
-                        if(earthHall.addObject(newobjectEarth, gridX, gridY)){
-                            c.setLocation(snappedX, snappedY);
-                            SoundPlayerUtil.playObjectPlacedSound();
-                            copyInProgress = false;
-                        }
-                        else{
-                            c.setLocation(lastLocation[0]);
-                            SoundPlayerUtil.playMisplacedSound();
-                            earthHall.addObject(newobjectEarth, lastX, lastY);
-                        }
-
-                        System.out.println("Earth Hall");
-                        earthHall.displayGrid();
-                        System.out.println(earthHall.getObjects());
-                    }
-
-                    if(targetedHall.equals("fireHall")){
-                        gridX = (snappedX - GRID_START_X) / GRID_CELL_SIZE;
-                        gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
-
-                        GameObject newobjectFire = new GameObject(gridX, gridY, gameImage);
-
-                        if(fireHall.addObject(newobjectFire, gridX, gridY)){
-                            c.setLocation(snappedX, snappedY);
-                            SoundPlayerUtil.playObjectPlacedSound();
-                            copyInProgress = false;
-                        }
-                        else{
-                            c.setLocation(lastLocation[0]);
-                            SoundPlayerUtil.playMisplacedSound();
-                            fireHall.addObject(newobjectFire, lastX, lastY);
-                        }
-
-                        System.out.println("Fire Hall");
-                        fireHall.displayGrid();
-                        System.out.println(fireHall.getObjects());
-                    }
-
-                    if(targetedHall.equals("airHall")){
-                        gridX = (snappedX - (GRID_START_X + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-                        gridY = (snappedY - (GRID_START_Y + RIGHT_GRID_START_FROM_X)) / GRID_CELL_SIZE;
-
-                        removeAfterDrag(position, lastLocation[0], lastHall, lastX, lastY);
-                        GameObject newobject = new GameObject(gridX, gridY, gameImage);
-
-                        if(airHall.addObject(newobject, gridX, gridY)){
-                            c.setLocation(snappedX, snappedY);
-                            SoundPlayerUtil.playObjectPlacedSound();
-                            copyInProgress = false;
-                        }
-                        else{
-                            c.setLocation(lastLocation[0]);
-                            SoundPlayerUtil.playMisplacedSound();
-                            airHall.addObject(newobject, lastX, lastY);
-                        }
-
-                        System.out.println("Air hall");
-                        airHall.displayGrid();
-                        System.out.println(airHall.getObjects());
-                    }
-                    
-                } 
-                else {
-                    // move back if not in grid
-                    SoundPlayerUtil.playMisplacedSound();
+                } else {
                     c.setLocation(lastLocation[0]);
-                    
+                    SoundPlayerUtil.playMisplacedSound();
                 }
                 gridVisible = false;
                 background.repaint();
@@ -706,7 +607,7 @@ public class BuildModeScreen extends JFrame {
             }
         });
     }
-    
+        
     private boolean isInsideAnyGrid(Point position) {
         Rectangle[] gridBounds = {
                 new Rectangle(GRID_START_X, GRID_START_Y, GRID_COLUMNS * GRID_CELL_SIZE, GRID_ROWS * GRID_CELL_SIZE), // Top-left

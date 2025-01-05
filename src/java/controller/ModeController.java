@@ -14,8 +14,10 @@ public class ModeController {
     private MainMenu mainMenu;
     private GameOverScreen gameOverScreen;
     private ArrayList<Hall> allHalls;
+    private HallController hallController;
 
-    public ModeController() {
+    public ModeController(HallController hallController) {
+        this.hallController = hallController;
         showMainMenu();
     }
 
@@ -30,18 +32,15 @@ public class ModeController {
     public void switchToBuildMode() {
         closeActiveScreens();
         if (buildModeScreen == null) {
-            buildModeScreen = new BuildModeScreen(this::showMainMenu, this::switchToPlayMode);
+            buildModeScreen = new BuildModeScreen(this::showMainMenu, this::switchToPlayMode, hallController);
         }
         buildModeScreen.setVisible(true);
     }
 
     public void switchToPlayMode() {
+        closeActiveScreens(); 
         if (gameScreen == null) {
-            if (buildModeScreen != null) {
-                allHalls = buildModeScreen.getAllHalls(); 
-                closeActiveScreens(); 
-            }
-            closeActiveScreens(); 
+            allHalls = hallController.getHalls();
             gameScreen = new GameScreen(this::switchToGameOverScreen, allHalls);
         }
         gameScreen.setVisible(true);
@@ -51,7 +50,7 @@ public class ModeController {
     public void switchToGameOverScreen() {
         closeActiveScreens(); 
         if (gameOverScreen == null) {
-            gameOverScreen = new GameOverScreen(this::switchToPlayMode, this::showMainMenu);
+            gameOverScreen = new GameOverScreen(this::switchToPlayMode, this::showMainMenu, hallController);
         }
         gameOverScreen.setVisible(true);
     }

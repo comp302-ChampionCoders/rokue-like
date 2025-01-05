@@ -785,12 +785,4 @@ public class GameScreen extends JFrame {
         @Override
         public void keyTyped(KeyEvent e) {}
     }
-
-    // public static void main(String[] args) {
-    //     SwingUtilities.invokeLater(() -> {
-    //         GameScreen screen = new GameScreen();
-    //         screen.setVisible(true);
-    //     });
-    // }
- 
 }
