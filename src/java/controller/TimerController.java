@@ -1,8 +1,8 @@
 package controller;
 
-import javax.swing.Timer;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.Timer;
 
 public class TimerController {
     private static TimerController instance;
@@ -15,6 +15,8 @@ public class TimerController {
     private static final int RUNE_TELEPORT_DELAY = 5000;
     private static final int ARCHER_ATTACK_DELAY = 1000;
     private static final int GAME_TIMER_DELAY = 1000;
+    private static final int ENCHANTMENT_SPAWN_DELAY = 12000;
+    private static final int ENCHANTMENT_REMOVE_DELAY = 6000;
 
     private TimerController() {
         timers = new HashMap<>();
@@ -32,7 +34,9 @@ public class TimerController {
                                    Runnable monsterSpawnAction,
                                    Runnable runeTeleportAction,
                                    Runnable archerAttackAction,
-                                   Runnable timeUpdateAction) {
+                                   Runnable timeUpdateAction,
+                                   Runnable enchantmentSpawnAction,
+                                   Runnable enchantmentRemoveAction) {
                                     
         timers.put("monsterMove", new Timer(MONSTER_MOVE_DELAY, e -> {
             if (!isPaused) monsterMoveAction.run();
@@ -52,6 +56,14 @@ public class TimerController {
 
         timers.put("gameTimer", new Timer(GAME_TIMER_DELAY, e -> {
             if (!isPaused) timeUpdateAction.run();
+        }));
+
+        timers.put("enchantmentSpawn", new Timer(ENCHANTMENT_SPAWN_DELAY, e -> {
+            if (!isPaused) enchantmentSpawnAction.run();
+        }));
+
+        timers.put("enchantmentRemove", new Timer(ENCHANTMENT_REMOVE_DELAY, e -> {
+            if (!isPaused) enchantmentRemoveAction.run();
         }));
     }
 

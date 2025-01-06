@@ -3,6 +3,10 @@ package ui.swing;
 import controller.ScreenTransition;
 import controller.TimerController;
 import domain.behaviors.Direction;
+import domain.enchantments.CloakOfProtection;
+import domain.enchantments.Enchantment;
+import domain.enchantments.LuringGem;
+import domain.enchantments.Reveal;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
@@ -10,9 +14,6 @@ import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
 import domain.monsters.WizardMonster;
-import ui.utils.CursorUtils;
-import ui.utils.SoundPlayerUtil;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -23,11 +24,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 
 public class GameScreen extends JFrame {
@@ -37,6 +41,7 @@ public class GameScreen extends JFrame {
 
     private Hero hero; 
     private List<Monster> monsters; 
+    private List<Enchantment> enchantments;
     private Random random;
 
     private TimerController timerController;
@@ -103,6 +108,7 @@ public class GameScreen extends JFrame {
         hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
         monsters = new ArrayList<>();
         random = new Random();
+        enchantments = new ArrayList<>();
         loadEarthHall();
         //runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
         initializeRunePosition();
@@ -264,7 +270,9 @@ public class GameScreen extends JFrame {
             () -> addRandomMonster(),
             () -> teleportRune(),
             () -> checkArcherAttacks(),
-            () -> updateTime()
+            () -> updateTime(),
+            () -> spawnEnchantment(),
+            () -> removeEnchantment()
         );
         timerController.startTimers();
     }
@@ -488,6 +496,59 @@ public class GameScreen extends JFrame {
             }
         }
     }
+
+    private void spawnEnchantment() {
+        int x, y;
+        do {
+            x = random.nextInt(GRID_COLUMNS);
+            y = random.nextInt(GRID_ROWS);
+        } while (isPositionOccupied(x, y));
+
+        // Randomly select an enchantment type
+        int enchantmentType = random.nextInt(3); // 0: Extra time, 1: Reveal, 2: Cloak of protection, 3: Luring gem, 4: Extra life
+        Enchantment enchantment;
+
+        switch (enchantmentType) {
+            
+            case 0:
+                enchantment = new Reveal(); // Highlights 4x4 area
+                break;
+            case 1:
+                enchantment = new CloakOfProtection(); // Protects from archer monsters
+                break;
+            case 2:
+                enchantment = new LuringGem(); // Distracts fighter monsters
+                break;
+            /*case 3:
+                enchantment = new ExtraLife(); // Adds 1 life
+                break;
+            case 4:
+                enchantment = new ExtraTime(); // Adds 5 seconds
+                break;*/
+            default:
+                return;
+        }
+
+        // Set enchantment position and add to the list
+        enchantment.appear(x, y);
+        enchantments.add(enchantment);
+        repaint();
+        
+    }
+
+    private void removeEnchantment() {
+        Iterator<Enchantment> iterator = enchantments.iterator();
+        while (iterator.hasNext()) {
+            Enchantment enchantment = iterator.next();
+            if (enchantment.isAvailable() && enchantment.getTimeRemaining() <= 0) {
+                enchantment.disappear();
+                iterator.remove(); // Use iterator's remove method to avoid ConcurrentModificationException
+                System.out.println(enchantment.getName() + " disappeared.");
+                repaint();
+            }
+        }
+    }
+
     
     private void stopGame() {
         timerController.cleanup();
@@ -538,6 +599,7 @@ public class GameScreen extends JFrame {
             drawHero(g, offsetX, offsetY);
             drawMonsters(g, offsetX, offsetY);
             drawRune(g, offsetX, offsetY);
+            drawEnchantments(g, offsetX, offsetY);
         }
 
         private void drawGrid(Graphics g, int offsetX, int offsetY) {
@@ -661,6 +723,26 @@ public class GameScreen extends JFrame {
             }
         }
         
+        private void drawEnchantments(Graphics g, int offsetX, int offsetY) {
+            for (Enchantment enchantment : enchantments) {
+                if (enchantment != null){
+                    BufferedImage enchantmentImage = enchantment.getImage();
+                    if (enchantmentImage != null) {
+                        g.drawImage(enchantmentImage, 
+                                    offsetX + enchantment.getX() * CELL_SIZE, 
+                                    offsetY + enchantment.getY() * CELL_SIZE, 
+                                    CELL_SIZE, CELL_SIZE, 
+                                    this);
+                    } else {
+                        g.setColor(Color.MAGENTA); // Default color for missing image
+                        g.fillRect(offsetX + enchantment.getX() * CELL_SIZE, 
+                                offsetY + enchantment.getY() * CELL_SIZE, 
+                                CELL_SIZE, CELL_SIZE);
+                    }
+                }
+            }
+        }
+        
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -673,13 +755,22 @@ public class GameScreen extends JFrame {
             int x = (e.getX() - offsetX) / CELL_SIZE;
             int y = (e.getY() - offsetY) / CELL_SIZE;
 
-
             if (x < 0 || x >= GRID_COLUMNS || y < 0 || y >= GRID_ROWS) {
 
                 return;
             }
 
             Point clickPoint = new Point(x, y);
+
+            // Check if an enchantment was clicked
+            for (Enchantment enchantment : enchantments) {
+                if (enchantment.getX() == x && enchantment.getY() == y && enchantment.isAvailable()) {
+                    System.out.println("Clicked on enchantment at: (" + x + ", " + y + ")");
+                    //handleEnchantmentClick(enchantment);
+                    return; // Exit after handling the enchantment click
+                }
+            }
+
             Map<Point, GameObject> objects = currentHall.getObjects();
 
             int dx = Math.abs(clickPoint.x - hero.getX());

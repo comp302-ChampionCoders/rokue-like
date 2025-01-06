@@ -1,7 +1,7 @@
 package domain.enchantments;
 
-import domain.gameobjects.*;
 import domain.behaviors.Direction;
+import domain.gameobjects.*;
 
 public class LuringGem extends Enchantment {
     private int throwX;
@@ -10,7 +10,7 @@ public class LuringGem extends Enchantment {
     private static final long DURATION = 5000;
 
     public LuringGem() {
-        super("Luring Gem");
+        super("Luring Gem", "src/resources/images/lure32x32.png");
     }
 
     public void throwGem(Direction direction, int distance) {
