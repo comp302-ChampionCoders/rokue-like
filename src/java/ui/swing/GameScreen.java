@@ -209,6 +209,7 @@ public class GameScreen extends JFrame {
             heartsPanel.add(heartLabels[i]);
         }
         updateHearts();
+        
     
         // Inventory label
       /*   JLabel inventoryLabel = new JLabel("Inventory");
@@ -236,10 +237,22 @@ public class GameScreen extends JFrame {
 
     for (int i = 0; i < enchantmentSlots; i++) {
         enchantmentLabels[i] = new JLabel();
+        enchantmentLabels[i].setIcon(new ImageIcon("src/resources/images/lure32x32.png"));
         enchantmentLabels[i].setBounds(startX + (i % 3) * (slotSize + gap), startY + (i / 3) * (slotSize + gap), slotSize, slotSize);
         enchantmentLabels[i].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); // Border for empty slots
         chestIcon.add(enchantmentLabels[i], Integer.valueOf(1)); // Add to the top layer (foreground)
+        updateInventory();
     }
+    //updateInventory();
+
+    //for (int j = 0; j < hero.getInventory().getItemCount("LuringGem") ; j++) {
+      //  enchantmentLabels[j].setIcon(hero.getInventory().getItems("LuringGem").get(j).getImage());
+    //} 
+
+    
+
+    
+    
 
     // Add the inventory layered pane to the side panel
     sidePanel.add(inventoryLayeredPane);
@@ -275,6 +288,18 @@ public class GameScreen extends JFrame {
         Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImg);
     }
+
+    private void updateInventory() {
+        if (hero.getInventory().hasItem("LuringGem")) {
+            enchantmentLabels[0].setIcon((new ImageIcon("src/resources/images/lure32x32.png")));
+            }
+        if (hero.getInventory().hasItem("Reveal")) {
+            enchantmentLabels[1].setIcon((new ImageIcon("src/resources/images/reveal32x32.png")));
+            }
+        if (hero.getInventory().hasItem("ExtraTime")) {
+            enchantmentLabels[2].setIcon((new ImageIcon("src/resources/images/clock_icon.png")));
+            }
+    }
     
 
     private void updateHearts() {
@@ -297,6 +322,7 @@ public class GameScreen extends JFrame {
             () -> updateTime(),
             () -> spawnEnchantment(),
             () -> removeEnchantment()
+            
         );
         timerController.startTimers();
     }
@@ -858,6 +884,7 @@ public class GameScreen extends JFrame {
             hero.getInventory().addItem(clickedEnchantment);
             enchantments.remove(clickedEnchantment);
             clickedEnchantment.disappear();
+            updateInventory();
             System.out.println("Added enchantment " + clickedEnchantment.getType() + " to inventory.");
             System.out.println(hero.getInventory().getInventoryContents());
         }
