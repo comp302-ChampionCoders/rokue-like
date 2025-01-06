@@ -1,21 +1,35 @@
 package domain.enchantments;
 
-import domain.gameobjects.*;
 import domain.behaviors.Collectible;
 import domain.behaviors.GridElement;
+import domain.gameobjects.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public abstract class Enchantment implements Collectible, GridElement {
     private String name; 
     private boolean isActive;
-    private boolean isAvailable;
     private int x,y;
     private long spawnTime;
     private static final long DISAPPEAR_TIME = 6000; //6s in ms 
+    private BufferedImage image; // Image for the enchantment
 
-    public Enchantment(String name) {
+    public Enchantment(String name, String imagePath) {
         this.name = name;
         this.isActive = false;
-        this.isAvailable = false;
+        
+        loadImage(imagePath);
+    }
+
+    private void loadImage(String imagePath) {
+        try {
+            this.image = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            System.err.println("Failed to load image for enchantment: " + name);
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -28,20 +42,20 @@ public abstract class Enchantment implements Collectible, GridElement {
 
     @Override
     public boolean canBeCollected() {
-        return isAvailable && !isActive && getTimeRemaining() > 0;
+        return isActive;
     }
 
     @Override
     public void appear(int x, int y) {
         this.x = x;
         this.y = y;
-        this.isAvailable = true;
+        this.isActive = true;
         this.spawnTime = System.currentTimeMillis();
     }
 
     @Override
     public void disappear() {
-        this.isAvailable = false;
+        this.isActive = false;
     }
     @Override
     public String getType() { return name; }
@@ -59,14 +73,18 @@ public abstract class Enchantment implements Collectible, GridElement {
 
     @Override
     public boolean isAvailable() {
-        return isAvailable && getTimeRemaining() > 0;
+        return isActive;
     }
 
     @Override
     public long getTimeRemaining() {
-        if (!isAvailable) return -1;
+        if (!isActive) return -1;
         long elapsedTime = System.currentTimeMillis() - spawnTime;
         return Math.max(0, DISAPPEAR_TIME - elapsedTime);
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 
     public String getName() {return name;}

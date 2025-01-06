@@ -176,6 +176,9 @@ public class Hall {
     
 
     // Getters
+    public HallType getHallType(){
+        return hallType;
+    }
     public boolean isLocked() { return isLocked; }
     public GridElement[][] getGrid() { return grid; }
     public List<Monster> getMonsters() { return new ArrayList<>(monsters); }

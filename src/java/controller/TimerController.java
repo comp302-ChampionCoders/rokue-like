@@ -1,13 +1,14 @@
 package controller;
 
-import javax.swing.Timer;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.Timer;
 
 public class TimerController {
     private static TimerController instance;
     private Map<String, Timer> timers;
     private boolean isPaused;
+    private int remainingTime;
 
     // Timer constants
     private static final int MONSTER_MOVE_DELAY = 500;
@@ -15,10 +16,18 @@ public class TimerController {
     private static final int RUNE_TELEPORT_DELAY = 5000;
     private static final int ARCHER_ATTACK_DELAY = 1000;
     private static final int GAME_TIMER_DELAY = 1000;
+    private static final int ENCHANTMENT_SPAWN_DELAY = 12000;
+    private static final int ENCHANTMENT_REMOVE_DELAY = 6000;
+
+    private static final int DEFAULT_GAME_TIME = 50;
+    private static final int HERO_MOVE_DELAY = 200;
+    private Timer heroMoveTimer;
+    private Runnable heroMoveAction;
 
     private TimerController() {
         timers = new HashMap<>();
         isPaused = false;
+        remainingTime = DEFAULT_GAME_TIME;
     }
 
     public static TimerController getInstance() {
@@ -32,7 +41,9 @@ public class TimerController {
                                    Runnable monsterSpawnAction,
                                    Runnable runeTeleportAction,
                                    Runnable archerAttackAction,
-                                   Runnable timeUpdateAction) {
+                                   Runnable timeUpdateAction,
+                                   Runnable enchantmentSpawnAction,
+                                   Runnable enchantmentRemoveAction) {
                                     
         timers.put("monsterMove", new Timer(MONSTER_MOVE_DELAY, e -> {
             if (!isPaused) monsterMoveAction.run();
@@ -53,6 +64,14 @@ public class TimerController {
         timers.put("gameTimer", new Timer(GAME_TIMER_DELAY, e -> {
             if (!isPaused) timeUpdateAction.run();
         }));
+
+        timers.put("enchantmentSpawn", new Timer(ENCHANTMENT_SPAWN_DELAY, e -> {
+            if (!isPaused) enchantmentSpawnAction.run();
+        }));
+
+        timers.put("enchantmentRemove", new Timer(ENCHANTMENT_REMOVE_DELAY, e -> {
+            if (!isPaused) enchantmentRemoveAction.run();
+        }));
     }
 
     public void startTimers() {
@@ -67,4 +86,34 @@ public class TimerController {
         stopTimers();
         timers.clear();
     }
+
+    public void resetGameTime() {
+        remainingTime = DEFAULT_GAME_TIME; 
+    }
+
+    public int getRemainingGameTime() {
+        return remainingTime;
+    }
+
+    public void initializeHeroTimer(Runnable moveAction) {
+        this.heroMoveAction = moveAction;
+        heroMoveTimer = new Timer(HERO_MOVE_DELAY, e -> {
+            if (!isPaused && heroMoveAction != null) {
+                heroMoveAction.run();
+            }
+        });
+    }
+    
+    public void startHeroTimer() {
+        if (heroMoveTimer != null) {
+            heroMoveTimer.start();
+        }
+    }
+    
+    public void stopHeroTimer() {
+        if (heroMoveTimer != null) {
+            heroMoveTimer.stop();
+        }
+    }
+    
 }

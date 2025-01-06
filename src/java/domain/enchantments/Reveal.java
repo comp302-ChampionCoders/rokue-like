@@ -8,7 +8,7 @@ public class Reveal extends Enchantment {
     private boolean hasHighlight;
 
     public Reveal() {
-        super("Reveal");
+        super("Reveal", "src/resources/images/reveal32x32.png");
         this.hasHighlight = false;
     }
 

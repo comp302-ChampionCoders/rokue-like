@@ -5,7 +5,7 @@ public class CloakOfProtection extends Enchantment {
     private static final int DURATION = 20000; // duration in seconds
 
     public CloakOfProtection() {
-        super("Cloak of Protection");
+        super("Cloak of Protection", "src/resources/images/cloak32x32.png");
     }
 
     @Override
