@@ -64,6 +64,12 @@ public class Hero implements Moveable, GridElement {
             setIsAlive(false);
         }
     }
+
+    public void addLife() {
+        if (this.lives != 4) {
+            this.lives++;
+        }
+    }
     public int getLives(){return lives;}
     public Inventory getInventory(){return inventory;}
 

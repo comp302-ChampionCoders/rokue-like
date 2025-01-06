@@ -1,12 +1,12 @@
 package domain.enchantments;
 
-import domain.gameobjects.*;
+import domain.gameobjects.Hero;
 
-public class ExtraTime extends Enchantment {
+public class ExtraLife extends Enchantment {
     private static final long EFFECT_DURATION = 0; // This enchantment has no active duration
 
-    public ExtraTime() {
-        super("Extra Time", "src/resources/images/clock_icon.png");
+    public ExtraLife() {
+        super("Extra Life", "src/resources/images/heart_full.png");
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ExtraTime extends Enchantment {
 
     @Override
     public boolean canBeCollected() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canBeCollected'");
+        // Define logic if needed to control when this enchantment can be collected
+        return true; // For now, it can always be collected
     }
 }
