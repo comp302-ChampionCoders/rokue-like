@@ -2,15 +2,17 @@ package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JWindow;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
+import javax.swing.SwingUtilities;
 
 import domain.gameobjects.Hall;
 import ui.swing.BuildModeScreen;
@@ -63,41 +65,54 @@ public class ModeController {
     }
 
     private void showWarning(String message) {
-        JWindow warningWindow = new JWindow();
-        warningWindow.setLayout(new BorderLayout());
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
     
-        // Uyarı mesajı etiketi
+        int windowWidth = (int) (screenWidth * 0.35);
+        int windowHeight = (int) (screenHeight * 0.2);
+    
+
+        JDialog warningDialog = new JDialog();
+        warningDialog.setLayout(new BorderLayout());
+        warningDialog.setUndecorated(true);
+        warningDialog.setModal(true);
+    
+
         JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
         messageLabel.setFont(new Font("Arial", Font.BOLD, 18));
         messageLabel.setForeground(Color.WHITE);
     
-        // Kaplama paneli
+
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(0, 0, 0, 200)); // Yarı saydam siyah arka plan
+        panel.setBackground(new Color(0, 0, 0, 200)); 
         panel.add(messageLabel, BorderLayout.CENTER);
     
-        // "OK" düğmesi
+
         JButton closeButton = new JButton("OK");
         closeButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        closeButton.addActionListener(e -> warningWindow.dispose());
+        closeButton.addActionListener(e -> warningDialog.dispose());
         panel.add(closeButton, BorderLayout.SOUTH);
     
-        warningWindow.add(panel);
+        warningDialog.add(panel);
     
-        // Pencere boyutu ve konumu
-        warningWindow.setSize(400, 200);
-        warningWindow.setLocationRelativeTo(null);
-        warningWindow.setAlwaysOnTop(true); // Her zaman üstte
-        warningWindow.setVisible(true);
+       
+        warningDialog.setSize(windowWidth, windowHeight);
+        warningDialog.setLocation(
+            (screenWidth - windowWidth) / 2, 
+            (screenHeight - windowHeight) / 2
+        );
     
-        // Uyarıyı belirli bir süre ekranda tut
-        Timer timer = new Timer(5000, e -> {
-            if (warningWindow.isVisible()) {
-                warningWindow.toFront(); // Her durumda üstte tut
-            }
+        
+        warningDialog.setAlwaysOnTop(true); 
+        warningDialog.setFocusableWindowState(true); 
+    
+        
+        SwingUtilities.invokeLater(() -> {
+            warningDialog.toFront();
+            warningDialog.setVisible(true);
         });
-        timer.setRepeats(false); 
-        timer.start();
     }
     
     
