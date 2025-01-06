@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class HallController {
     private ArrayList<Hall> halls;
     private Hero hero;
+    private Hall currentHall;
+    int i;
 
     public HallController(Hero hero) {
         this.hero = hero;
@@ -21,6 +23,23 @@ public class HallController {
         halls.add(new Hall(16, 12, hero, Hall.HallType.WATER));
         halls.add(new Hall(16, 12, hero, Hall.HallType.FIRE));
         halls.add(new Hall(16, 12, hero, Hall.HallType.AIR));
+        i = 0;
+        currentHall = halls.get(i);
+    }
+
+    public void goNextHall(){
+        if(i < 3){
+            i++;
+        }
+        currentHall = halls.get(i);
+    }
+
+    public int getIndex(){
+        return i;
+    }
+
+    public Hall getCurrentHall(){
+        return currentHall;
     }
 
     public ArrayList<Hall> getHalls() {

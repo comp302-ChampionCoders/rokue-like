@@ -8,6 +8,7 @@ public class TimerController {
     private static TimerController instance;
     private Map<String, Timer> timers;
     private boolean isPaused;
+    private int remainingTime;
 
     // Timer constants
     private static final int MONSTER_MOVE_DELAY = 500;
@@ -18,9 +19,15 @@ public class TimerController {
     private static final int ENCHANTMENT_SPAWN_DELAY = 12000;
     private static final int ENCHANTMENT_REMOVE_DELAY = 6000;
 
+    private static final int DEFAULT_GAME_TIME = 50;
+    private static final int HERO_MOVE_DELAY = 200;
+    private Timer heroMoveTimer;
+    private Runnable heroMoveAction;
+
     private TimerController() {
         timers = new HashMap<>();
         isPaused = false;
+        remainingTime = DEFAULT_GAME_TIME;
     }
 
     public static TimerController getInstance() {
@@ -79,4 +86,34 @@ public class TimerController {
         stopTimers();
         timers.clear();
     }
+
+    public void resetGameTime() {
+        remainingTime = DEFAULT_GAME_TIME; 
+    }
+
+    public int getRemainingGameTime() {
+        return remainingTime;
+    }
+
+    public void initializeHeroTimer(Runnable moveAction) {
+        this.heroMoveAction = moveAction;
+        heroMoveTimer = new Timer(HERO_MOVE_DELAY, e -> {
+            if (!isPaused && heroMoveAction != null) {
+                heroMoveAction.run();
+            }
+        });
+    }
+    
+    public void startHeroTimer() {
+        if (heroMoveTimer != null) {
+            heroMoveTimer.start();
+        }
+    }
+    
+    public void stopHeroTimer() {
+        if (heroMoveTimer != null) {
+            heroMoveTimer.stop();
+        }
+    }
+    
 }

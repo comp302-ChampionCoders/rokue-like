@@ -1,5 +1,6 @@
 package ui.swing;
 
+import controller.HallController;
 import controller.ScreenTransition;
 import controller.TimerController;
 import domain.behaviors.Direction;
@@ -52,34 +53,26 @@ public class GameScreen extends JFrame {
     private int timeRemaining;
 
     private final ScreenTransition returnToGameOverScreen;
-    private ArrayList<Hall> allHalls = new ArrayList<>();
+    //private ArrayList<Hall> allHalls = new ArrayList<>();
 
-    private Hall earthHall;
-    private Hall waterHall;
-    private Hall fireHall;
-    private Hall airHall;
-    private Hall currentHall;
+    //private Hall earthHall;
     
     private GamePanel gamePanel;
     private JPanel sidePanel; // Side panel for inventory, timer, hearts, and buttons
     private JLabel[] heartLabels; // Array of heart icons for lives
     private JLabel timerLabel; // Timer display
     private Font timerFont;
+    private HallController hallController;
 
-    public GameScreen(ScreenTransition returnToGameOverScreen, ArrayList<Hall> allHalls) {
+    public GameScreen(ScreenTransition returnToGameOverScreen, HallController hallController) {
 
         this.returnToGameOverScreen = returnToGameOverScreen;
-        this.allHalls = allHalls;
-        this.earthHall = allHalls.get(0);
-        this.waterHall = allHalls.get(1);
-        this.fireHall = allHalls.get(2);
-        this.airHall = allHalls.get(3);
-
-        this.currentHall = earthHall;
+        this.hallController = hallController;
         
-        timeRemaining = 50;
+        
         this.timerController = TimerController.getInstance();
         initializeTimers();
+        timeRemaining = timerController.getRemainingGameTime();
 
         try {
             timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(34f);
@@ -109,12 +102,12 @@ public class GameScreen extends JFrame {
         monsters = new ArrayList<>();
         random = new Random();
         enchantments = new ArrayList<>();
-        loadEarthHall();
+        loadHall();
         //runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
         initializeRunePosition();
 
        //loadRuneImage();
-        spawnMonsters();
+        //spawnMonsters();
 
         gamePanel = new GamePanel(); 
         sidePanel = new JPanel();
@@ -179,6 +172,11 @@ public class GameScreen extends JFrame {
             returnToGameOverScreen.execute();
         });
     
+        JButton nextHallButton = new JButton("Next");
+
+        nextHallButton.addActionListener(e -> goNextHall());
+
+        buttonPanel.add(nextHallButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(exitButton);
     
@@ -288,8 +286,10 @@ public class GameScreen extends JFrame {
         }
     }
 
-    private void loadEarthHall() {
-        Map<Point, GameObject> earthObjects = earthHall.getObjects();
+    private void loadHall() {
+        Map<Point, GameObject> earthObjects = hallController.getCurrentHall().getObjects();
+        hallController.getCurrentHall().displayGrid();
+        System.out.println(hallController.getCurrentHall().getObjects());
     
         for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
             Point position = entry.getKey();
@@ -302,9 +302,24 @@ public class GameScreen extends JFrame {
         }
         repaint(); 
     }
+
+    private void goNextHall(){ //#TODO Timerlarin sifirlanmasi, monsterlarin sifirlanmasi.
+        hallController.goNextHall();
+        timerController.cleanup();
+        timerController.resetGameTime();
+        initializeTimers();
+        timeRemaining = timerController.getRemainingGameTime();
+
+        initializeRunePosition();
+        hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
+        monsters = new ArrayList<>();
+        random = new Random();
+        enchantments = new ArrayList<>();
+        loadHall();
+    }
     
     private void initializeRunePosition() {
-        Map<Point, GameObject> objects = currentHall.getObjects();
+        Map<Point, GameObject> objects = hallController.getCurrentHall().getObjects();
     
         if (objects.isEmpty()) {
             System.out.println("No objects available in the hall to place the rune.");
@@ -330,10 +345,6 @@ public class GameScreen extends JFrame {
             e.printStackTrace();
         }
     }
-
-    private void spawnMonsters() {
-        monsters.add(new ArcherMonster(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS)));
-    }
     
     private void moveMonsters() {
         Direction[] directions = Direction.values(); // Get all possible directions
@@ -354,7 +365,7 @@ public class GameScreen extends JFrame {
     }
 
     private void addRandomMonster() {
-        if (monsters.size() >= 5) return; // Canavar sayısı 5'i geçmesin
+        if (monsters.size() >= 5) return; 
 
         int x, y;
         do {
@@ -390,7 +401,7 @@ public class GameScreen extends JFrame {
         for (Monster monster : monsters) {
             if (monster.getX() == x && monster.getY() == y) return true;
         }
-        for(GameObject obj : currentHall.getObjects().values()){
+        for(GameObject obj : hallController.getCurrentHall().getObjects().values()){
             if(obj.getX() == x && obj.getY() == y){
                 return true;
             }
@@ -401,7 +412,7 @@ public class GameScreen extends JFrame {
     private void teleportRune() {
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
         if (wizardExists) {
-            Map<Point, GameObject> objects = currentHall.getObjects();
+            Map<Point, GameObject> objects = hallController.getCurrentHall().getObjects();
     
             if (objects.isEmpty()) {
                 System.out.println("No objects available in the hall to teleport the rune.");
@@ -676,7 +687,7 @@ public class GameScreen extends JFrame {
         }
         
         private void drawEarthHallObjects(Graphics g, int offsetX, int offsetY) {
-            Map<Point, GameObject> earthObjects = earthHall.getObjects();
+            Map<Point, GameObject> earthObjects = hallController.getCurrentHall().getObjects();
             for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
                 Point position = entry.getKey();
                 GameObject gameObject = entry.getValue();
@@ -771,7 +782,7 @@ public class GameScreen extends JFrame {
                 }
             }
 
-            Map<Point, GameObject> objects = currentHall.getObjects();
+            Map<Point, GameObject> objects = hallController.getCurrentHall().getObjects();
 
             int dx = Math.abs(clickPoint.x - hero.getX());
             int dy = Math.abs(clickPoint.y - hero.getY());
