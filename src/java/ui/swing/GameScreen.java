@@ -91,14 +91,11 @@ public class GameScreen extends JFrame {
     private int timeRemaining;
 
     private final ScreenTransition returnToGameOverScreen;
-    //private ArrayList<Hall> allHalls = new ArrayList<>();
 
-    //private Hall earthHall;
-    
     private GamePanel gamePanel;
-    private JPanel sidePanel; // Side panel for inventory, timer, hearts, and buttons
-    private JLabel[] heartLabels; // Array of heart icons for lives
-    private JLabel timerLabel; // Timer display
+    private JPanel sidePanel; 
+    private JLabel[] heartLabels; 
+    private JLabel timerLabel; 
     private Font timerFont;
     private HallController hallController;
 
@@ -139,17 +136,14 @@ public class GameScreen extends JFrame {
         
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
-        hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
         monsters = new ArrayList<>();
         random = new Random();
         enchantments = new ArrayList<>();
         loadHall();
-        //runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
         initializeHeroPosition();
         initializeRunePosition();
 
        //loadRuneImage();
-        //spawnMonsters();
 
         gamePanel = new GamePanel(); 
         sidePanel = new JPanel();
@@ -239,14 +233,12 @@ public class GameScreen extends JFrame {
 
         nextHallButton.addActionListener(e -> goNextHall());
 
-        buttonPanel.add(nextHallButton);
+        //buttonPanel.add(nextHallButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(exitButton);
     
         // Timer display
-        // Timer header (icon + "Time")
         JLabel timerHeader = new JLabel();
-        //timerHeader.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         timerHeader.setIcon(resizeIcon(new ImageIcon("src/resources/images/clock_icon.png"), 32, 32));
         
         timerHeader.setText("TIME: ");
@@ -273,12 +265,6 @@ public class GameScreen extends JFrame {
         }
         updateHearts();
     
-        // Inventory label
-      /*   JLabel inventoryLabel = new JLabel("Inventory");
-        inventoryLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        inventoryLabel.setForeground(Color.WHITE);8
-        inventoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);*/
-    
         // Inventory chest icon
         JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x_3.png"));
         chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -291,13 +277,11 @@ public class GameScreen extends JFrame {
         containerPanel.add(heartsPanel);
         containerPanel.add(chestIcon);
         containerPanel.add(Box.createRigidArea(new Dimension(0, 80)));
-        containerPanel.add(Box.createVerticalGlue()); // Alt boşluk
-    
-        // SidePanel'e container panelini ekleme
+        containerPanel.add(Box.createVerticalGlue()); 
+
         sidePanel.add(containerPanel);
     }
     
-
     private JButton createButton(String imagePath) {
         JButton button = new JButton(new ImageIcon(imagePath));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -312,8 +296,6 @@ public class GameScreen extends JFrame {
         Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImg);
     }
-
-    
 
     private void updateHearts() {
         int lives = hero.getLives();
@@ -338,6 +320,7 @@ public class GameScreen extends JFrame {
         );
         timerController.startTimers();
     }
+
     private void initializeHeroPosition() {
         int x,y;
         do { 
@@ -383,7 +366,7 @@ public class GameScreen extends JFrame {
         timeRemaining = timerController.getRemainingGameTime();
 
         initializeRunePosition();
-        hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
+        initializeHeroPosition();
         monsters = new ArrayList<>();
         random = new Random();
         enchantments = new ArrayList<>();
@@ -396,7 +379,7 @@ public class GameScreen extends JFrame {
         if (objects.isEmpty()) {
             System.out.println("No objects available in the hall to place the rune.");
             runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
-            return; // No objects to place the rune on
+            return; 
         }
     
         // Randomly select a GameObject
@@ -419,7 +402,7 @@ public class GameScreen extends JFrame {
     }
     
     private void moveMonsters() {
-        Direction[] directions = Direction.values(); // Get all possible directions
+        Direction[] directions = Direction.values();
         for (Monster monster : monsters) {
             if ((monster instanceof FighterMonster)) { // Sadece fighter monster hareket ediyor
                 Direction randomDirection = directions[random.nextInt(directions.length)];
@@ -515,7 +498,6 @@ public class GameScreen extends JFrame {
                 int dy = Math.abs(monster.getY() - hero.getY());
     
                 if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1)) {
-                    // FighterMonster tek vuruşta 3 can alır 
                     hero.reduceLife();
                     hero.reduceLife();
                     hero.reduceLife();
@@ -635,7 +617,6 @@ public class GameScreen extends JFrame {
             }
         }
     }
-
     
     private void stopGame() {
         timerController.cleanup();
@@ -683,7 +664,7 @@ public class GameScreen extends JFrame {
             drawGrid(g, offsetX, offsetY);
             drawTopAndSideWalls(g, offsetX, offsetY);
             drawArcherRanges(g, offsetX, offsetY);
-            drawEarthHallObjects(g, offsetX, offsetY);
+            drawHallObjects(g, offsetX, offsetY);
             drawHero(g, offsetX, offsetY);
             drawMonsters(g, offsetX, offsetY);
             drawRune(g, offsetX, offsetY);
@@ -789,10 +770,6 @@ public class GameScreen extends JFrame {
                 e.printStackTrace();
             }
         }
-        
-        
-        
-        
 
         private void drawMonsters(Graphics g, int offsetX, int offsetY) {
             for (Monster monster : monsters) {
@@ -822,9 +799,9 @@ public class GameScreen extends JFrame {
             }
         }
         
-        private void drawEarthHallObjects(Graphics g, int offsetX, int offsetY) {
-            Map<Point, GameObject> earthObjects = hallController.getCurrentHall().getObjects();
-            for (Map.Entry<Point, GameObject> entry : earthObjects.entrySet()) {
+        private void drawHallObjects(Graphics g, int offsetX, int offsetY) {
+            Map<Point, GameObject> hallObjects = hallController.getCurrentHall().getObjects();
+            for (Map.Entry<Point, GameObject> entry : hallObjects.entrySet()) {
                 Point position = entry.getKey();
                 GameObject gameObject = entry.getValue();
                 if (gameObject.getImage() != null) {
@@ -1045,7 +1022,7 @@ public class GameScreen extends JFrame {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            isKeyPressed = false; // Tuş bırakıldığında izin ver
+            isKeyPressed = false; 
         }
 
         @Override
