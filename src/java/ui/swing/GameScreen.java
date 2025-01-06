@@ -9,7 +9,6 @@ import domain.enchantments.Enchantment;
 import domain.enchantments.LuringGem;
 import domain.enchantments.Reveal;
 import domain.gameobjects.GameObject;
-import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
@@ -760,8 +759,8 @@ public class GameScreen extends JFrame {
             int panelWidth = getWidth();
             int panelHeight = getHeight();
 
-            int offsetX = (panelWidth - (GRID_COLUMNS * CELL_SIZE)) / 2 - 50; // X ofset
-            int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2;        // Y ofset
+            int offsetX = (panelWidth - (GRID_COLUMNS * CELL_SIZE)) / 2; // X ofset
+            int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2;// Y ofset
 
             int x = (e.getX() - offsetX) / CELL_SIZE;
             int y = (e.getY() - offsetY) / CELL_SIZE;
@@ -777,7 +776,7 @@ public class GameScreen extends JFrame {
             for (Enchantment enchantment : enchantments) {
                 if (enchantment.getX() == x && enchantment.getY() == y && enchantment.isAvailable()) {
                     System.out.println("Clicked on enchantment at: (" + x + ", " + y + ")");
-                    //handleEnchantmentClick(enchantment);
+                    handleEnchantmentClick(enchantment);
                     return; // Exit after handling the enchantment click
                 }
             }
@@ -796,9 +795,6 @@ public class GameScreen extends JFrame {
                 }
             }
         }
-
-
-        
 
         private void handleObjectClick(GameObject clickedObject) {
             // Determine if the object is a rune or empty
@@ -829,6 +825,14 @@ public class GameScreen extends JFrame {
             Timer timer = new Timer(2000, e -> dialog.dispose());
             timer.setRepeats(false); // Ensure the timer runs only once
             timer.start();
+        }
+
+        private void handleEnchantmentClick(Enchantment clickedEnchantment) {
+            hero.getInventory().addItem(clickedEnchantment);
+            enchantments.remove(clickedEnchantment);
+            clickedEnchantment.disappear();
+            System.out.println("Added enchantment " + clickedEnchantment.getType() + " to inventory.");
+            System.out.println(hero.getInventory().getInventoryContents());
         }
         
 
