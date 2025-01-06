@@ -104,6 +104,7 @@ public class GameScreen extends JFrame {
         enchantments = new ArrayList<>();
         loadHall();
         //runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
+        initializeHeroPosition();
         initializeRunePosition();
 
        //loadRuneImage();
@@ -275,6 +276,14 @@ public class GameScreen extends JFrame {
         );
         timerController.startTimers();
     }
+    private void initializeHeroPosition() {
+        int x,y;
+        do { 
+            x = random.nextInt(GRID_COLUMNS);
+            y = random.nextInt(GRID_ROWS);
+        } while (isPositionOccupied(x, y));
+        hero = new Hero(x, y);
+    }
 
     private void updateTime() {
         timeRemaining--;
@@ -397,8 +406,12 @@ public class GameScreen extends JFrame {
     }
 
     private boolean isPositionOccupied(int x, int y) {
-        if (hero.getX() == x && hero.getY() == y) return true;
-        if (runePosition.x == x && runePosition.y == y) return true;
+        if (hero != null) {
+            if (hero.getX() == x && hero.getY() == y) return true;
+        }
+        if (runePosition != null){
+            if (runePosition.x == x && runePosition.y == y) return true;
+        }
         for (Monster monster : monsters) {
             if (monster.getX() == x && monster.getY() == y) return true;
         }
