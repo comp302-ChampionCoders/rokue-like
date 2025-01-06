@@ -106,21 +106,24 @@ public class GameScreen extends JFrame {
             e1.printStackTrace();
         }
 
-        setUndecorated(true); 
-        setTitle("Game Screen");
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+
+        String osName = System.getProperty("os.name").toLowerCase();
+        
+        if (osName.contains("win")) {
+            configureForWindows();
+        } else if (osName.contains("mac")) {
+            configureForMacOS();
+        } else {
+            configureForOther();
+        }
+
+        
+        
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
-    
-        /*if (gd.isFullScreenSupported()) {
-            gd.setFullScreenWindow(this);
-        } else {
-            System.err.println("Full Screen Not Supported");
-            setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        }*/
-        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
         hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
@@ -144,6 +147,27 @@ public class GameScreen extends JFrame {
 
 
         setVisible(true);
+    }
+
+    private void configureForMacOS(){
+        setTitle("Game Screen");
+        setUndecorated(false); 
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void configureForWindows(){
+        setTitle("Game Screen");
+        setUndecorated(true); 
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void configureForOther(){
+        setTitle("GameScreenM");
+        setUndecorated(false); 
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void setupSidePanel() {

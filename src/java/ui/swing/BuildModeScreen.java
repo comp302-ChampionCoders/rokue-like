@@ -82,24 +82,44 @@ public class BuildModeScreen extends JFrame {
         this.onSwitchToPlayMode = onSwitchToPlayMode;
         this.hallController = hallController;
     
-        setTitle("Build Mode");
-        setUndecorated(true); 
-        setResizable(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        String osName = System.getProperty("os.name").toLowerCase();
+
+        if (osName.contains("win")) {
+            configureForWindows();
+        } else if (osName.contains("mac")) {
+            configureForMacOS();
+        } else {
+            configureForOther();
+        }
     
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
-    
-      /*   if (gd.isFullScreenSupported()) {
-            gd.setFullScreenWindow(this);
-        } else {
-            System.err.println("Full Screen Not Supported");
-            setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        }*/
+
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setTaskbarIcon();
         loadImages();
         initializeScreen();
+    }
+
+    private void configureForMacOS(){
+        setTitle("Build Mode");
+        setUndecorated(false); 
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void configureForWindows(){
+        setTitle("Build Mode");
+        setUndecorated(true); 
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void configureForOther(){
+        setTitle("Build ModeM");
+        setUndecorated(false); 
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void setTaskbarIcon() {
