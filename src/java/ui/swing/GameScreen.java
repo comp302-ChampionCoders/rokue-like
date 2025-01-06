@@ -512,7 +512,7 @@ public class GameScreen extends JFrame {
         } while (isPositionOccupied(x, y));
 
         // Randomly select an enchantment type
-        int enchantmentType = random.nextInt(4); // 0: Extra time, 1: Reveal, 2: Cloak of protection, 3: Luring gem, 4: Extra life
+        int enchantmentType = random.nextInt(5); // 0: Extra time, 1: Reveal, 2: Cloak of protection, 3: Luring gem, 4: Extra life
         Enchantment enchantment;
 
         switch (enchantmentType) {
