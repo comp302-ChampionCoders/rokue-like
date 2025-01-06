@@ -1,26 +1,42 @@
 package ui.swing;
 
 
-import javax.swing.*;
-
-import controller.HallController;
-import controller.ModeController;
-import controller.ScreenTransition;
-import domain.gameobjects.GameObject;
-import domain.gameobjects.Hall;
-import domain.gameobjects.Hall.HallType;
-import ui.utils.CursorUtils;
-import ui.utils.SoundPlayerUtil;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Taskbar;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import controller.HallController;
+import controller.ScreenTransition;
+import domain.gameobjects.GameObject;
+import domain.gameobjects.Hall;
+import ui.utils.CursorUtils;
+import ui.utils.SoundPlayerUtil;
 
 public class BuildModeScreen extends JFrame {
     private final int GRID_CELL_SIZE = 24; 
@@ -141,6 +157,10 @@ public class BuildModeScreen extends JFrame {
             exitButton.setBorderPainted(false);
             exitButton.setContentAreaFilled(false);
             exitButton.setFocusPainted(false);
+
+            playButton.setBorderPainted(false);
+            playButton.setContentAreaFilled(false);
+            playButton.setFocusPainted(false);
             
             
             playButton.addMouseListener(new MouseAdapter() {
