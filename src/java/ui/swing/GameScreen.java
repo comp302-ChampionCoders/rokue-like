@@ -59,6 +59,7 @@ public class GameScreen extends JFrame {
     private GamePanel gamePanel;
     private JPanel sidePanel; // Side panel for inventory, timer, hearts, and buttons
     private JLabel[] heartLabels; // Array of heart icons for lives
+    private JLabel[] enchantmentLabels;
     private JLabel timerLabel; // Timer display
     private Font timerFont;
     private HallController hallController;
@@ -215,9 +216,35 @@ public class GameScreen extends JFrame {
         inventoryLabel.setForeground(Color.WHITE);8
         inventoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);*/
     
-        // Inventory chest icon
-        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x_3.png"));
-        chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Create a layered pane for inventory
+    JLayeredPane inventoryLayeredPane = new JLayeredPane();
+    inventoryLayeredPane.setPreferredSize(new Dimension(250, 150)); // Adjust size to match the inventory design
+    inventoryLayeredPane.setLayout(null); // Use null layout for absolute positioning
+
+    // Inventory chest icon
+    JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x_3.png"));
+    chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+    inventoryLayeredPane.add(chestIcon, Integer.valueOf(0)); // Add to the bottom layer (background)
+
+    // Add enchantment slots on top of the chest icon
+    int enchantmentSlots = 6;
+    JLabel[] enchantmentLabels = new JLabel[enchantmentSlots];
+    int slotSize = 25;
+    int startX = 45; // Adjust to align with the inventory background
+    int startY = 60; // Adjust to align with the inventory background
+    int gap = 10;
+
+    for (int i = 0; i < enchantmentSlots; i++) {
+        enchantmentLabels[i] = new JLabel();
+        enchantmentLabels[i].setBounds(startX + (i % 3) * (slotSize + gap), startY + (i / 3) * (slotSize + gap), slotSize, slotSize);
+        enchantmentLabels[i].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); // Border for empty slots
+        inventoryLayeredPane.add(enchantmentLabels[i], Integer.valueOf(1)); // Add to the top layer (foreground)
+    }
+
+    // Add the inventory layered pane to the side panel
+    sidePanel.add(inventoryLayeredPane);
+    inventoryLayeredPane.setBounds(50, 300, 250, 150); // Adjust position on the side panel
+
     
         containerPanel.add(Box.createRigidArea(new Dimension(0, 60)));
         containerPanel.add(buttonPanel); 
