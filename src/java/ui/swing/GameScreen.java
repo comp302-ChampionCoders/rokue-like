@@ -230,15 +230,15 @@ public class GameScreen extends JFrame {
     int enchantmentSlots = 6;
     JLabel[] enchantmentLabels = new JLabel[enchantmentSlots];
     int slotSize = 25;
-    int startX = 45; // Adjust to align with the inventory background
-    int startY = 60; // Adjust to align with the inventory background
-    int gap = 10;
+    int startX = 35; // Adjust to align with the inventory background
+    int startY = 92; // Adjust to align with the inventory background
+    int gap = 7;
 
     for (int i = 0; i < enchantmentSlots; i++) {
         enchantmentLabels[i] = new JLabel();
         enchantmentLabels[i].setBounds(startX + (i % 3) * (slotSize + gap), startY + (i / 3) * (slotSize + gap), slotSize, slotSize);
         enchantmentLabels[i].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); // Border for empty slots
-        inventoryLayeredPane.add(enchantmentLabels[i], Integer.valueOf(1)); // Add to the top layer (foreground)
+        chestIcon.add(enchantmentLabels[i], Integer.valueOf(1)); // Add to the top layer (foreground)
     }
 
     // Add the inventory layered pane to the side panel
