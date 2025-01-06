@@ -9,6 +9,7 @@ import domain.enchantments.Enchantment;
 import domain.enchantments.LuringGem;
 import domain.enchantments.Reveal;
 import domain.gameobjects.GameObject;
+import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
@@ -248,6 +249,7 @@ public class GameScreen extends JFrame {
         Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImg);
     }
+
     
 
     private void updateHearts() {
@@ -604,6 +606,7 @@ public class GameScreen extends JFrame {
             int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2; 
 
             drawGrid(g, offsetX, offsetY);
+            drawTopAndSideWalls(g, offsetX, offsetY);
             drawArcherRanges(g, offsetX, offsetY);
             drawEarthHallObjects(g, offsetX, offsetY);
             drawHero(g, offsetX, offsetY);
@@ -653,6 +656,65 @@ public class GameScreen extends JFrame {
             resetImageTimer.setRepeats(false); // Timer runs only once
             resetImageTimer.start();
         }
+        private void drawTopAndSideWalls(Graphics g, int offsetX, int offsetY) {
+            int wallOffset = 16;
+            int topWallWidth = GRID_COLUMNS * CELL_SIZE; 
+            int sideWallWidth = wallOffset;
+            int sideWallHeight = GRID_ROWS * CELL_SIZE + (int)(1.5 * CELL_SIZE) - 20;
+        
+            try {
+                BufferedImage sideWallImage = ImageIO.read(new File("src/resources/images/sidewall.png"));
+                BufferedImage topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
+        
+                Hall currentHall = hallController.getCurrentHall();
+                Hall.HallType hallType = currentHall.getHallType();
+        
+                // Adjust wall properties based on hall type if needed
+                Color hallColor;
+                switch (hallType) {
+                    case EARTH:
+                        hallColor = new Color(34, 139, 34);
+                        break;
+                    case WATER:
+                        hallColor = new Color(30, 144, 255);
+                        break;
+                    case FIRE:
+                        hallColor = new Color(255, 69, 0);
+                        break;
+                    case AIR:
+                        hallColor = new Color(135, 206, 250);
+                        break;
+                    default:
+                        hallColor = Color.GRAY;
+                }
+        
+                // Top wall positions
+                int[][] topWallPositions = {
+                    {offsetX, offsetY - CELL_SIZE},
+                };
+        
+                // Side wall positions
+                int[][] sideWallPositions = {
+                    {offsetX - wallOffset, offsetY - CELL_SIZE}, // Extended upward to align with top wall
+                    {offsetX + GRID_COLUMNS * CELL_SIZE, offsetY - CELL_SIZE} // Extended upward to align with top wall
+                };
+        
+        
+                // Draw top walls
+                for (int[] pos : topWallPositions) {
+                    g.drawImage(topWallImage, pos[0], pos[1], topWallWidth, CELL_SIZE, null);
+                }
+        
+                // Draw side walls
+                for (int[] pos : sideWallPositions) {
+                    g.drawImage(sideWallImage, pos[0], pos[1], sideWallWidth, sideWallHeight, null);
+                }
+            } catch (IOException e) {
+                System.err.println("Failed to load wall images: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
         
         
         
