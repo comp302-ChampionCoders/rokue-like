@@ -1,5 +1,17 @@
 package ui.swing;
 
+import controller.HallController;
+import controller.ScreenTransition;
+import controller.TimerController;
+import domain.behaviors.Direction;
+import domain.enchantments.*;
+import domain.gameobjects.GameObject;
+import domain.gameobjects.Hero;
+import domain.monsters.ArcherMonster;
+import domain.monsters.FighterMonster;
+import domain.monsters.Monster;
+import domain.monsters.WizardMonster;
+import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -580,7 +592,7 @@ public class GameScreen extends JFrame {
         } while (isPositionOccupied(x, y));
 
         // Randomly select an enchantment type
-        int enchantmentType = random.nextInt(3); // 0: Extra time, 1: Reveal, 2: Cloak of protection, 3: Luring gem, 4: Extra life
+        int enchantmentType = random.nextInt(5); // 0: Extra time, 1: Reveal, 2: Cloak of protection, 3: Luring gem, 4: Extra life
         Enchantment enchantment;
 
         switch (enchantmentType) {
@@ -594,12 +606,12 @@ public class GameScreen extends JFrame {
             case 2:
                 enchantment = new LuringGem(); // Distracts fighter monsters
                 break;
-            /*case 3:
-                enchantment = new ExtraLife(); // Adds 1 life
+            case 3:
+                enchantment = new ExtraTime(); // Adds 5 seconds
                 break;
             case 4:
-                enchantment = new ExtraTime(); // Adds 5 seconds
-                break;*/
+                enchantment = new ExtraLife(); // Adds 1 life
+                break;
             default:
                 return;
         }
@@ -953,11 +965,34 @@ public class GameScreen extends JFrame {
         }
 
         private void handleEnchantmentClick(Enchantment clickedEnchantment) {
-            hero.getInventory().addItem(clickedEnchantment);
+            String enc = clickedEnchantment.getType();
+            if (enc == "Extra Time") {
+                activeExtraTime();
+                System.out.println("5 seconds added!");
+            }
+            else if (enc == "Extra Life") {
+                activateExtraLife();
+                updateHearts();
+            }
+            else {
+                hero.getInventory().addItem(clickedEnchantment);
+                System.out.println("Added enchantment " + clickedEnchantment.getType() + " to inventory.");
+            }
             enchantments.remove(clickedEnchantment);
             clickedEnchantment.disappear();
-            System.out.println("Added enchantment " + clickedEnchantment.getType() + " to inventory.");
             System.out.println(hero.getInventory().getInventoryContents());
+        }
+
+        private void activeExtraTime() {
+            timeRemaining+=5;
+        }
+
+        private void activateExtraLife() {
+            if (hero.getLives() != 4) {
+                hero.addLife();
+                System.out.println("Life was gained!");
+            }
+            System.out.println("Max lives!");
         }
         
 
