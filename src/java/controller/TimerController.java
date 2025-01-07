@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Timer;
 
+import domain.gameobjects.Hall.HallType;
+
 public class TimerController {
     private static TimerController instance;
     private Map<String, Timer> timers;
@@ -21,6 +23,8 @@ public class TimerController {
 
     private static final int DEFAULT_GAME_TIME = 50;
     private static final int HERO_MOVE_DELAY = 200;
+    private Map<HallType, Integer> hallRemainingTimes;
+
     private Timer heroMoveTimer;
     private Runnable heroMoveAction;
 
@@ -91,8 +95,8 @@ public class TimerController {
         remainingTime = DEFAULT_GAME_TIME; 
     }
 
-    public int getRemainingGameTime() {
-        return remainingTime;
+    public int getRemainingGameTime(HallType hall) {
+        return hallRemainingTimes.get(hall);
     }
 
     public void initializeHeroTimer(Runnable moveAction) {
@@ -115,5 +119,13 @@ public class TimerController {
             heroMoveTimer.stop();
         }
     }
+
+    public void setRemainingTimeForHall(HallType hallType, int timeInSeconds) {
+        if (hallRemainingTimes == null) {
+            hallRemainingTimes = new HashMap<>();
+        }
+        hallRemainingTimes.put(hallType, timeInSeconds);
+        System.out.println("Set remaining time for " + hallType + ": " + timeInSeconds + " seconds.");
+}
     
 }

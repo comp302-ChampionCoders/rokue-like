@@ -6,12 +6,12 @@ import controller.TimerController;
 import domain.behaviors.Direction;
 import domain.enchantments.*;
 import domain.gameobjects.GameObject;
+import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
 import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
 import domain.monsters.WizardMonster;
-import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -39,7 +39,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -53,22 +52,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-
-import controller.HallController;
-import controller.ScreenTransition;
-import controller.TimerController;
-import domain.behaviors.Direction;
-import domain.enchantments.CloakOfProtection;
-import domain.enchantments.Enchantment;
-import domain.enchantments.LuringGem;
-import domain.enchantments.Reveal;
-import domain.gameobjects.GameObject;
-import domain.gameobjects.Hall;
-import domain.gameobjects.Hero;
-import domain.monsters.ArcherMonster;
-import domain.monsters.FighterMonster;
-import domain.monsters.Monster;
-import domain.monsters.WizardMonster;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 
@@ -103,11 +86,9 @@ public class GameScreen extends JFrame {
 
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.hallController = hallController;
-        
-        
         this.timerController = TimerController.getInstance();
         initializeTimers();
-        timeRemaining = timerController.getRemainingGameTime();
+        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         try {
             timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(34f);
@@ -128,12 +109,9 @@ public class GameScreen extends JFrame {
             configureForOther();
         }
 
-        
-        
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
 
-        
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
         monsters = new ArrayList<>();
@@ -233,7 +211,7 @@ public class GameScreen extends JFrame {
 
         nextHallButton.addActionListener(e -> goNextHall());
 
-        //buttonPanel.add(nextHallButton);
+        buttonPanel.add(nextHallButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(exitButton);
     
@@ -358,12 +336,12 @@ public class GameScreen extends JFrame {
         repaint(); 
     }
 
-    private void goNextHall(){ //#TODO Timerlarin sifirlanmasi, monsterlarin sifirlanmasi.
+    private void goNextHall(){ 
         hallController.goNextHall();
         timerController.cleanup();
         timerController.resetGameTime();
         initializeTimers();
-        timeRemaining = timerController.getRemainingGameTime();
+        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         initializeRunePosition();
         initializeHeroPosition();
@@ -501,6 +479,7 @@ public class GameScreen extends JFrame {
                     hero.reduceLife();
                     hero.reduceLife();
                     hero.reduceLife();
+                    hero.reduceLife(); // kills even if it has 4 lives
                     updateHearts();
                     System.out.println("Hero has been attacked by a Fighter monster, " + hero.getLives() + " lives remaining");
                     if (hero.getLives() <= 0) {
@@ -540,6 +519,11 @@ public class GameScreen extends JFrame {
     private void checkArcherAttacks() {
         for (Monster monster : monsters) {
             if (monster instanceof ArcherMonster) {
+
+                if (!hero.isVisible()) { // for cloak of protection
+                    System.out.println("Hero is invisible. ArcherMonster cannot attack.");
+                    continue;
+                }
                 int dx = Math.abs(monster.getX() - hero.getX());
                 int dy = Math.abs(monster.getY() - hero.getY());
                 
@@ -575,7 +559,7 @@ public class GameScreen extends JFrame {
         } while (isPositionOccupied(x, y));
 
         // Randomly select an enchantment type
-        int enchantmentType = random.nextInt(5); // 0: Extra time, 1: Reveal, 2: Cloak of protection, 3: Luring gem, 4: Extra life
+        int enchantmentType = random.nextInt(5); // 0: Reveal, 1: Cloak of protection, 2: Luring gem, 3: Extra time, 4: Extra life
         Enchantment enchantment;
 
         switch (enchantmentType) {
@@ -675,6 +659,32 @@ public class GameScreen extends JFrame {
             drawMonsters(g, offsetX, offsetY);
             drawRune(g, offsetX, offsetY);
             drawEnchantments(g, offsetX, offsetY);
+
+            for (Enchantment enchantment : enchantments) { // needs to be moved out of this method
+                if (enchantment instanceof Reveal) {
+                    Reveal reveal = (Reveal) enchantment;
+                    if (reveal.hasHighlight()) {
+                        int highlightX = reveal.getHighlightX();
+                        int highlightY = reveal.getHighlightY();
+        
+                        g.setColor(new Color(0, 255, 0, 128)); // Transparent green
+                        for (int dx = -2; dx <= 1; dx++) {
+                            for (int dy = -2; dy <= 1; dy++) {
+                                int drawX = highlightX + dx;
+                                int drawY = highlightY + dy;
+                                if (drawX >= 0 && drawX < GRID_COLUMNS && drawY >= 0 && drawY < GRID_ROWS) {
+                                    g.fillRect(
+                                        offsetX + drawX * CELL_SIZE,
+                                        offsetY + drawY * CELL_SIZE,
+                                        CELL_SIZE,
+                                        CELL_SIZE
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void drawGrid(Graphics g, int offsetX, int offsetY) {
@@ -800,7 +810,7 @@ public class GameScreen extends JFrame {
             if (runeImage != null) {
                 g.drawImage(runeImage, offsetX + runePosition.x * CELL_SIZE, offsetY + runePosition.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
             } else {
-                g.setColor(Color.YELLOW);
+                // g.setColor(Color.YELLOW); // for test
                 g.fillRect(offsetX + runePosition.x * CELL_SIZE, offsetY + runePosition.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
@@ -872,7 +882,6 @@ public class GameScreen extends JFrame {
                 }
             }
         }
-        
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -971,11 +980,39 @@ public class GameScreen extends JFrame {
         }
 
         private void activateExtraLife() {
-            if (hero.getLives() != 4) {
+            if (hero.getLives() <= 4) {
                 hero.addLife();
                 System.out.println("Life was gained!");
             }
             System.out.println("Max lives!");
+        }
+
+        private void activateReveal() {
+            for (Enchantment enchantment : enchantments) {
+                if (enchantment instanceof Reveal) {
+                    Reveal reveal = (Reveal) enchantment;
+                    System.out.println("Setting highlight center for Reveal...");
+                    reveal.setHighlightCenter(runePosition.x, runePosition.y);
+                    repaint(); // Trigger repaint to show the highlight
+                    break;
+                }
+            }
+        }
+        
+        private void activateCloakOfProtection() {
+            hero.toggleVisibility(); // Set isVisible to false
+            System.out.println("Hero is now invisible to archers for 20 seconds.");
+        
+            // Schedule the visibility to reset after 20 seconds
+            new Thread(() -> {
+                try {
+                    Thread.sleep(20000); // 20 seconds in milliseconds
+                    hero.toggleVisibility(); // Reset isVisible to true
+                    System.out.println("Hero is now visible to archers again.");
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
         }
         
 
@@ -1007,6 +1044,27 @@ public class GameScreen extends JFrame {
                 case KeyEvent.VK_RIGHT:
                     direction = Direction.RIGHT;
                     break;
+                case KeyEvent.VK_R: // Reveal
+                    System.out.println("R key pressed. Checking for Reveal...");
+                    if (hero.getInventory().hasItem("Reveal")) {
+                        System.out.println("Reveal found. Using enchantment...");
+                        hero.getInventory().useItem("Reveal");
+                        activateReveal();
+                    } else {
+                        System.out.println("No Reveal enchantment found in inventory.");
+                    }
+                    break;
+                case KeyEvent.VK_P: // Cloak of Protection
+                    System.out.println("P key pressed. Checking for Cloak of Protection...");
+                    if (hero.getInventory().hasItem("Cloak of Protection")) {
+                        System.out.println("Using Cloak of Protection...");
+                        hero.getInventory().useItem("Cloak of Protection");
+                        activateCloakOfProtection();
+                    } else {
+                        System.out.println("No Cloak of Protection found in inventory.");
+                    }
+                    break;
+                
             }
 
             if (direction != null) {

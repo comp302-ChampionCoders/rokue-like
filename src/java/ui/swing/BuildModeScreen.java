@@ -33,6 +33,7 @@ import javax.swing.SwingUtilities;
 
 import controller.HallController;
 import controller.ScreenTransition;
+import controller.TimerController;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import ui.utils.CursorUtils;
@@ -76,11 +77,13 @@ public class BuildModeScreen extends JFrame {
     private final ScreenTransition onExit;
     private final ScreenTransition onSwitchToPlayMode;
     private HallController hallController;
-    
+    private TimerController timerController;
+        
     public BuildModeScreen(ScreenTransition onExit, ScreenTransition onSwitchToPlayMode, HallController hallController) {
         this.onExit = onExit;
         this.onSwitchToPlayMode = onSwitchToPlayMode;
         this.hallController = hallController;
+        this.timerController = TimerController.getInstance();
     
         String osName = System.getProperty("os.name").toLowerCase();
 
@@ -210,6 +213,12 @@ public class BuildModeScreen extends JFrame {
             });
             playButton.addActionListener(e -> {
                 SoundPlayerUtil.playClickSound();
+                for (Hall hall : hallController.getHalls()) {
+                    int objectCount = hall.getObjects().size();
+                    int totalTime = objectCount * 5;
+                    timerController.setRemainingTimeForHall(hall.getHallType(), totalTime);
+            
+                }
                 onSwitchToPlayMode.execute();});
             
             background.add(exitButton);
