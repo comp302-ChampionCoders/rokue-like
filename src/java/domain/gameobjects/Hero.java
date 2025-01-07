@@ -12,6 +12,9 @@ public class Hero implements Moveable, GridElement {
     private int x;
     private int y;
     private boolean isAlive;
+    private boolean isCloaked;
+    private boolean isDamaged;
+    private String direction = "RIGHT";
     
     public Hero(int x, int y) {
         this.x = x;
@@ -93,4 +96,28 @@ public class Hero implements Moveable, GridElement {
         this.y = y;
     }
     
+    public String getDirection() {
+        return direction;
+    }
+    
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public boolean isDamaged(){
+        return isDamaged;
+    }
+
+    public boolean isCloaked(){
+        return isCloaked;
+    }
+
+    public void setIsDamaged(boolean isDamaged){
+        this.isDamaged = isDamaged;
+    }
+
+    public void setIsCloaked(boolean isCloaked){
+        this.isCloaked = isCloaked;
+    }
+
 }
