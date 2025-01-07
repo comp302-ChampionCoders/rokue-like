@@ -28,10 +28,19 @@ public class HallController {
     }
 
     public void goNextHall(){
-        if(i < 3){
-            i++;
+        if(canGoNextHall()){
+            if(i < 3){
+                i++;
+            }
+            currentHall = halls.get(i);
         }
-        currentHall = halls.get(i);
+    }
+
+    public boolean canGoNextHall(){
+        if(i < 3){
+            return true;
+        }
+        return false;
     }
 
     public int getIndex(){

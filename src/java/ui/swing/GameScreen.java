@@ -209,7 +209,11 @@ public class GameScreen extends JFrame {
     
         JButton nextHallButton = new JButton("Next");
 
-        nextHallButton.addActionListener(e -> goNextHall());
+        nextHallButton.addActionListener(e -> {
+            if(hallController.canGoNextHall()){
+                goNextHall();
+            }
+        });
 
         buttonPanel.add(nextHallButton);
         buttonPanel.add(pauseButton);
