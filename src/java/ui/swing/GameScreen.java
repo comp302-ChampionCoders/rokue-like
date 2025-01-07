@@ -12,6 +12,20 @@ import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
 import domain.monsters.WizardMonster;
 import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -25,8 +39,36 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
+import controller.HallController;
+import controller.ScreenTransition;
+import controller.TimerController;
+import domain.behaviors.Direction;
+import domain.enchantments.CloakOfProtection;
+import domain.enchantments.Enchantment;
+import domain.enchantments.LuringGem;
+import domain.enchantments.Reveal;
+import domain.gameobjects.GameObject;
+import domain.gameobjects.Hall;
+import domain.gameobjects.Hero;
+import domain.monsters.ArcherMonster;
+import domain.monsters.FighterMonster;
+import domain.monsters.Monster;
+import domain.monsters.WizardMonster;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 
@@ -77,21 +119,24 @@ public class GameScreen extends JFrame {
             e1.printStackTrace();
         }
 
-        setUndecorated(true); 
-        setTitle("Game Screen");
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+
+        String osName = System.getProperty("os.name").toLowerCase();
+        
+        if (osName.contains("win")) {
+            configureForWindows();
+        } else if (osName.contains("mac")) {
+            configureForMacOS();
+        } else {
+            configureForOther();
+        }
+
+        
+        
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
-    
-        if (gd.isFullScreenSupported()) {
-            gd.setFullScreenWindow(this);
-        } else {
-            System.err.println("Full Screen Not Supported");
-            setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        }
-        //setSize(Toolkit.getDefaultToolkit().getScreenSize());
+
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
         hero = new Hero(0, 0); // Hero starts at (0,0) // #TODO: NEEDS TO BE RANDOMIZED
@@ -100,6 +145,7 @@ public class GameScreen extends JFrame {
         enchantments = new ArrayList<>();
         loadHall();
         //runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
+        initializeHeroPosition();
         initializeRunePosition();
 
        //loadRuneImage();
@@ -115,6 +161,27 @@ public class GameScreen extends JFrame {
 
 
         setVisible(true);
+    }
+
+    private void configureForMacOS(){
+        setTitle("Game Screen");
+        setUndecorated(false); 
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void configureForWindows(){
+        setTitle("Game Screen");
+        setUndecorated(true); 
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void configureForOther(){
+        setTitle("GameScreenM");
+        setUndecorated(false); 
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void setupSidePanel() {
@@ -245,6 +312,7 @@ public class GameScreen extends JFrame {
         Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImg);
     }
+
     
 
     private void updateHearts() {
@@ -269,6 +337,14 @@ public class GameScreen extends JFrame {
             () -> removeEnchantment()
         );
         timerController.startTimers();
+    }
+    private void initializeHeroPosition() {
+        int x,y;
+        do { 
+            x = random.nextInt(GRID_COLUMNS);
+            y = random.nextInt(GRID_ROWS);
+        } while (isPositionOccupied(x, y));
+        hero = new Hero(x, y);
     }
 
     private void updateTime() {
@@ -392,8 +468,12 @@ public class GameScreen extends JFrame {
     }
 
     private boolean isPositionOccupied(int x, int y) {
-        if (hero.getX() == x && hero.getY() == y) return true;
-        if (runePosition.x == x && runePosition.y == y) return true;
+        if (hero != null) {
+            if (hero.getX() == x && hero.getY() == y) return true;
+        }
+        if (runePosition != null){
+            if (runePosition.x == x && runePosition.y == y) return true;
+        }
         for (Monster monster : monsters) {
             if (monster.getX() == x && monster.getY() == y) return true;
         }
@@ -607,6 +687,7 @@ public class GameScreen extends JFrame {
             int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2; 
 
             drawGrid(g, offsetX, offsetY);
+            drawTopAndSideWalls(g, offsetX, offsetY);
             drawArcherRanges(g, offsetX, offsetY);
             drawEarthHallObjects(g, offsetX, offsetY);
             drawHero(g, offsetX, offsetY);
@@ -656,6 +737,65 @@ public class GameScreen extends JFrame {
             resetImageTimer.setRepeats(false); // Timer runs only once
             resetImageTimer.start();
         }
+        private void drawTopAndSideWalls(Graphics g, int offsetX, int offsetY) {
+            int wallOffset = 16;
+            int topWallWidth = GRID_COLUMNS * CELL_SIZE; 
+            int sideWallWidth = wallOffset;
+            int sideWallHeight = GRID_ROWS * CELL_SIZE + (int)(1.5 * CELL_SIZE) - 20;
+        
+            try {
+                BufferedImage sideWallImage = ImageIO.read(new File("src/resources/images/sidewall.png"));
+                BufferedImage topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
+        
+                Hall currentHall = hallController.getCurrentHall();
+                Hall.HallType hallType = currentHall.getHallType();
+        
+                // Adjust wall properties based on hall type if needed
+                Color hallColor;
+                switch (hallType) {
+                    case EARTH:
+                        hallColor = new Color(34, 139, 34);
+                        break;
+                    case WATER:
+                        hallColor = new Color(30, 144, 255);
+                        break;
+                    case FIRE:
+                        hallColor = new Color(255, 69, 0);
+                        break;
+                    case AIR:
+                        hallColor = new Color(135, 206, 250);
+                        break;
+                    default:
+                        hallColor = Color.GRAY;
+                }
+        
+                // Top wall positions
+                int[][] topWallPositions = {
+                    {offsetX, offsetY - CELL_SIZE},
+                };
+        
+                // Side wall positions
+                int[][] sideWallPositions = {
+                    {offsetX - wallOffset, offsetY - CELL_SIZE}, // Extended upward to align with top wall
+                    {offsetX + GRID_COLUMNS * CELL_SIZE, offsetY - CELL_SIZE} // Extended upward to align with top wall
+                };
+        
+        
+                // Draw top walls
+                for (int[] pos : topWallPositions) {
+                    g.drawImage(topWallImage, pos[0], pos[1], topWallWidth, CELL_SIZE, null);
+                }
+        
+                // Draw side walls
+                for (int[] pos : sideWallPositions) {
+                    g.drawImage(sideWallImage, pos[0], pos[1], sideWallWidth, sideWallHeight, null);
+                }
+            } catch (IOException e) {
+                System.err.println("Failed to load wall images: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
         
         
         
