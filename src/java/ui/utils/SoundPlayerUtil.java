@@ -12,6 +12,7 @@ public class SoundPlayerUtil {
     private static final String GAME_OVER_PATH = "src/resources/sounds/gameOverSax.wav";
     private static final String HERO_HURT_PATH = "src/resources/sounds/heroHit.wav";
     private static final String HERO_MOVE_PATH = "src/resources/sounds/footstep.wav";
+    private static final String CLOTH_SOUND_PATH = "src/resources/sounds/cloth2.wav";
     
 
     public static void playClickSound() {
@@ -40,6 +41,10 @@ public class SoundPlayerUtil {
 
     public static void playMoveSound(){
         playSound(HERO_MOVE_PATH);
+    }
+
+    public static void playClothSound(){
+        playSound(CLOTH_SOUND_PATH);
     }
 
     private static void playSound(String soundFilePath) {

@@ -710,28 +710,55 @@ public class GameScreen extends JFrame {
             }
         }
 
-        private void showHeroDamagedEffect() {
+        private void updateHeroImage() {
             try {
-                BufferedImage damagedImage = ImageIO.read(new File("src/resources/images/playerDamaged.png"));
-                heroImage = damagedImage; 
-                repaint(); 
+                if (hero.isDamaged()) { // Hero hasar aldıysa
+                    if (hero.getDirection().equals("RIGHT")) {
+                        heroImage = ImageIO.read(new File("src/resources/images/playerDamaged.png"));
+                    } else {
+                        heroImage = ImageIO.read(new File("src/resources/images/playerDamagedReversed.png"));
+                    }
+                } else if (hero.isCloaked()) { // Hero cloak etkisindeyse
+                    if (hero.getDirection().equals("RIGHT")) {
+                        heroImage = ImageIO.read(new File("src/resources/images/playerCloak2.png"));
+                    } else {
+                        heroImage = ImageIO.read(new File("src/resources/images/playerCloak2_reversed.png"));
+                    }
+                } else { // Normal durumda
+                    if (hero.getDirection().equals("RIGHT")) {
+                        heroImage = ImageIO.read(new File("src/resources/images/player.png"));
+                    } else {
+                        heroImage = ImageIO.read(new File("src/resources/images/playerReversed.png"));
+                    }
+                }
+                repaint(); // Görseli yeniden çiz
             } catch (IOException e) {
-                System.err.println("Failed to load heroDamaged image.");
+                System.err.println("Failed to update hero image.");
                 e.printStackTrace();
             }
+        }
         
-            Timer resetImageTimer = new Timer(500, e -> { // Reset image and timer after 0.5 seconds
-                try {
-                    heroImage = ImageIO.read(new File("src/resources/images/player.png"));
-                    repaint();
-                } catch (IOException ex) {
-                    System.err.println("Failed to reload player image.");
-                    ex.printStackTrace();
-                }
+
+        private void showHeroCloakedEffect() {
+            hero.setIsCloaked(true);
+            updateHeroImage(); 
+            repaint();
+        }
+        
+
+        private void showHeroDamagedEffect() {
+            hero.setIsDamaged(true); 
+            updateHeroImage();
+            repaint();
+        
+            Timer resetImageTimer = new Timer(500, e -> {
+                hero.setIsDamaged(false); // Hasar durumunu sıfırla
+                updateHeroImage(); // Normal duruma dön
             });
-            resetImageTimer.setRepeats(false); // Timer runs only once
+            resetImageTimer.setRepeats(false);
             resetImageTimer.start();
         }
+
         private void drawTopAndSideWalls(Graphics g, int offsetX, int offsetY) {
             int wallOffset = 16;
             int topWallWidth = GRID_COLUMNS * CELL_SIZE; 
@@ -1043,9 +1070,11 @@ public class GameScreen extends JFrame {
                     direction = Direction.DOWN;
                     break;
                 case KeyEvent.VK_LEFT:
+                    hero.setDirection("LEFT");
                     direction = Direction.LEFT;
                     break;
                 case KeyEvent.VK_RIGHT:
+                    hero.setDirection("RIGHT");
                     direction = Direction.RIGHT;
                     break;
                 case KeyEvent.VK_R: // Reveal
@@ -1061,9 +1090,11 @@ public class GameScreen extends JFrame {
                 case KeyEvent.VK_P: // Cloak of Protection
                     System.out.println("P key pressed. Checking for Cloak of Protection...");
                     if (hero.getInventory().hasItem("Cloak of Protection")) {
+                        SoundPlayerUtil.playClothSound();
                         System.out.println("Using Cloak of Protection...");
                         hero.getInventory().useItem("Cloak of Protection");
                         activateCloakOfProtection();
+                        gamePanel.showHeroCloakedEffect();
                     } else {
                         System.out.println("No Cloak of Protection found in inventory.");
                     }
@@ -1078,7 +1109,7 @@ public class GameScreen extends JFrame {
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
                     hero.move(direction);
-
+                    updateHeroImage();
                     SoundPlayerUtil.playMoveSound();
                 }
             }
