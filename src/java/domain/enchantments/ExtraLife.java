@@ -6,7 +6,7 @@ public class ExtraLife extends Enchantment {
     private static final long EFFECT_DURATION = 0; // This enchantment has no active duration
 
     public ExtraLife() {
-        super("Extra Life", "src/resources/images/heart_full.png");
+        super("Extra Life", "src/resources/images/chestheart32x32.png");
     }
 
     @Override
