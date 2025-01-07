@@ -66,11 +66,15 @@ public class Hero implements Moveable, GridElement {
     }
 
     public void addLife() {
-        if (this.lives != 4) {
+        if (this.lives <= 4) {
             this.lives++;
         }
     }
     public int getLives(){return lives;}
+    
+    public void setLives(int lives){
+        this.lives = lives;
+    }
     public Inventory getInventory(){return inventory;}
 
     @Override
