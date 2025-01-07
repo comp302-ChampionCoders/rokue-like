@@ -88,7 +88,7 @@ public class GameScreen extends JFrame {
         this.hallController = hallController;
         this.timerController = TimerController.getInstance();
         initializeTimers();
-        timeRemaining = timerController.getRemainingGameTime();
+        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         try {
             timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(34f);
@@ -211,7 +211,7 @@ public class GameScreen extends JFrame {
 
         nextHallButton.addActionListener(e -> goNextHall());
 
-        //buttonPanel.add(nextHallButton);
+        buttonPanel.add(nextHallButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(exitButton);
     
@@ -336,12 +336,12 @@ public class GameScreen extends JFrame {
         repaint(); 
     }
 
-    private void goNextHall(){ //#TODO Timerlarin sifirlanmasi, monsterlarin sifirlanmasi.
+    private void goNextHall(){ 
         hallController.goNextHall();
         timerController.cleanup();
         timerController.resetGameTime();
         initializeTimers();
-        timeRemaining = timerController.getRemainingGameTime();
+        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         initializeRunePosition();
         initializeHeroPosition();
