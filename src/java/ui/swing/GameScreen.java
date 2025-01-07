@@ -720,7 +720,7 @@ public class GameScreen extends JFrame {
                     }
                 } else if (hero.isCloaked()) { // Hero cloak etkisindeyse
                     if (hero.getDirection().equals("RIGHT")) {
-                        heroImage = ImageIO.read(new File("src/resources/images/playerCloak.png"));
+                        heroImage = ImageIO.read(new File("src/resources/images/playerCloak2.png"));
                     } else {
                         heroImage = ImageIO.read(new File("src/resources/images/playerCloak2_reversed.png"));
                     }
