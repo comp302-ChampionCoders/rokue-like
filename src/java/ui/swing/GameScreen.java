@@ -506,6 +506,7 @@ public class GameScreen extends JFrame {
 
     private void spawnEnchantment() {
         int x, y;
+        boolean max_lives = (hero.getLives() == 4);
         do {
             x = random.nextInt(GRID_COLUMNS);
             y = random.nextInt(GRID_ROWS);
@@ -530,7 +531,12 @@ public class GameScreen extends JFrame {
                 enchantment = new ExtraTime(); // Adds 5 seconds
                 break;
             case 4:
-                enchantment = new ExtraLife(); // Adds 1 life
+                if (max_lives) {
+                    enchantment = new ExtraTime(); // Adds 5 seconds
+                }
+                else {
+                    enchantment = new ExtraLife(); // Adds 1 life
+                }
                 break;
             default:
                 return;
