@@ -519,6 +519,11 @@ public class GameScreen extends JFrame {
     private void checkArcherAttacks() {
         for (Monster monster : monsters) {
             if (monster instanceof ArcherMonster) {
+
+                if (!hero.isVisible()) { // for cloak of protection
+                    System.out.println("Hero is invisible. ArcherMonster cannot attack.");
+                    continue;
+                }
                 int dx = Math.abs(monster.getX() - hero.getX());
                 int dy = Math.abs(monster.getY() - hero.getY());
                 
@@ -877,7 +882,6 @@ public class GameScreen extends JFrame {
                 }
             }
         }
-        
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -982,6 +986,34 @@ public class GameScreen extends JFrame {
             }
             System.out.println("Max lives!");
         }
+
+        private void activateReveal() {
+            for (Enchantment enchantment : enchantments) {
+                if (enchantment instanceof Reveal) {
+                    Reveal reveal = (Reveal) enchantment;
+                    System.out.println("Setting highlight center for Reveal...");
+                    reveal.setHighlightCenter(runePosition.x, runePosition.y);
+                    repaint(); // Trigger repaint to show the highlight
+                    break;
+                }
+            }
+        }
+        
+        private void activateCloakOfProtection() {
+            hero.toggleVisibility(); // Set isVisible to false
+            System.out.println("Hero is now invisible to archers for 20 seconds.");
+        
+            // Schedule the visibility to reset after 20 seconds
+            new Thread(() -> {
+                try {
+                    Thread.sleep(20000); // 20 seconds in milliseconds
+                    hero.toggleVisibility(); // Reset isVisible to true
+                    System.out.println("Hero is now visible to archers again.");
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+        }
         
 
         @Override
@@ -1012,24 +1044,27 @@ public class GameScreen extends JFrame {
                 case KeyEvent.VK_RIGHT:
                     direction = Direction.RIGHT;
                     break;
-                case KeyEvent.VK_R:
+                case KeyEvent.VK_R: // Reveal
                     System.out.println("R key pressed. Checking for Reveal...");
                     if (hero.getInventory().hasItem("Reveal")) {
                         System.out.println("Reveal found. Using enchantment...");
                         hero.getInventory().useItem("Reveal");
-                        for (Enchantment enchantment : enchantments) {
-                            if (enchantment instanceof Reveal) {
-                                Reveal reveal = (Reveal) enchantment;
-                                System.out.println("Setting highlight center...");
-                                reveal.setHighlightCenter(runePosition.x, runePosition.y);
-                                repaint(); 
-                                break;
-                            }
-                        }
+                        activateReveal();
                     } else {
                         System.out.println("No Reveal enchantment found in inventory.");
                     }
                     break;
+                case KeyEvent.VK_P: // Cloak of Protection
+                    System.out.println("P key pressed. Checking for Cloak of Protection...");
+                    if (hero.getInventory().hasItem("Cloak of Protection")) {
+                        System.out.println("Using Cloak of Protection...");
+                        hero.getInventory().useItem("Cloak of Protection");
+                        activateCloakOfProtection();
+                    } else {
+                        System.out.println("No Cloak of Protection found in inventory.");
+                    }
+                    break;
+                
             }
 
             if (direction != null) {
