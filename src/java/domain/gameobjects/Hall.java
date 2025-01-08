@@ -29,6 +29,7 @@ public class Hall {
     private final int width;
     private final int height;
     private final GridElement[][] grid;
+    private final Map<Point, GridElement> gridElements;
     private final Hero hero;
     private final List<Monster> monsters;
     private final Map<Point, GameObject> objects;
@@ -41,14 +42,16 @@ public class Hall {
     public Hall(int width, int height, Hero hero, HallType hallType) {
         this.width = width;
         this.height = height;
-        this.hero = hero;
+        this.hero = hero != null ? hero : new Hero(0, 0); // Default position if hero is null
         this.hallType = hallType;
         this.grid = new GridElement[height][width];
+        this.gridElements = new HashMap<>();
         this.monsters = new ArrayList<>();
         this.objects = new HashMap<>();
         this.isLocked = true;
         initializeGrid();
     }
+
 
     private void initializeGrid() {
         for (int i = 0; i < height; i++) {
@@ -56,7 +59,7 @@ public class Hall {
                 grid[i][j] = null;
             }
         }
-        updateGridWithHero();
+        addGridElement(hero, hero.getX(), hero.getY());
     }
 
     private boolean isHeroNull(){
@@ -86,29 +89,53 @@ public class Hall {
         return false;
     }
 
+    public boolean addGridElement(GridElement element, int x, int y) {
+        Point position = new Point(x, y);
+        if (isValidPosition(x, y) && !gridElements.containsKey(position)) {
+            gridElements.put(position, element);
+            updateGrid(x, y, element);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeGridElement(int x, int y) {
+        Point position = new Point(x, y);
+        if (gridElements.containsKey(position)) {
+            gridElements.remove(position);
+            updateGrid(x, y, null);
+            return true;
+        }
+        return false;
+    }
+
     public boolean isValidPosition(int x, int y) {
         return x >= 0 && x < width && y >= 0 && y < height && 
                !isPositionOccupied(x, y);
     }
 
-    private boolean isPositionOccupied(int x, int y) {
-        if(!isHeroNull()){
-            Point position = new Point(x, y);
-            return objects.containsKey(position) || 
-                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) ||
-                    (hero.getX() == x && hero.getY() == y);
-        }
-        else{
-            Point position = new Point(x, y);
-            return objects.containsKey(position) || 
-                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) || objects.containsKey(position);
-        }
+    // private boolean isPositionOccupied(int x, int y) {
+    //     if(!isHeroNull()){
+    //         Point position = new Point(x, y);
+    //         return objects.containsKey(position) || 
+    //                monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) ||
+    //                 (hero.getX() == x && hero.getY() == y);
+    //     }
+    //     else{
+    //         Point position = new Point(x, y);
+    //         return objects.containsKey(position) || 
+    //                monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) || objects.containsKey(position);
+    //     }
         
+    // }
+
+    private boolean isPositionOccupied(int x, int y) {
+        Point position = new Point(x, y);
+        return gridElements.containsKey(position);
     }
 
     public void updateState() {
         updateMonsters();
-
         updateGrid();
     }
 
@@ -119,34 +146,33 @@ public class Hall {
             }
         }
     }
-
     private void updateGrid() {
-        // Clear grid
-        initializeGrid();
-        
-        // Update with objects
-        for (Map.Entry<Point, GameObject> entry : objects.entrySet()) {
-            Point p = entry.getKey();
-            updateGrid(p.x, p.y, objects.get(p));
-        }
-
-        // Update with monsters
-        for (Monster monster : monsters) {
-            if (monster.isActive()) {
-                updateGrid(monster.getX(), monster.getY(), monster);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                grid[i][j] = null;
             }
         }
 
-        // Update with hero
-        updateGridWithHero();
+        for (Map.Entry<Point, GridElement> entry : gridElements.entrySet()) {
+            Point p = entry.getKey();
+            updateGrid(p.x, p.y, entry.getValue());
+        }
     }
 
-    private void updateGridWithHero() {
-        if(!isHeroNull()){
-            grid[hero.getY()][hero.getX()] = hero;
-        }
-        
-    }
+    // private void updateGrid() {
+
+    //     initializeGrid();
+    //     for (Map.Entry<Point, GameObject> entry : objects.entrySet()) {
+    //         Point p = entry.getKey();
+    //         updateGrid(p.x, p.y, objects.get(p));
+    //     }
+    //     for (Monster monster : monsters) {
+    //         if (monster.isActive()) {
+    //             updateGrid(monster.getX(), monster.getY(), monster);
+    //         }
+    //     }
+    //     updateGridWithHero();
+    // }
 
     private void updateGrid(int x, int y, GridElement elm) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
@@ -183,4 +209,8 @@ public class Hall {
     public GridElement[][] getGrid() { return grid; }
     public List<Monster> getMonsters() { return new ArrayList<>(monsters); }
     public Map<Point, GameObject> getObjects() { return new HashMap<>(objects); }
+    public Map<Point, GridElement> getGridElements() {
+        return new HashMap<>(gridElements);
+    }
+    public Hero getHero(){return hero;}
 }
