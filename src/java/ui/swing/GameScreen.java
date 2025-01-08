@@ -279,6 +279,7 @@ public class GameScreen extends JFrame {
         return new ImageIcon(resizedImg);
     }
 
+    // heart controller eklenmeli
     private void updateHearts() {
         int lives = hero.getLives();
         for (int i = 0; i < heartLabels.length; i++) {
@@ -310,6 +311,7 @@ public class GameScreen extends JFrame {
             y = random.nextInt(GRID_ROWS);
         } while (isPositionOccupied(x, y));
         hero = new Hero(x, y);
+        //terminaldeki H gride yazılacak farklı bi classta yapılıp buraya çekilmeli
     }
 
     private void updateTime() {
@@ -383,6 +385,7 @@ public class GameScreen extends JFrame {
         }
     }
     
+    //bu classtan çıkarılmalı
     private void moveMonsters() {
         Direction[] directions = Direction.values();
         for (Monster monster : monsters) {
@@ -401,6 +404,7 @@ public class GameScreen extends JFrame {
         repaint();
     }
 
+    //classtan çıkarılmalı
     private void addRandomMonster() {
         if (monsters.size() >= 5) return; 
 
@@ -426,12 +430,14 @@ public class GameScreen extends JFrame {
         repaint();
     }
 
+    // addrandom monster'a bağlı. bu classtan çıakrılmalı
     private boolean isWithinHeroProximity(int x, int y) {
         int dx = Math.abs(x - hero.getX());
         int dy = Math.abs(y - hero.getY());
         return dx <= 3 && dy <= 3; // Hero'nun 3x3 alanını kontrol eder
     }
 
+    // bu classtan çıakrılmalı
     private boolean isPositionOccupied(int x, int y) {
         if (hero != null) {
             if (hero.getX() == x && hero.getY() == y) return true;
@@ -450,6 +456,8 @@ public class GameScreen extends JFrame {
         return false;
     }
 
+
+    // bu classtan çıakrılmalı
     private void teleportRune() {
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
         if (wizardExists) {
@@ -472,6 +480,8 @@ public class GameScreen extends JFrame {
         }
     }
 
+
+    // bu classtan çıakrılmalı
     private void checkHeroMonsterCollision() {
         for (Monster monster : monsters) {
             if (monster instanceof FighterMonster) {
@@ -498,6 +508,8 @@ public class GameScreen extends JFrame {
         }
     }
 
+
+    // bu classtan çıakrılmalı
     // Helper method to check if there's an obstacle between archer and hero
     private boolean isPathBlocked(int archerX, int archerY, int heroX, int heroY) {
         // Check only if they're in the same row or column
@@ -519,6 +531,8 @@ public class GameScreen extends JFrame {
         return false;
     }
 
+
+    // bu classtan çıakrılmalı
     // Add this new method for archer attacks
     private void checkArcherAttacks() {
         for (Monster monster : monsters) {
@@ -554,6 +568,8 @@ public class GameScreen extends JFrame {
         }
     }
 
+
+    // bu classtan çıakrılmalı
     private void spawnEnchantment() {
         int x, y;
         boolean max_lives = (hero.getLives() == 4);
@@ -599,6 +615,8 @@ public class GameScreen extends JFrame {
         
     }
 
+
+    // bu classtan çıakrılmalı
     private void removeEnchantment() {
         Iterator<Enchantment> iterator = enchantments.iterator();
         while (iterator.hasNext()) {
@@ -1000,10 +1018,12 @@ public class GameScreen extends JFrame {
             else {
                 hero.getInventory().addItem(clickedEnchantment);
                 System.out.println("Added enchantment " + clickedEnchantment.getType() + " to inventory.");
+                
             }
             enchantments.remove(clickedEnchantment);
             clickedEnchantment.disappear();
             System.out.println(hero.getInventory().getInventoryContents());
+            System.out.println(hero.getInventory().getTotalCount());
         }
 
         private void activeExtraTime() {

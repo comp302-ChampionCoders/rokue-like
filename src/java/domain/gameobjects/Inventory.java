@@ -3,6 +3,7 @@ package domain.gameobjects;
 import java.util.*;
 import domain.behaviors.Collectible;
 public class Inventory {
+
     private HashMap<String, List<Collectible>> items;
 
     public Inventory() {
@@ -68,9 +69,13 @@ public class Inventory {
     public boolean hasItem(String type) {
         return items.containsKey(type) && !items.get(type).isEmpty();
     }
+
+    public int getTotalCount() {
+        return items.values().stream().mapToInt(List::size).sum();
+    }
     
-        // public int getItemCount(String type) { // could be useful if we later on need to limit enchantments.
-    //     List<Collectible> itemList = items.get(type);
-    //     return itemList != null ? itemList.size() : 0;
-    // }
+    public int getItemCount(String type) { // could be useful if we later on need to limit enchantments.
+         List<Collectible> itemList = items.get(type);
+         return itemList != null ? itemList.size() : 0;
+ }
 }
