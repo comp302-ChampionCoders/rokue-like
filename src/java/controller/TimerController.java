@@ -18,7 +18,7 @@ public class TimerController {
     private static final int RUNE_TELEPORT_DELAY = 5000;
     private static final int ARCHER_ATTACK_DELAY = 1000;
     private static final int GAME_TIMER_DELAY = 1000;
-    private static final int ENCHANTMENT_SPAWN_DELAY = 12000;
+    private static final int ENCHANTMENT_SPAWN_DELAY = 4000;
     private static final int ENCHANTMENT_REMOVE_DELAY = 6000;
 
     private static final int DEFAULT_GAME_TIME = 50;

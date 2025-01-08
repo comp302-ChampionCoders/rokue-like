@@ -3,6 +3,7 @@ package domain.gameobjects;
 import domain.monsters.*;
 import domain.behaviors.Direction;
 import domain.behaviors.GridElement;
+import domain.enchantments.Enchantment;
 
 import java.awt.Point;
 import java.util.*;
@@ -192,11 +193,13 @@ public class Hall {
                     System.out.print("M"); // Canavar için M
                 } else if (grid[y][x] instanceof GameObject) {
                     System.out.print("O"); // Oyun nesneleri için O
+                } else if (grid[y][x] instanceof Enchantment) {
+                        System.out.print("E"); // E for enchantments
                 } else {
-                    System.out.print("?"); // Tanımlanamayan elemanlar için ?
+                    System.out.print("?"); // ? for undefined objects
                 }
             }
-            System.out.println(); // Her satırın sonunda yeni bir satıra geç
+            System.out.println(); 
         }
     }
     

@@ -95,6 +95,7 @@ public class SpawnController {
 
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
         int monsterType = random.nextInt(wizardExists ? 2 : 3); // 0: Archer, 1: Fighter, 2: Wizard
+        Monster newMonster = null;
         switch (monsterType) {
             case 0:
                 monsters.add(new ArcherMonster(x, y));
@@ -105,6 +106,11 @@ public class SpawnController {
             case 2:
                 monsters.add(new WizardMonster(x, y));
                 break;
+        }
+        if (newMonster != null) {
+            monsters.add(newMonster);
+            currentHall.addGridElement(newMonster, x, y); // Add to the grid
+            System.out.println("Monster spawned at: " + x + ", " + y);
         }
     }
 
@@ -138,8 +144,17 @@ public class SpawnController {
                 return;
         }
 
-        enchantment.appear(x, y);
-        enchantments.add(enchantment);
+        // enchantment.appear(x, y);
+        // enchantments.add(enchantment);
+
+        if (enchantment != null) {
+            enchantment.appear(x, y);
+            enchantments.add(enchantment);
+            currentHall.addGridElement(enchantment, x, y); // Add to the grid
+
+            System.out.println("Enchantment spawned at: " + x + ", " + y);
+
+        }
     }
 
     public void removeEnchantment() {

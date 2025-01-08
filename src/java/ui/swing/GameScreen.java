@@ -407,32 +407,6 @@ public class GameScreen extends JFrame {
         repaint();
     }
 
-    //classtan çıkarılmalı
-    // private void spawnMonster() {
-    //     if (monsters.size() >= 5) return; 
-
-    //     int x, y;
-    //     do {
-    //         x = random.nextInt(GRID_COLUMNS);
-    //         y = random.nextInt(GRID_ROWS);
-    //     } while (isPositionOccupied(x, y) || isWithinHeroProximity(x, y));
-
-    //     boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
-    //     int monsterType = random.nextInt(wizardExists ? 2 : 3); // 0: Archer, 1: Fighter, 2: Wizard (eğer yoksa)
-    //     switch (monsterType) {
-    //         case 0:
-    //             monsters.add(new ArcherMonster(x, y));
-    //             break;
-    //         case 1:
-    //             monsters.add(new FighterMonster(x, y));
-    //             break;
-    //         case 2:
-    //             monsters.add(new WizardMonster(x, y));
-    //             break;
-    //     }
-    //     repaint();
-    // }
-
     // addrandom monster'a bağlı. bu classtan çıakrılmalı
     private boolean isWithinHeroProximity(int x, int y) {
         int dx = Math.abs(x - hero.getX());
@@ -571,68 +545,6 @@ public class GameScreen extends JFrame {
         }
     }
 
-
-    // // bu classtan çıakrılmalı
-    // private void spawnEnchantment() {
-    //     int x, y;
-    //     boolean max_lives = (hero.getLives() == 4);
-    //     do {
-    //         x = random.nextInt(GRID_COLUMNS);
-    //         y = random.nextInt(GRID_ROWS);
-    //     } while (isPositionOccupied(x, y));
-
-    //     // Randomly select an enchantment type
-    //     int enchantmentType = random.nextInt(5); // 0: Reveal, 1: Cloak of protection, 2: Luring gem, 3: Extra time, 4: Extra life
-    //     Enchantment enchantment;
-
-    //     switch (enchantmentType) {
-            
-    //         case 0:
-    //             enchantment = new Reveal(); // Highlights 4x4 area
-    //             break;
-    //         case 1:
-    //             enchantment = new CloakOfProtection(); // Protects from archer monsters
-    //             break;
-    //         case 2:
-    //             enchantment = new LuringGem(); // Distracts fighter monsters
-    //             break;
-    //         case 3:
-    //             enchantment = new ExtraTime(); // Adds 5 seconds
-    //             break;
-    //         case 4:
-    //             if (max_lives) {
-    //                 enchantment = new ExtraTime(); // Adds 5 seconds
-    //             }
-    //             else {
-    //                 enchantment = new ExtraLife(); // Adds 1 life
-    //             }
-    //             break;
-    //         default:
-    //             return;
-    //     }
-
-    //     // Set enchantment position and add to the list
-    //     enchantment.appear(x, y);
-    //     enchantments.add(enchantment);
-    //     repaint();
-        
-    // }
-
-
-    // // bu classtan çıakrılmalı
-    // private void removeEnchantment() {
-    //     Iterator<Enchantment> iterator = enchantments.iterator();
-    //     while (iterator.hasNext()) {
-    //         Enchantment enchantment = iterator.next();
-    //         if (enchantment.isAvailable() && enchantment.getTimeRemaining() <= 0) {
-    //             enchantment.disappear();
-    //             iterator.remove(); // Use iterator's remove method to avoid ConcurrentModificationException
-    //             System.out.println(enchantment.getName() + " disappeared.");
-    //             repaint();
-    //         }
-    //     }
-    // }
-    
     private void stopGame() {
         timerController.cleanup();
         dispose();
@@ -1140,6 +1052,7 @@ public class GameScreen extends JFrame {
 
             System.out.println("Hero Position: X=" + hero.getX() + ", Y=" + hero.getY());
             repaint();
+            hallController.getCurrentHall().displayGrid(); // FOR TEST
         }
 
         @Override
