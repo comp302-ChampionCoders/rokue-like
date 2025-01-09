@@ -64,7 +64,6 @@ class MinObjectControllerTest {
         assertTrue(result, "Result should be true when all requirements are met.");
     }
 
-
     @Test
     void oneHallOrPartialRequirementsMet() {
         Hall hall1 = hallController.getEarthHall();
