@@ -3,11 +3,13 @@ package ui.swing;
 import controller.HallController;
 import controller.ScreenTransition;
 import controller.TimerController;
+import controller.SpawnController;
 import domain.behaviors.Direction;
 import domain.enchantments.*;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
+import domain.gameobjects.Rune;
 import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
@@ -62,11 +64,13 @@ public class GameScreen extends JFrame {
     private final int CELL_SIZE = 50;
 
     private Hero hero; 
+    private Rune rune;
     private List<Monster> monsters; 
     private List<Enchantment> enchantments;
     private Random random;
 
     private TimerController timerController;
+    private SpawnController spawnController;
 
     private Point runePosition;
     private BufferedImage runeImage;
@@ -86,7 +90,10 @@ public class GameScreen extends JFrame {
 
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.hallController = hallController;
+        initializeHeroPosition();
+        initializeRunePosition();
         this.timerController = TimerController.getInstance();
+        this.spawnController = SpawnController.getInstance();
         initializeTimers();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
@@ -118,8 +125,6 @@ public class GameScreen extends JFrame {
         random = new Random();
         enchantments = new ArrayList<>();
         loadHall();
-        initializeHeroPosition();
-        initializeRunePosition();
 
        //loadRuneImage();
 
@@ -294,7 +299,7 @@ public class GameScreen extends JFrame {
     private void initializeTimers() {
         timerController.initializeGameTimers(
             () -> moveMonsters(),
-            () -> addRandomMonster(),
+            () -> spawnController.spawnMonster(hallController.getCurrentHall()),
             () -> teleportRune(),
             () -> checkArcherAttacks(),
             () -> updateTime(),
@@ -305,12 +310,8 @@ public class GameScreen extends JFrame {
     }
 
     private void initializeHeroPosition() {
-        int x,y;
-        do { 
-            x = random.nextInt(GRID_COLUMNS);
-            y = random.nextInt(GRID_ROWS);
-        } while (isPositionOccupied(x, y));
-        hero = new Hero(x, y);
+        hallController.updateHero();
+        hero = hallController.getHero();
         //terminaldeki H gride yazılacak farklı bi classta yapılıp buraya çekilmeli
     }
 
@@ -346,11 +347,11 @@ public class GameScreen extends JFrame {
         hallController.goNextHall();
         timerController.cleanup();
         timerController.resetGameTime();
+        initializeHeroPosition();
         initializeTimers();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         initializeRunePosition();
-        initializeHeroPosition();
         monsters = new ArrayList<>();
         random = new Random();
         enchantments = new ArrayList<>();
@@ -358,21 +359,10 @@ public class GameScreen extends JFrame {
     }
     
     private void initializeRunePosition() {
-        Map<Point, GameObject> objects = hallController.getCurrentHall().getObjects();
-    
-        if (objects.isEmpty()) {
-            System.out.println("No objects available in the hall to place the rune.");
-            runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
-            return; 
-        }
-    
-        // Randomly select a GameObject
-        List<Point> objectPositions = new ArrayList<>(objects.keySet());
-        Point randomPosition = objectPositions.get(random.nextInt(objectPositions.size()));
-    
-        // Set the rune position to the selected object's position
-        runePosition = new Point(randomPosition);
-        System.out.println("Initial rune placed on an object at position: X=" + runePosition.x + ", Y=" + runePosition.y);
+        hallController.updateRune();
+        rune = hallController.getRune();
+        Point point = new Point(rune.getX(), rune.getY());
+        runePosition = point;
     }
     
 
@@ -401,32 +391,6 @@ public class GameScreen extends JFrame {
             }
         }
         checkHeroMonsterCollision();
-        repaint();
-    }
-
-    //classtan çıkarılmalı
-    private void addRandomMonster() {
-        if (monsters.size() >= 5) return; 
-
-        int x, y;
-        do {
-            x = random.nextInt(GRID_COLUMNS);
-            y = random.nextInt(GRID_ROWS);
-        } while (isPositionOccupied(x, y) || isWithinHeroProximity(x, y));
-
-        boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
-        int monsterType = random.nextInt(wizardExists ? 2 : 3); // 0: Archer, 1: Fighter, 2: Wizard (eğer yoksa)
-        switch (monsterType) {
-            case 0:
-                monsters.add(new ArcherMonster(x, y));
-                break;
-            case 1:
-                monsters.add(new FighterMonster(x, y));
-                break;
-            case 2:
-                monsters.add(new WizardMonster(x, y));
-                break;
-        }
         repaint();
     }
 
@@ -568,68 +532,16 @@ public class GameScreen extends JFrame {
         }
     }
 
-
-    // bu classtan çıakrılmalı
     private void spawnEnchantment() {
-        int x, y;
-        boolean max_lives = (hero.getLives() == 4);
-        do {
-            x = random.nextInt(GRID_COLUMNS);
-            y = random.nextInt(GRID_ROWS);
-        } while (isPositionOccupied(x, y));
-
-        // Randomly select an enchantment type
-        int enchantmentType = random.nextInt(5); // 0: Reveal, 1: Cloak of protection, 2: Luring gem, 3: Extra time, 4: Extra life
-        Enchantment enchantment;
-
-        switch (enchantmentType) {
-            
-            case 0:
-                enchantment = new Reveal(); // Highlights 4x4 area
-                break;
-            case 1:
-                enchantment = new CloakOfProtection(); // Protects from archer monsters
-                break;
-            case 2:
-                enchantment = new LuringGem(); // Distracts fighter monsters
-                break;
-            case 3:
-                enchantment = new ExtraTime(); // Adds 5 seconds
-                break;
-            case 4:
-                if (max_lives) {
-                    enchantment = new ExtraTime(); // Adds 5 seconds
-                }
-                else {
-                    enchantment = new ExtraLife(); // Adds 1 life
-                }
-                break;
-            default:
-                return;
-        }
-
-        // Set enchantment position and add to the list
-        enchantment.appear(x, y);
+        Enchantment enchantment = spawnController.spawnEnchantment(hallController.getCurrentHall());
         enchantments.add(enchantment);
         repaint();
-        
     }
 
-
-    // bu classtan çıakrılmalı
-    private void removeEnchantment() {
-        Iterator<Enchantment> iterator = enchantments.iterator();
-        while (iterator.hasNext()) {
-            Enchantment enchantment = iterator.next();
-            if (enchantment.isAvailable() && enchantment.getTimeRemaining() <= 0) {
-                enchantment.disappear();
-                iterator.remove(); // Use iterator's remove method to avoid ConcurrentModificationException
-                System.out.println(enchantment.getName() + " disappeared.");
-                repaint();
-            }
-        }
+    private void removeEnchantment(){
+        spawnController.removeEnchantment(null);
     }
-    
+
     private void stopGame() {
         timerController.cleanup();
         dispose();
@@ -1021,6 +933,7 @@ public class GameScreen extends JFrame {
                 
             }
             enchantments.remove(clickedEnchantment);
+            hallController.getCurrentHall().removeGridElement(clickedEnchantment.getX(), clickedEnchantment.getY());
             clickedEnchantment.disappear();
             System.out.println(hero.getInventory().getInventoryContents());
             System.out.println(hero.getInventory().getTotalCount());
@@ -1128,7 +1041,7 @@ public class GameScreen extends JFrame {
 
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
-                    hero.move(direction);
+                    hallController.moveHero(direction);
                     updateHeroImage();
                     SoundPlayerUtil.playMoveSound();
                 }
@@ -1137,6 +1050,7 @@ public class GameScreen extends JFrame {
 
             System.out.println("Hero Position: X=" + hero.getX() + ", Y=" + hero.getY());
             repaint();
+            hallController.getCurrentHall().displayGrid(); // FOR TEST
         }
 
         @Override

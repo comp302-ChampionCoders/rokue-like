@@ -11,7 +11,7 @@ public class Hero implements Moveable, GridElement {
     private boolean isVisible;
     private int x;
     private int y;
-    private boolean isAlive;
+    //private boolean isAlive;
     private boolean isCloaked;
     private boolean isDamaged;
     private String direction = "RIGHT";
@@ -22,7 +22,7 @@ public class Hero implements Moveable, GridElement {
         this.lives = 3;
         this.inventory = new Inventory();
         this.isVisible = true;
-        this.isAlive = true;
+        //this.isAlive = true;
     }
 
     @Override
@@ -79,6 +79,10 @@ public class Hero implements Moveable, GridElement {
         this.lives = lives;
     }
     public Inventory getInventory(){return inventory;}
+
+    public void setInventory(Inventory inventory){
+        this.inventory = inventory;
+    }
 
     @Override
     public int getX() {

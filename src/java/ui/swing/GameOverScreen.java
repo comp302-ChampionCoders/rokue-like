@@ -77,6 +77,7 @@ public class GameOverScreen extends JFrame {
         JButton menuButton = createStyledButton("RETURN TO MENU");
 
         restartButton.addActionListener(e -> {
+            hallController.resetToBuildModeVersions();
             SoundPlayerUtil.playClickSound();
             restartGame.execute();});
         menuButton.addActionListener(e -> {

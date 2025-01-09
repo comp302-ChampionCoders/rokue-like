@@ -2,17 +2,13 @@ package ui.swing;
 
 import javax.swing.*;
 
-import controller.ModeController;
 import controller.ScreenTransition;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 

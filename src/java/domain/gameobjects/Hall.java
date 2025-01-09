@@ -1,12 +1,14 @@
 package domain.gameobjects;
 
 import domain.monsters.*;
-import domain.behaviors.Direction;
 import domain.behaviors.GridElement;
+import domain.enchantments.Enchantment;
 
 import java.awt.Point;
 import java.util.*;
-import java.util.function.IntFunction;
+
+
+import controller.SpawnController;
 
 public class Hall {
     // Hall type enumeration
@@ -29,25 +31,36 @@ public class Hall {
     private final int width;
     private final int height;
     private final GridElement[][] grid;
-    private final Hero hero;
+    private final Map<Point, GridElement> gridElements;
+    private  Hero hero;
     private final List<Monster> monsters;
     private final Map<Point, GameObject> objects;
     private Rune rune;
     private Door door;
     private boolean isLocked;
     private boolean isActive;
-    private Timer monsterSpawnTimer;
+    private SpawnController spawnController;
 
-    public Hall(int width, int height, Hero hero, HallType hallType) {
+    public Hall(int width, int height,HallType hallType) {
         this.width = width;
         this.height = height;
-        this.hero = hero;
         this.hallType = hallType;
         this.grid = new GridElement[height][width];
+        this.gridElements = new HashMap<>();
         this.monsters = new ArrayList<>();
         this.objects = new HashMap<>();
         this.isLocked = true;
+        this.hero = null; 
+        this.rune = null;
         initializeGrid();
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
     }
 
     private void initializeGrid() {
@@ -56,20 +69,25 @@ public class Hall {
                 grid[i][j] = null;
             }
         }
-        updateGridWithHero();
     }
 
-    private boolean isHeroNull(){
-        if(hero == null){
-            return true;
-        }
-        return false;
+    public Rune getRune(){
+        return rune;
+    }
+
+    public void setRune(Rune rune){
+        this.rune = rune;
+    }
+
+    public void setHero(Hero hero){
+        this.hero = hero;
     }
 
     public boolean addObject(GameObject object, int x, int y) {
         Point position = new Point(x, y);
         if (isValidPosition(x, y) && !objects.containsKey(position)) {
             objects.put(position, object);
+            gridElements.put(position, object);
             updateGrid(x, y, object);
             return true;
         }
@@ -80,6 +98,27 @@ public class Hall {
         Point position = new Point(x, y);
         if (objects.containsKey(position)) {
             objects.remove(position);
+            gridElements.remove(position);
+            updateGrid(x, y, null);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addGridElement(GridElement element, int x, int y) {
+        Point position = new Point(x, y);
+        if (isValidPosition(x, y) && !gridElements.containsKey(position)) {
+            gridElements.put(position, element);
+            updateGrid(x, y, element);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeGridElement(int x, int y) {
+        Point position = new Point(x, y);
+        if (gridElements.containsKey(position)) {
+            gridElements.remove(position);
             updateGrid(x, y, null);
             return true;
         }
@@ -91,24 +130,13 @@ public class Hall {
                !isPositionOccupied(x, y);
     }
 
-    private boolean isPositionOccupied(int x, int y) {
-        if(!isHeroNull()){
-            Point position = new Point(x, y);
-            return objects.containsKey(position) || 
-                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) ||
-                    (hero.getX() == x && hero.getY() == y);
-        }
-        else{
-            Point position = new Point(x, y);
-            return objects.containsKey(position) || 
-                   monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) || objects.containsKey(position);
-        }
-        
+    public boolean isPositionOccupied(int x, int y) {
+        Point position = new Point(x, y);
+        return gridElements.containsKey(position);
     }
 
     public void updateState() {
         updateMonsters();
-
         updateGrid();
     }
 
@@ -119,33 +147,17 @@ public class Hall {
             }
         }
     }
-
-    private void updateGrid() {
-        // Clear grid
-        initializeGrid();
-        
-        // Update with objects
-        for (Map.Entry<Point, GameObject> entry : objects.entrySet()) {
-            Point p = entry.getKey();
-            updateGrid(p.x, p.y, objects.get(p));
-        }
-
-        // Update with monsters
-        for (Monster monster : monsters) {
-            if (monster.isActive()) {
-                updateGrid(monster.getX(), monster.getY(), monster);
+    public void updateGrid() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                grid[i][j] = null;
             }
         }
 
-        // Update with hero
-        updateGridWithHero();
-    }
-
-    private void updateGridWithHero() {
-        if(!isHeroNull()){
-            grid[hero.getY()][hero.getX()] = hero;
+        for (Map.Entry<Point, GridElement> entry : gridElements.entrySet()) {
+            Point p = entry.getKey();
+            updateGrid(p.x, p.y, entry.getValue());
         }
-        
     }
 
     private void updateGrid(int x, int y, GridElement elm) {
@@ -166,11 +178,13 @@ public class Hall {
                     System.out.print("M"); // Canavar için M
                 } else if (grid[y][x] instanceof GameObject) {
                     System.out.print("O"); // Oyun nesneleri için O
+                } else if (grid[y][x] instanceof Enchantment) {
+                        System.out.print("E"); // E for enchantments
                 } else {
-                    System.out.print("?"); // Tanımlanamayan elemanlar için ?
+                    System.out.print("?"); // ? for undefined objects
                 }
             }
-            System.out.println(); // Her satırın sonunda yeni bir satıra geç
+            System.out.println(); 
         }
     }
     
@@ -179,8 +193,21 @@ public class Hall {
     public HallType getHallType(){
         return hallType;
     }
+
+    public SpawnController getSpawnController(){
+        return spawnController;
+    }
+
+    public void addMonster(Monster monster){
+        monsters.add(monster);
+    }
+
     public boolean isLocked() { return isLocked; }
     public GridElement[][] getGrid() { return grid; }
     public List<Monster> getMonsters() { return new ArrayList<>(monsters); }
     public Map<Point, GameObject> getObjects() { return new HashMap<>(objects); }
+    public Map<Point, GridElement> getGridElements() {
+        return new HashMap<>(gridElements);
+    }
+    public Hero getHero(){return hero;}
 }
