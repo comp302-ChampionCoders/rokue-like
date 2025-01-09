@@ -5,7 +5,6 @@ import domain.gameobjects.Hero;
 import domain.gameobjects.Rune;
 import domain.monsters.*;
 import domain.gameobjects.Hall;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

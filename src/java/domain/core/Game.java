@@ -2,19 +2,10 @@ package domain.core;
 
 import controller.HallController;
 import controller.ModeController;
-import controller.TimerController;
-import domain.gameobjects.Hall;
-import domain.gameobjects.Hero;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Game {
     private ModeController modeController;
-    private ArrayList<Hall> halls;
-    private TimerController timerController;
     private HallController hallController;
-    private Hero hero;
     private boolean isRunning;
 
     public Game() {
@@ -22,9 +13,8 @@ public class Game {
     }
 
     private void initializeGame() {
-        hallController = new HallController(hero);
+        hallController = new HallController();
         modeController = new ModeController(hallController);
-
         startGame();   
     }
 
@@ -43,29 +33,5 @@ public class Game {
 
     public HallController getHallController() {
         return hallController;
-    }
-
-    public Hall getWaterHall() {
-        return halls.get(1);
-    }
-
-    public ArrayList<Hall> getHalls() {
-        return halls;
-    }
-
-    public Hall getEarthHall() {
-        return halls.get(0);
-    }
-
-    public Hall getFireHall() {
-        return halls.get(2);
-    }
-
-    public Hall getAirHall() {
-        return halls.get(3);
-    }
-
-    public Hero getHero() {
-        return hero;
     }
 }

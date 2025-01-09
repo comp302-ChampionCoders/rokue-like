@@ -1,13 +1,12 @@
 package domain.gameobjects;
 
 import domain.monsters.*;
-import domain.behaviors.Direction;
 import domain.behaviors.GridElement;
 import domain.enchantments.Enchantment;
 
 import java.awt.Point;
 import java.util.*;
-import java.util.function.IntFunction;
+
 
 import controller.SpawnController;
 
@@ -40,7 +39,6 @@ public class Hall {
     private Door door;
     private boolean isLocked;
     private boolean isActive;
-    private Timer monsterSpawnTimer;
     private SpawnController spawnController;
 
     public Hall(int width, int height,HallType hallType) {
@@ -63,13 +61,6 @@ public class Hall {
                 grid[i][j] = null;
             }
         }
-    }
-
-    private boolean isHeroNull(){
-        if(hero == null){
-            return true;
-        }
-        return false;
     }
 
     public boolean addObject(GameObject object, int x, int y) {

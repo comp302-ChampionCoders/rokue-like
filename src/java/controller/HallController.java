@@ -14,8 +14,7 @@ public class HallController {
     private Hall currentHall;
     int i;
 
-    public HallController(Hero hero) {
-        this.hero = hero;
+    public HallController() {
         initializeHalls();
     }
 

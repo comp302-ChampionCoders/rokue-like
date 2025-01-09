@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import domain.gameobjects.Hall;
 import ui.swing.BuildModeScreen;
 import ui.swing.GameOverScreen;
 import ui.swing.GameScreen;
@@ -25,7 +23,6 @@ public class ModeController {
     private GameScreen gameScreen;
     private MainMenu mainMenu;
     private GameOverScreen gameOverScreen;
-    private ArrayList<Hall> allHalls;
     private HallController hallController;
     private MinObjectController minObjectController;
 
