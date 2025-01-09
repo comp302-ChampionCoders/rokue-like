@@ -39,7 +39,7 @@ public class SpawnController {
         return instance;
     }
 
-    private Hero initializeHeroPosition() {
+    public Hero initializeHeroPosition() {
         int x, y;
         do {
             x = random.nextInt(GRID_COLUMNS);
@@ -91,7 +91,7 @@ public class SpawnController {
         do {
             x = random.nextInt(GRID_COLUMNS);
             y = random.nextInt(GRID_ROWS);
-        } while (isPositionOccupied(x, y) || isWithinHeroProximity(x, y));
+        } while (currentHall.isPositionOccupied(x, y) || isWithinHeroProximity(x, y));
 
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
         int monsterType = random.nextInt(wizardExists ? 2 : 3); // 0: Archer, 1: Fighter, 2: Wizard
@@ -120,7 +120,7 @@ public class SpawnController {
         do {
             x = random.nextInt(GRID_COLUMNS);
             y = random.nextInt(GRID_ROWS);
-        } while (isPositionOccupied(x, y));
+        } while (currentHall.isPositionOccupied(x, y));
 
         Enchantment enchantment;
         int enchantmentType = random.nextInt(5); // 0: Reveal, 1: Cloak, 2: Luring Gem, 3: Extra Time, 4: Extra Life
@@ -172,17 +172,6 @@ public class SpawnController {
         int dx = Math.abs(x - hero.getX());
         int dy = Math.abs(y - hero.getY());
         return dx <= 3 && dy <= 3;
-    }
-
-    private boolean isPositionOccupied(int x, int y) {
-        if (hero != null && hero.getX() == x && hero.getY() == y) return true;
-        for (Monster monster : monsters) {
-            if (monster.getX() == x && monster.getY() == y) return true;
-        }
-        for (Point point : currentHall.getObjects().keySet()) {
-            if (point.x == x && point.y == y) return true;
-        }
-        return false;
     }
 
     public List<Monster> getMonsters() {

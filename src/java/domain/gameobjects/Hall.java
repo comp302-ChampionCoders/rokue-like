@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.util.*;
 import java.util.function.IntFunction;
 
+import controller.SpawnController;
+
 public class Hall {
     // Hall type enumeration
     public enum HallType {
@@ -31,7 +33,7 @@ public class Hall {
     private final int height;
     private final GridElement[][] grid;
     private final Map<Point, GridElement> gridElements;
-    private final Hero hero;
+    private  Hero hero;
     private final List<Monster> monsters;
     private final Map<Point, GameObject> objects;
     private Rune rune;
@@ -39,17 +41,18 @@ public class Hall {
     private boolean isLocked;
     private boolean isActive;
     private Timer monsterSpawnTimer;
+    private SpawnController spawnController;
 
-    public Hall(int width, int height, Hero hero, HallType hallType) {
+    public Hall(int width, int height,HallType hallType) {
         this.width = width;
         this.height = height;
-        this.hero = hero != null ? hero : new Hero(0, 0); // Default position if hero is null
         this.hallType = hallType;
         this.grid = new GridElement[height][width];
         this.gridElements = new HashMap<>();
         this.monsters = new ArrayList<>();
         this.objects = new HashMap<>();
         this.isLocked = true;
+        spawnController = SpawnController.getInstance(this);
         initializeGrid();
     }
 
@@ -60,7 +63,6 @@ public class Hall {
                 grid[i][j] = null;
             }
         }
-        addGridElement(hero, hero.getX(), hero.getY());
     }
 
     private boolean isHeroNull(){
@@ -74,6 +76,7 @@ public class Hall {
         Point position = new Point(x, y);
         if (isValidPosition(x, y) && !objects.containsKey(position)) {
             objects.put(position, object);
+            gridElements.put(position, object);
             updateGrid(x, y, object);
             return true;
         }
@@ -84,6 +87,7 @@ public class Hall {
         Point position = new Point(x, y);
         if (objects.containsKey(position)) {
             objects.remove(position);
+            gridElements.remove(position);
             updateGrid(x, y, null);
             return true;
         }
@@ -115,22 +119,7 @@ public class Hall {
                !isPositionOccupied(x, y);
     }
 
-    // private boolean isPositionOccupied(int x, int y) {
-    //     if(!isHeroNull()){
-    //         Point position = new Point(x, y);
-    //         return objects.containsKey(position) || 
-    //                monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) ||
-    //                 (hero.getX() == x && hero.getY() == y);
-    //     }
-    //     else{
-    //         Point position = new Point(x, y);
-    //         return objects.containsKey(position) || 
-    //                monsters.stream().anyMatch(m -> m.getX() == x && m.getY() == y) || objects.containsKey(position);
-    //     }
-        
-    // }
-
-    private boolean isPositionOccupied(int x, int y) {
+    public boolean isPositionOccupied(int x, int y) {
         Point position = new Point(x, y);
         return gridElements.containsKey(position);
     }
@@ -147,7 +136,7 @@ public class Hall {
             }
         }
     }
-    private void updateGrid() {
+    public void updateGrid() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 grid[i][j] = null;
@@ -159,21 +148,6 @@ public class Hall {
             updateGrid(p.x, p.y, entry.getValue());
         }
     }
-
-    // private void updateGrid() {
-
-    //     initializeGrid();
-    //     for (Map.Entry<Point, GameObject> entry : objects.entrySet()) {
-    //         Point p = entry.getKey();
-    //         updateGrid(p.x, p.y, objects.get(p));
-    //     }
-    //     for (Monster monster : monsters) {
-    //         if (monster.isActive()) {
-    //             updateGrid(monster.getX(), monster.getY(), monster);
-    //         }
-    //     }
-    //     updateGridWithHero();
-    // }
 
     private void updateGrid(int x, int y, GridElement elm) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
@@ -208,6 +182,11 @@ public class Hall {
     public HallType getHallType(){
         return hallType;
     }
+
+    public SpawnController getSpawnController(){
+        return spawnController;
+    }
+
     public boolean isLocked() { return isLocked; }
     public GridElement[][] getGrid() { return grid; }
     public List<Monster> getMonsters() { return new ArrayList<>(monsters); }

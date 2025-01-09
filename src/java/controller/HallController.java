@@ -1,5 +1,7 @@
 package controller;
 
+import domain.behaviors.Direction;
+import domain.behaviors.GridElement;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
@@ -19,10 +21,10 @@ public class HallController {
 
     private void initializeHalls() {
         halls = new ArrayList<>();
-        halls.add(new Hall(16, 12, hero, Hall.HallType.EARTH));
-        halls.add(new Hall(16, 12, hero, Hall.HallType.WATER));
-        halls.add(new Hall(16, 12, hero, Hall.HallType.FIRE));
-        halls.add(new Hall(16, 12, hero, Hall.HallType.AIR));
+        halls.add(new Hall(16, 12, Hall.HallType.EARTH));
+        halls.add(new Hall(16, 12, Hall.HallType.WATER));
+        halls.add(new Hall(16, 12, Hall.HallType.FIRE));
+        halls.add(new Hall(16, 12, Hall.HallType.AIR));
         i = 0;
         currentHall = halls.get(i);
     }
@@ -41,6 +43,16 @@ public class HallController {
             return true;
         }
         return false;
+    }
+
+    public void resetToBuildModeVersions(){
+        for(Hall hall: halls){
+            for(GridElement gridElement : hall.getGridElements().values()){
+                if(!(gridElement instanceof GameObject)){
+                    hall.removeGridElement(gridElement.getX(), gridElement.getY());
+                }
+            }
+        }
     }
 
     public int getIndex(){
@@ -93,4 +105,20 @@ public class HallController {
     public Hall getHall(Hall.HallType type) {
         return halls.stream().filter(h -> h.getHallType() == type).findFirst().orElse(null);
     }
+
+    public void updateHero(){
+        this.hero = SpawnController.getInstance(currentHall).initializeHeroPosition();
+    }
+
+    public Hero getHero(){
+        return hero;
+    }
+
+    public void moveHero(Direction direction){
+        currentHall.removeGridElement(hero.getX(), hero.getY());
+        hero.move(direction);
+        currentHall.addGridElement(hero,hero.getX(), hero.getY());
+        
+    }
+
 }

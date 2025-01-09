@@ -27,6 +27,9 @@ public class Hero implements Moveable, GridElement {
 
     @Override
     public boolean move(Direction direction) { // find a way to call the enum inside the moveable
+        int oldX = getX();
+        int oldY = getY();
+        
         int newX = getX() + direction.getDx();
         int newY = getY() + direction.getDy();
         

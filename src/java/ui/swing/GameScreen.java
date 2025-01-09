@@ -88,6 +88,7 @@ public class GameScreen extends JFrame {
 
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.hallController = hallController;
+        initializeHeroPosition();
         this.timerController = TimerController.getInstance();
         this.spawnController = SpawnController.getInstance(hallController.getCurrentHall());
         initializeTimers();
@@ -121,7 +122,6 @@ public class GameScreen extends JFrame {
         random = new Random();
         enchantments = new ArrayList<>();
         loadHall();
-        initializeHeroPosition();
         initializeRunePosition();
 
        //loadRuneImage();
@@ -308,12 +308,8 @@ public class GameScreen extends JFrame {
     }
 
     private void initializeHeroPosition() {
-        int x,y;
-        do { 
-            x = random.nextInt(GRID_COLUMNS);
-            y = random.nextInt(GRID_ROWS);
-        } while (isPositionOccupied(x, y));
-        hero = new Hero(x, y);
+        hallController.updateHero();
+        hero = hallController.getHero();
         //terminaldeki H gride yazılacak farklı bi classta yapılıp buraya çekilmeli
     }
 
@@ -1043,7 +1039,7 @@ public class GameScreen extends JFrame {
 
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
-                    hero.move(direction);
+                    hallController.moveHero(direction);
                     updateHeroImage();
                     SoundPlayerUtil.playMoveSound();
                 }

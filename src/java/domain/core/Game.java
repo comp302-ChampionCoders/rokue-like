@@ -25,14 +25,6 @@ public class Game {
         hallController = new HallController(hero);
         modeController = new ModeController(hallController);
 
-        hero = new Hero(0, 0); 
-
-        halls = new ArrayList<>();
-        halls.add(new Hall(16, 12, hero, Hall.HallType.EARTH));
-        halls.add(new Hall(16, 12, hero, Hall.HallType.WATER));
-        halls.add(new Hall(16, 12, hero, Hall.HallType.FIRE));
-        halls.add(new Hall(16, 12, hero, Hall.HallType.AIR));
-
         startGame();   
     }
 
