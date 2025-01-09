@@ -5,7 +5,11 @@ License: Creative Commons Zero, CC0
 URL: https://kenney.nl/assets/impact-sounds
 
 
+Cloth Sound
 
+Author: Kenney
+License: Creative Common Zero, CC0
+URL: https://kenney.nl/assets/rpg-audio
 Hurt Sound
 
 Author: Brackeys, Asbjørn Thirslund
@@ -19,6 +23,12 @@ Author: Kenney
 License: Creative Commons Zero, CC0
 URL: https://kenney.nl/assets/ui-audio
 
+Door Open Sound
+
+Author: Kenney
+License: Creative Common Zero, CC0
+URL: https://kenney.nl/assets/rpg-audio
+Hurt Sound
 
 
 Misplace, Add sound:
