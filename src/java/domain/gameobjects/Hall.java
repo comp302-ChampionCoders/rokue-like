@@ -55,6 +55,13 @@ public class Hall {
         initializeGrid();
     }
 
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
 
     private void initializeGrid() {
         for (int i = 0; i < height; i++) {
@@ -189,6 +196,10 @@ public class Hall {
 
     public SpawnController getSpawnController(){
         return spawnController;
+    }
+
+    public void addMonster(Monster monster){
+        monsters.add(monster);
     }
 
     public boolean isLocked() { return isLocked; }

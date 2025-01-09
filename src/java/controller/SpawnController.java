@@ -16,7 +16,6 @@ import java.util.Random;
 
 public class SpawnController {
     private static SpawnController instance;
-    private List<Monster> monsters;
     private List<Enchantment> enchantments; // Hall bazli degil artik, enchantmentsi method icine verilen hallu kullanarak hero uzerinden almamiz gerekli, bunu silebiliriz
     private Random random;
     private Rune rune;
@@ -25,7 +24,6 @@ public class SpawnController {
 
     //SpawnController artik Hall bazli degil, methodlari Hall bazli
     private SpawnController() {
-        this.monsters = new ArrayList<>();
         this.enchantments = new ArrayList<>();
         this.random = new Random();
     }
@@ -85,76 +83,16 @@ public class SpawnController {
     }
 
     public void spawnMonster(Hall hall) {
-        if (monsters.size() >= 5) return;
-
-        int x, y;
-        do {
-            x = random.nextInt(GRID_COLUMNS);
-            y = random.nextInt(GRID_ROWS);
-        } while (hall.isPositionOccupied(x, y) || isWithinHeroProximity(x, y, hall));
-
-        boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
-        int monsterType = random.nextInt(wizardExists ? 2 : 3); // 0: Archer, 1: Fighter, 2: Wizard
-        Monster newMonster = null;
-        switch (monsterType) {
-            case 0:
-                monsters.add(new ArcherMonster(x, y));
-                break;
-            case 1:
-                monsters.add(new FighterMonster(x, y));
-                break;
-            case 2:
-                monsters.add(new WizardMonster(x, y));
-                break;
-        }
-        if (newMonster != null) {
-            monsters.add(newMonster);
-            hall.addGridElement(newMonster, x, y); // Add to the grid
-            System.out.println("Monster spawned at: " + x + ", " + y);
-        }
+        if (hall.getMonsters().size() >= 5) return;
+        Monster monster = SpawnFactory.createMonster(hall);
+        hall.addMonster(monster);
+        System.out.println("Monster spawned at: " + monster.getX() + ", " + monster.getY());
     }
-
-    public void spawnEnchantment(Hall hall) {
-        int x, y;
-        boolean maxLives = (hall.getHero().getLives() == 4);
-        do {
-            x = random.nextInt(GRID_COLUMNS);
-            y = random.nextInt(GRID_ROWS);
-        } while (hall.isPositionOccupied(x, y));
-
-        Enchantment enchantment; 
-        int enchantmentType = random.nextInt(5); // 0: Reveal, 1: Cloak, 2: Luring Gem, 3: Extra Time, 4: Extra Life
-        switch (enchantmentType) {
-            case 0:
-                enchantment = new Reveal();
-                break;
-            case 1:
-                enchantment = new CloakOfProtection();
-                break;
-            case 2:
-                enchantment = new LuringGem();
-                break;
-            case 3:
-                enchantment = new ExtraTime();
-                break;
-            case 4:
-                enchantment = maxLives ? new ExtraTime() : new ExtraLife();
-                break;
-            default:
-                return;
-        }
-
-        // enchantment.appear(x, y);
-        // enchantments.add(enchantment);
-
-        if (enchantment != null) {
-            enchantment.appear(x, y);
-            enchantments.add(enchantment);
-            hall.addGridElement(enchantment, x, y); // Add to the grid
-
-            System.out.println("Enchantment spawned at: " + x + ", " + y);
-
-        }
+     
+    public Enchantment spawnEnchantment(Hall hall) {
+        Enchantment enchantment = SpawnFactory.createEnchantment(hall);
+        System.out.println("Enchantment spawned at: " + enchantment.getX() + ", " + enchantment.getY());
+        return enchantment;
     }
 
     public void removeEnchantment(Hall hall) {
@@ -164,20 +102,10 @@ public class SpawnController {
             if (enchantment.isAvailable() && enchantment.getTimeRemaining() <= 0) {
                 enchantment.disappear();
                 iterator.remove();
+                hall.removeGridElement(enchantment.getX(), enchantment.getY());
             }
         }
     }
-
-    private boolean isWithinHeroProximity(int x, int y, Hall hall) {
-        int dx = Math.abs(x - hall.getHero().getX());
-        int dy = Math.abs(y - hall.getHero().getY());
-        return dx <= 3 && dy <= 3;
-    }
-
-    public List<Monster> getMonsters() {
-        return monsters;
-    }
-
     public List<Enchantment> getEnchantments(Hall hall) { //#TODO Enchantmentlar SpawnControllerda sadece bir liste olmaz, her Hall icin enchantmentlara ayri erismek lazim
         return enchantments;
     }

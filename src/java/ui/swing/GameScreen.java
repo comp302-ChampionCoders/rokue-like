@@ -303,8 +303,8 @@ public class GameScreen extends JFrame {
             () -> teleportRune(),
             () -> checkArcherAttacks(),
             () -> updateTime(),
-            () -> spawnController.spawnEnchantment(hallController.getCurrentHall()),
-            () -> spawnController.removeEnchantment(hallController.getCurrentHall())
+            () -> spawnEnchantment(),
+            () -> removeEnchantment()
         );
         timerController.startTimers();
     }
@@ -530,6 +530,16 @@ public class GameScreen extends JFrame {
                 }
             }
         }
+    }
+
+    private void spawnEnchantment() {
+        Enchantment enchantment = spawnController.spawnEnchantment(hallController.getCurrentHall());
+        enchantments.add(enchantment);
+        repaint();
+    }
+
+    private void removeEnchantment(){
+        spawnController.removeEnchantment(null);
     }
 
     private void stopGame() {
@@ -923,6 +933,7 @@ public class GameScreen extends JFrame {
                 
             }
             enchantments.remove(clickedEnchantment);
+            hallController.getCurrentHall().removeGridElement(clickedEnchantment.getX(), clickedEnchantment.getY());
             clickedEnchantment.disappear();
             System.out.println(hero.getInventory().getInventoryContents());
             System.out.println(hero.getInventory().getTotalCount());
