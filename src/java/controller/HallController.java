@@ -33,7 +33,7 @@ public class HallController {
     }
 
     public void goNextHall(){
-        if(canGoNextHall()){
+        if(!canGoNextHall()){
             if(i < 3){
                 i++;
             }

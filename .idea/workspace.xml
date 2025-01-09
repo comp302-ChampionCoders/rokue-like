@@ -5,13 +5,80 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/junit_jupiter.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/controller/MinObjectControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/controller/HallController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/controller/ModeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/controller/ScreenTransition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/controller/TimerController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/behaviors/Collectible.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/behaviors/Direction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/behaviors/GridElement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/behaviors/Moveable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/core/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/enchantments/CloakOfProtection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/enchantments/Enchantment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/enchantments/ExtraTime.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/enchantments/LuringGem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/enchantments/Reveal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/gameobjects/Door.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/gameobjects/GameObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/gameobjects/Hall$HallType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/gameobjects/Hall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/gameobjects/Hero.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/gameobjects/Inventory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/gameobjects/Rune.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/monsters/ArcherMonster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/monsters/FighterMonster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/monsters/Monster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/domain/monsters/WizardMonster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/technicalservices/Timer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/application/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/BuildModeScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/GameOverScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/GameOverScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/GameOverScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/GameScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/GameScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/GameScreen$GamePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/GameScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/MainMenu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/MainMenu$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/MainMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/PauseScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/PauseScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/PauseScreen$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/PauseScreen$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/PauseScreen$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/swing/PauseScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/utils/CursorUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/rokue-like/ui/utils/SoundPlayerUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rokue-like.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rokue-like.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/HallController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/HallController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,18 +109,71 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.MinObjectControllerTest.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "Testing-Arda",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="domain.gameobjects" />
+      <recent name="controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.MinObjectControllerTest">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
+      <module name="rokue-like" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ui.application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MinObjectControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rokue-like" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.MinObjectControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -65,6 +185,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MinObjectControllerTest" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -76,6 +210,7 @@
       <updated>1736203871101</updated>
       <workItem from="1736203877427" duration="3574000" />
       <workItem from="1736208281619" duration="518000" />
+      <workItem from="1736453800959" duration="7852000" />
     </task>
     <servers />
   </component>
