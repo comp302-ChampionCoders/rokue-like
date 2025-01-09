@@ -51,6 +51,7 @@ public class Hall {
         this.objects = new HashMap<>();
         this.isLocked = true;
         this.hero = null; 
+        this.rune = null;
         initializeGrid();
     }
 
@@ -61,6 +62,14 @@ public class Hall {
                 grid[i][j] = null;
             }
         }
+    }
+
+    public Rune getRune(){
+        return rune;
+    }
+
+    public void setRune(Rune rune){
+        this.rune = rune;
     }
 
     public void setHero(Hero hero){

@@ -9,6 +9,7 @@ import domain.enchantments.*;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
+import domain.gameobjects.Rune;
 import domain.monsters.ArcherMonster;
 import domain.monsters.FighterMonster;
 import domain.monsters.Monster;
@@ -63,6 +64,7 @@ public class GameScreen extends JFrame {
     private final int CELL_SIZE = 50;
 
     private Hero hero; 
+    private Rune rune;
     private List<Monster> monsters; 
     private List<Enchantment> enchantments;
     private Random random;
@@ -89,6 +91,7 @@ public class GameScreen extends JFrame {
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.hallController = hallController;
         initializeHeroPosition();
+        initializeRunePosition();
         this.timerController = TimerController.getInstance();
         this.spawnController = SpawnController.getInstance();
         initializeTimers();
@@ -122,7 +125,6 @@ public class GameScreen extends JFrame {
         random = new Random();
         enchantments = new ArrayList<>();
         loadHall();
-        initializeRunePosition();
 
        //loadRuneImage();
 
@@ -357,21 +359,10 @@ public class GameScreen extends JFrame {
     }
     
     private void initializeRunePosition() {
-        Map<Point, GameObject> objects = hallController.getCurrentHall().getObjects();
-    
-        if (objects.isEmpty()) {
-            System.out.println("No objects available in the hall to place the rune.");
-            runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
-            return; 
-        }
-    
-        // Randomly select a GameObject
-        List<Point> objectPositions = new ArrayList<>(objects.keySet());
-        Point randomPosition = objectPositions.get(random.nextInt(objectPositions.size()));
-    
-        // Set the rune position to the selected object's position
-        runePosition = new Point(randomPosition);
-        System.out.println("Initial rune placed on an object at position: X=" + runePosition.x + ", Y=" + runePosition.y);
+        hallController.updateRune();
+        rune = hallController.getRune();
+        Point point = new Point(rune.getX(), rune.getY());
+        runePosition = point;
     }
     
 

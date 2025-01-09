@@ -5,12 +5,14 @@ import domain.behaviors.GridElement;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
+import domain.gameobjects.Rune;
 
 import java.util.ArrayList;
 
 public class HallController {
     private ArrayList<Hall> halls;
     private Hero hero;
+    private Rune rune;
     private Hall currentHall;
     int i;
     private SpawnController spawnController;;
@@ -115,6 +117,15 @@ public class HallController {
 
     public Hero getHero(){
         return hero;
+    }
+
+    public void updateRune(){
+        this.rune = spawnController.initializeRune(currentHall);
+        currentHall.setRune(rune);   
+    }
+
+    public Rune getRune(){
+        return rune;
     }
 
     public void moveHero(Direction direction){

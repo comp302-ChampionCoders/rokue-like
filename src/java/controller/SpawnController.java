@@ -4,16 +4,20 @@ import domain.enchantments.*;
 import domain.gameobjects.Hero;
 import domain.gameobjects.Rune;
 import domain.monsters.*;
+import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
+
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class SpawnController {
     private static SpawnController instance;
     private List<Monster> monsters;
-    private List<Enchantment> enchantments;
+    private List<Enchantment> enchantments; // Hall bazli degil artik, enchantmentsi method icine verilen hallu kullanarak hero uzerinden almamiz gerekli, bunu silebiliriz
     private Random random;
     private Rune rune;
     private final int GRID_ROWS = 12;
@@ -49,14 +53,26 @@ public class SpawnController {
     }
 
     public Rune initializeRune(Hall hall) {
-        int x, y;
-        do {
-            x = random.nextInt(GRID_COLUMNS);
-            y = random.nextInt(GRID_ROWS);
-        } while (!hall.isValidPosition(x, y));
-        Rune newRune = new Rune(x, y);
-        hall.addGridElement(newRune, x, y);
-        return newRune;
+        Map<Point, GameObject> objects = hall.getObjects();
+    
+        if (objects.isEmpty()) {
+            System.out.println("No objects available in the hall to place the rune.");
+            Point runePosition = new Point(random.nextInt(GRID_COLUMNS), random.nextInt(GRID_ROWS));
+            rune = new Rune(runePosition.x, runePosition.y, hall);
+            hall.setRune(rune);
+            return rune;
+        }
+        List<Point> objectPositions = new ArrayList<>(objects.keySet());
+        Point randomPosition = objectPositions.get(random.nextInt(objectPositions.size()));
+    
+        Point runePosition = new Point(randomPosition);
+        rune = new Rune(runePosition.x, runePosition.y, hall);
+        hall.addGridElement(rune, runePosition.x, runePosition.y);
+        System.out.println("Initial rune placed on an object at position: X=" + runePosition.x + ", Y=" + runePosition.y);
+        return rune;
+        
+      
+
     }
 
     public void teleportRune(Hall hall) {

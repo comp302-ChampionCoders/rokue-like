@@ -9,7 +9,7 @@ public class Rune implements Collectible, GridElement {
     private boolean isCollected;
     private boolean isAvailable;
 
-    public Rune(int x, int y) {
+    public Rune(int x, int y, Hall hall) {
         this.x = x;
         this.y = y;
         this.isAvailable = true;
