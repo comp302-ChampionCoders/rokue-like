@@ -50,7 +50,7 @@ public class Hall {
         this.monsters = new ArrayList<>();
         this.objects = new HashMap<>();
         this.isLocked = true;
-        spawnController = SpawnController.getInstance(this);
+        this.hero = null; 
         initializeGrid();
     }
 
@@ -61,6 +61,10 @@ public class Hall {
                 grid[i][j] = null;
             }
         }
+    }
+
+    public void setHero(Hero hero){
+        this.hero = hero;
     }
 
     public boolean addObject(GameObject object, int x, int y) {

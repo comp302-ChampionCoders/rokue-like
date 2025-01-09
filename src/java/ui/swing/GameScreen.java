@@ -90,7 +90,7 @@ public class GameScreen extends JFrame {
         this.hallController = hallController;
         initializeHeroPosition();
         this.timerController = TimerController.getInstance();
-        this.spawnController = SpawnController.getInstance(hallController.getCurrentHall());
+        this.spawnController = SpawnController.getInstance();
         initializeTimers();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
@@ -297,12 +297,12 @@ public class GameScreen extends JFrame {
     private void initializeTimers() {
         timerController.initializeGameTimers(
             () -> moveMonsters(),
-            () -> spawnController.spawnMonster(),
+            () -> spawnController.spawnMonster(hallController.getCurrentHall()),
             () -> teleportRune(),
             () -> checkArcherAttacks(),
             () -> updateTime(),
-            () -> spawnController.spawnEnchantment(),
-            () -> spawnController.removeEnchantment()
+            () -> spawnController.spawnEnchantment(hallController.getCurrentHall()),
+            () -> spawnController.removeEnchantment(hallController.getCurrentHall())
         );
         timerController.startTimers();
     }
@@ -345,11 +345,11 @@ public class GameScreen extends JFrame {
         hallController.goNextHall();
         timerController.cleanup();
         timerController.resetGameTime();
+        initializeHeroPosition();
         initializeTimers();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         initializeRunePosition();
-        initializeHeroPosition();
         monsters = new ArrayList<>();
         random = new Random();
         enchantments = new ArrayList<>();

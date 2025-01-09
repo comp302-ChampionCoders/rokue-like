@@ -13,6 +13,7 @@ public class HallController {
     private Hero hero;
     private Hall currentHall;
     int i;
+    private SpawnController spawnController;;
 
     public HallController() {
         initializeHalls();
@@ -26,6 +27,7 @@ public class HallController {
         halls.add(new Hall(16, 12, Hall.HallType.AIR));
         i = 0;
         currentHall = halls.get(i);
+        spawnController = SpawnController.getInstance();
     }
 
     public void goNextHall(){
@@ -49,6 +51,7 @@ public class HallController {
             for(GridElement gridElement : hall.getGridElements().values()){
                 if(!(gridElement instanceof GameObject)){
                     hall.removeGridElement(gridElement.getX(), gridElement.getY());
+                    hall.setHero(null);
                 }
             }
         }
@@ -106,7 +109,8 @@ public class HallController {
     }
 
     public void updateHero(){
-        this.hero = SpawnController.getInstance(currentHall).initializeHeroPosition();
+        this.hero = spawnController.initializeHeroPosition(currentHall);
+        currentHall.setHero(hero);
     }
 
     public Hero getHero(){
