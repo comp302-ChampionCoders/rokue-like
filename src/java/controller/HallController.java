@@ -112,7 +112,6 @@ public class HallController {
 
     public void updateHero(){
         this.hero = spawnController.initializeHeroPosition(currentHall);
-        currentHall.setHero(hero);
     }
 
     public Hero getHero(){

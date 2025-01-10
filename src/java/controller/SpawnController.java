@@ -36,6 +36,7 @@ public class SpawnController {
         return instance;
     }
 
+    //
     public Hero initializeHeroPosition(Hall hall) {
         if(hall.getHero() == null){
             int x, y;
@@ -44,6 +45,7 @@ public class SpawnController {
                 y = random.nextInt(GRID_ROWS);
             } while (!hall.isValidPosition(x, y));
             Hero newHero = new Hero(x, y);
+            hall.setHero(newHero);
             hall.addGridElement(newHero, x, y);
             return newHero;
         }
