@@ -1,6 +1,5 @@
 package controller;
 
-import controller.HallController;
 import controller.SpawnController;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
