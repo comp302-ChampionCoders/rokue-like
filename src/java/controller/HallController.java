@@ -127,11 +127,33 @@ public class HallController {
         return rune;
     }
 
-    public void moveHero(Direction direction){
-        currentHall.removeGridElement(hero.getX(), hero.getY());
-        hero.move(direction);
-        currentHall.addGridElement(hero,hero.getX(), hero.getY());
-        
+    public void moveHero(Direction direction) {
+        int newX = hero.getX() + direction.getDx();
+        int newY = hero.getY() + direction.getDy();
+
+        if (isValidMove(newX, newY)) {
+
+            currentHall.removeGridElement(hero.getX(), hero.getY());
+
+
+            hero.move(direction);
+            currentHall.addGridElement(hero, hero.getX(), hero.getY());
+        } else {
+            System.out.println("Geçersiz hareket: Kahraman bu pozisyona geçemez.");
+        }
+    }
+
+    private boolean isValidMove(int x, int y) {
+
+        if (x < 0 || x >= currentHall.getWidth() || y < 0 || y >= currentHall.getHeight()) {
+            return false;
+        }
+
+        if (currentHall.isPositionOccupied(x, y)) {
+            return false;
+        }
+
+        return true;
     }
 
 }
