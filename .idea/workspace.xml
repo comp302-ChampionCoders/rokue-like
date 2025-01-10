@@ -5,9 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/controller/MoveHeroTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/domain/gameobjects/addGridElementTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/controller/HallController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/HallController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controller/HallController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/HallController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/MinObjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MinObjectController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/ModeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/ModeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SpawnFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TimerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/behaviors/Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/behaviors/Direction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/CloakOfProtection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/CloakOfProtection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/LuringGem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/LuringGem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Reveal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/Reveal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall$HallType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall$HallType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Inventory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/monsters/WizardMonster.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/monsters/WizardMonster.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/technicalservices/Timer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/technicalservices/Timer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/CursorUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/utils/CursorUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/SoundPlayerUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/utils/SoundPlayerUtil.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,8 +106,9 @@
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "Testing-Arda",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/DERİN/Desktop/rokue-like",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -83,11 +124,11 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="controller" />
       <recent name="domain.gameobjects" />
+      <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SpawnControllerTest">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -149,14 +190,6 @@
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
