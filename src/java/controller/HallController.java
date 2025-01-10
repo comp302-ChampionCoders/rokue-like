@@ -33,7 +33,7 @@ public class HallController {
     }
 
     public void goNextHall(){
-        if(!canGoNextHall()){
+        if(canGoNextHall()){
             if(i < 3){
                 i++;
             }
@@ -112,7 +112,6 @@ public class HallController {
 
     public void updateHero(){
         this.hero = spawnController.initializeHeroPosition(currentHall);
-        currentHall.setHero(hero);
     }
 
     public Hero getHero(){

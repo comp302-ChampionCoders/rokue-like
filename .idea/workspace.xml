@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/controller/SpawnControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/MinObjectControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/MinObjectControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/HallController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/HallController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/HallController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/HallController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +168,7 @@
       <updated>1736203871101</updated>
       <workItem from="1736203877427" duration="3574000" />
       <workItem from="1736208281619" duration="518000" />
-      <workItem from="1736453800959" duration="11372000" />
+      <workItem from="1736453800959" duration="12798000" />
     </task>
     <servers />
   </component>
