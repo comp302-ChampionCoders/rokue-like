@@ -892,29 +892,8 @@ public class GameScreen extends JFrame {
             if (clickedObject.getX() == runePosition.x && clickedObject.getY() == runePosition.y) { 
                 message = "You found the rune at: (" + clickedObject.getX() + ", " + clickedObject.getY() + ")!";
             } else {
-                message = "Rune is not here. You clicked on an empty object at: (" + clickedObject.getX() + ", " + clickedObject.getY() + ").";
+                SoundPlayerUtil.playErrorSound();
             }
-        
-            // Create a JOptionPane
-            JOptionPane optionPane = new JOptionPane(
-                message,
-                JOptionPane.INFORMATION_MESSAGE,
-                JOptionPane.DEFAULT_OPTION,
-                null,
-                new Object[]{}, // No buttons
-                null
-            );
-        
-            // Create a dialog with the JOptionPane
-            JDialog dialog = optionPane.createDialog(this, "Object Clicked");
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setModal(false); // Allow non-blocking behavior
-            dialog.setVisible(true);
-        
-            // Set a timer to dispose of the dialog after 2 seconds
-            Timer timer = new Timer(2000, e -> dialog.dispose());
-            timer.setRepeats(false); // Ensure the timer runs only once
-            timer.start();
         }
 
         private void handleEnchantmentClick(Enchantment clickedEnchantment) {

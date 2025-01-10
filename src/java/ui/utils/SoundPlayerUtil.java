@@ -13,6 +13,7 @@ public class SoundPlayerUtil {
     private static final String HERO_HURT_PATH = "src/resources/sounds/heroHit.wav";
     private static final String HERO_MOVE_PATH = "src/resources/sounds/footstep.wav";
     private static final String CLOTH_SOUND_PATH = "src/resources/sounds/cloth2.wav";
+    private static final String  ERROR_SOUND_PATH ="src/resources/sounds/error-message182475.wav";
     
 
     public static void playClickSound() {
@@ -46,6 +47,8 @@ public class SoundPlayerUtil {
     public static void playClothSound(){
         playSound(CLOTH_SOUND_PATH);
     }
+
+    public static void playErrorSound(){playSound(ERROR_SOUND_PATH);}
 
     private static void playSound(String soundFilePath) {
         try {
