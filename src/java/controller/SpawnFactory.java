@@ -19,7 +19,8 @@ public class SpawnFactory {
         } while (hall.isPositionOccupied(x, y) || isWithinHeroProximity(x, y, hall));
 
         boolean wizardExists = hall.getMonsters().stream().anyMatch(m -> m instanceof WizardMonster);
-        int monsterType = RANDOM.nextInt(wizardExists ? 2 : 3); // 0: Archer, 1: Fighter, 2: Wizard
+        int wizExst = (wizardExists ? 2 : 3);
+        int monsterType = RANDOM.nextInt(wizExst); // 0: Archer, 1: Fighter, 2: Wizard
 
         Monster newMonster;
         switch (monsterType) {
@@ -36,6 +37,7 @@ public class SpawnFactory {
                 throw new IllegalStateException("Unexpected monster type: " + monsterType);
         }
 
+        hall.addMonster(newMonster);
         hall.addGridElement(newMonster, x, y);
         return newMonster;
     }

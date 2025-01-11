@@ -350,12 +350,13 @@ public class GameScreen extends JFrame {
         timerController.resetGameTime();
         initializeHeroPosition();
         initializeTimers();
+        initializeRunePosition();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
-        initializeRunePosition();
         monsters = new ArrayList<>();
         random = new Random();
         enchantments = new ArrayList<>();
+        rune.unCollect(hero);
         loadHall();
     }
     
@@ -387,7 +388,9 @@ public class GameScreen extends JFrame {
 
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
+                    hallController.getCurrentHall().removeGridElement(monster.getX(), monster.getY());
                     monster.move(randomDirection);
+                    hallController.getCurrentHall().addGridElement(monster, monster.getX(), monster.getY());
                 }
             }
         }
@@ -540,8 +543,10 @@ public class GameScreen extends JFrame {
     }
     private void spawnMonster() {
         Monster monster = spawnController.spawnMonster(hallController.getCurrentHall());
-        monsters.add(monster);
-        repaint();
+        if (monster != null) {
+            monsters.add(monster);
+            repaint();
+        }
     }
 
     private void removeEnchantment(){
@@ -593,6 +598,7 @@ public class GameScreen extends JFrame {
 
             drawGrid(g, offsetX, offsetY);
             drawTopAndSideWalls(g, offsetX, offsetY);
+            drawBottomWall(g, offsetX, offsetY);
             drawArcherRanges(g, offsetX, offsetY);
             drawHallObjects(g, offsetX, offsetY);
             drawHero(g, offsetX, offsetY);
@@ -755,6 +761,37 @@ public class GameScreen extends JFrame {
                 e.printStackTrace();
             }
         }
+        private void drawBottomWall(Graphics g, int offsetX, int offsetY) {
+            int bottomWallY = offsetY + GRID_ROWS * CELL_SIZE; // Alt duvarın Y koordinatı
+            int bottomWallWidth = GRID_COLUMNS * CELL_SIZE + 35; // Alt duvarın genişliği
+            int bottomWallHeight = CELL_SIZE + 20;
+            String bottomWallImagePath;
+            // Hall tipine göre uygun görseli seç
+            switch (hallController.getCurrentHall().getHallType()) {
+                case EARTH:
+                    bottomWallImagePath = "src/resources/images/bottomearth.png";
+                    break;
+                case WATER:
+                    bottomWallImagePath = "src/resources/images/bottomwater.png";
+                    break;
+                case FIRE:
+                    bottomWallImagePath = "src/resources/images/bottomfire.png";
+                    break;
+                case AIR:
+                    bottomWallImagePath = "src/resources/images/bottomair.png";
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid hall type.");
+            }
+            try {
+                BufferedImage bottomWallImage = ImageIO.read(new File(bottomWallImagePath));
+                g.drawImage(bottomWallImage, offsetX-18, bottomWallY, bottomWallWidth, bottomWallHeight, null);
+            } catch (IOException e) {
+                System.err.println("Failed to load bottom wall image: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
 
         private void drawMonsters(Graphics g, int offsetX, int offsetY) {
             for (Monster monster : monsters) {
@@ -895,10 +932,11 @@ public class GameScreen extends JFrame {
         }
 
         private void handleObjectClick(GameObject clickedObject) {
-            // Determine if the object is a rune or empty
-            String message;
-            if (clickedObject.getX() == runePosition.x && clickedObject.getY() == runePosition.y) { 
-                message = "You found the rune at: (" + clickedObject.getX() + ", " + clickedObject.getY() + ")!";
+            if (clickedObject.getX() == runePosition.x && clickedObject.getY() == runePosition.y && rune.isAvailable()) {
+
+                SoundPlayerUtil.playOpenDoorSound();
+                rune.collect(hero);
+
             } else {
                 SoundPlayerUtil.playErrorSound();
             }
@@ -1026,7 +1064,38 @@ public class GameScreen extends JFrame {
                 int newX = hero.getX() + direction.getDx();
                 int newY = hero.getY() + direction.getDy();
 
-                // Check boundaries and prevent overlap
+                if (hallController.getCurrentHall().getHallType() == Hall.HallType.EARTH &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 3 && hero.getY() == 11) || (hero.getX() == 4 && hero.getY() == 11))) {
+                    if(hallController.canGoNextHall()){
+                        goNextHall();
+                    }
+                    repaint();
+                    return;
+                }
+                if (hallController.getCurrentHall().getHallType() == Hall.HallType.WATER &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 8 && hero.getY() == 11) || (hero.getX() == 9 && hero.getY() == 11))) {
+                    if(hallController.canGoNextHall()){
+                        goNextHall();
+                    }
+                    repaint();
+                    return;
+                }
+                if (hallController.getCurrentHall().getHallType() == Hall.HallType.FIRE &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 9 && hero.getY() == 11) || (hero.getX() == 10 && hero.getY() == 11))) {
+                    if(hallController.canGoNextHall()){
+                        goNextHall();
+                    }
+                    repaint();
+                    return;
+                }
+                /*if (hallController.getCurrentHall().getHallType() == Hall.HallType.AIR &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 8 && hero.getY() == 11) || (hero.getX() == 9 && hero.getY() == 11))) {
+                    //SUCESFULL FINISHED EKLENECEK
+                    repaint();
+                    return;
+                }*/
+
+
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
                     hallController.moveHero(direction);
                     updateHeroImage();
