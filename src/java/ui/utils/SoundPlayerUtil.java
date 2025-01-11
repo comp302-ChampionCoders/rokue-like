@@ -13,7 +13,7 @@ public class SoundPlayerUtil {
     private static final String HERO_HURT_PATH = "src/resources/sounds/heroHit.wav";
     private static final String HERO_MOVE_PATH = "src/resources/sounds/footstep.wav";
     private static final String CLOTH_SOUND_PATH = "src/resources/sounds/cloth2.wav";
-    
+    private static final String OPEN_DOOR_SOUND_PATH = "src/resources/sounds/doorOpen_2.wav"; // Yeni ses yolu
 
     public static void playClickSound() {
         playSound(CLICK_SOUND_PATH);
@@ -26,7 +26,7 @@ public class SoundPlayerUtil {
     public static void playMisplacedSound() {
         playSound(MISPLACED_SOUND_PATH);
     }
-    
+
     public static void playAddSound(){
         playSound(ADD_SOUND_PATH);
     }
@@ -47,6 +47,10 @@ public class SoundPlayerUtil {
         playSound(CLOTH_SOUND_PATH);
     }
 
+    public static void playOpenDoorSound() { // Yeni yöntem
+        playSound(OPEN_DOOR_SOUND_PATH);
+    }
+
     private static void playSound(String soundFilePath) {
         try {
             File soundFile = new File(soundFilePath);
@@ -59,4 +63,3 @@ public class SoundPlayerUtil {
         }
     }
 }
-

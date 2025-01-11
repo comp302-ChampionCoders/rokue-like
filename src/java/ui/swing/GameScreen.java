@@ -349,12 +349,13 @@ public class GameScreen extends JFrame {
         timerController.resetGameTime();
         initializeHeroPosition();
         initializeTimers();
+        initializeRunePosition();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
-        initializeRunePosition();
         monsters = new ArrayList<>();
         random = new Random();
         enchantments = new ArrayList<>();
+        rune.unCollect(hero);
         loadHall();
     }
     
@@ -587,6 +588,7 @@ public class GameScreen extends JFrame {
 
             drawGrid(g, offsetX, offsetY);
             drawTopAndSideWalls(g, offsetX, offsetY);
+            drawBottomWall(g, offsetX, offsetY);
             drawArcherRanges(g, offsetX, offsetY);
             drawHallObjects(g, offsetX, offsetY);
             drawHero(g, offsetX, offsetY);
@@ -691,17 +693,17 @@ public class GameScreen extends JFrame {
 
         private void drawTopAndSideWalls(Graphics g, int offsetX, int offsetY) {
             int wallOffset = 16;
-            int topWallWidth = GRID_COLUMNS * CELL_SIZE; 
+            int topWallWidth = GRID_COLUMNS * CELL_SIZE;
             int sideWallWidth = wallOffset;
             int sideWallHeight = GRID_ROWS * CELL_SIZE + (int)(1.5 * CELL_SIZE) - 20;
-        
+
             try {
                 BufferedImage sideWallImage = ImageIO.read(new File("src/resources/images/sidewall.png"));
                 BufferedImage topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
-        
+
                 Hall currentHall = hallController.getCurrentHall();
                 Hall.HallType hallType = currentHall.getHallType();
-        
+
                 // Adjust wall properties based on hall type if needed
                 Color hallColor;
                 switch (hallType) {
@@ -720,24 +722,24 @@ public class GameScreen extends JFrame {
                     default:
                         hallColor = Color.GRAY;
                 }
-        
+
                 // Top wall positions
                 int[][] topWallPositions = {
-                    {offsetX, offsetY - CELL_SIZE},
+                        {offsetX, offsetY - CELL_SIZE},
                 };
-        
+
                 // Side wall positions
                 int[][] sideWallPositions = {
-                    {offsetX - wallOffset, offsetY - CELL_SIZE}, // Extended upward to align with top wall
-                    {offsetX + GRID_COLUMNS * CELL_SIZE, offsetY - CELL_SIZE} // Extended upward to align with top wall
+                        {offsetX - wallOffset, offsetY - CELL_SIZE}, // Extended upward to align with top wall
+                        {offsetX + GRID_COLUMNS * CELL_SIZE, offsetY - CELL_SIZE} // Extended upward to align with top wall
                 };
-        
-        
+
+
                 // Draw top walls
                 for (int[] pos : topWallPositions) {
                     g.drawImage(topWallImage, pos[0], pos[1], topWallWidth, CELL_SIZE, null);
                 }
-        
+
                 // Draw side walls
                 for (int[] pos : sideWallPositions) {
                     g.drawImage(sideWallImage, pos[0], pos[1], sideWallWidth, sideWallHeight, null);
@@ -747,6 +749,44 @@ public class GameScreen extends JFrame {
                 e.printStackTrace();
             }
         }
+
+        private void drawBottomWall(Graphics g, int offsetX, int offsetY) {
+            int bottomWallY = offsetY + GRID_ROWS * CELL_SIZE; // Alt duvarın Y koordinatı
+            int bottomWallWidth = GRID_COLUMNS * CELL_SIZE + 35; // Alt duvarın genişliği
+            int bottomWallHeight = CELL_SIZE + 20;
+
+            String bottomWallImagePath;
+
+            // Hall tipine göre uygun görseli seç
+            switch (hallController.getCurrentHall().getHallType()) {
+                case EARTH:
+                    bottomWallImagePath = "src/resources/images/bottomearth.png";
+                    break;
+                case WATER:
+                    bottomWallImagePath = "src/resources/images/bottomwater.png";
+                    break;
+                case FIRE:
+                    bottomWallImagePath = "src/resources/images/bottomfire.png";
+                    break;
+                case AIR:
+                    bottomWallImagePath = "src/resources/images/bottomair.png";
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid hall type.");
+            }
+
+            try {
+
+                BufferedImage bottomWallImage = ImageIO.read(new File(bottomWallImagePath));
+                g.drawImage(bottomWallImage, offsetX-18, bottomWallY, bottomWallWidth, bottomWallHeight, null);
+            } catch (IOException e) {
+                System.err.println("Failed to load bottom wall image: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+
+
 
         private void drawMonsters(Graphics g, int offsetX, int offsetY) {
             for (Monster monster : monsters) {
@@ -888,33 +928,13 @@ public class GameScreen extends JFrame {
 
         private void handleObjectClick(GameObject clickedObject) {
             // Determine if the object is a rune or empty
-            String message;
-            if (clickedObject.getX() == runePosition.x && clickedObject.getY() == runePosition.y) { 
-                message = "You found the rune at: (" + clickedObject.getX() + ", " + clickedObject.getY() + ")!";
+            if (clickedObject.getX() == runePosition.x && clickedObject.getY() == runePosition.y && rune.isAvailable()) {
+                SoundPlayerUtil.playOpenDoorSound();
+                rune.collect(hero);
             } else {
-                message = "Rune is not here. You clicked on an empty object at: (" + clickedObject.getX() + ", " + clickedObject.getY() + ").";
+
             }
-        
-            // Create a JOptionPane
-            JOptionPane optionPane = new JOptionPane(
-                message,
-                JOptionPane.INFORMATION_MESSAGE,
-                JOptionPane.DEFAULT_OPTION,
-                null,
-                new Object[]{}, // No buttons
-                null
-            );
-        
-            // Create a dialog with the JOptionPane
-            JDialog dialog = optionPane.createDialog(this, "Object Clicked");
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setModal(false); // Allow non-blocking behavior
-            dialog.setVisible(true);
-        
-            // Set a timer to dispose of the dialog after 2 seconds
-            Timer timer = new Timer(2000, e -> dialog.dispose());
-            timer.setRepeats(false); // Ensure the timer runs only once
-            timer.start();
+
         }
 
         private void handleEnchantmentClick(Enchantment clickedEnchantment) {
@@ -1038,6 +1058,39 @@ public class GameScreen extends JFrame {
             if (direction != null) {
                 int newX = hero.getX() + direction.getDx();
                 int newY = hero.getY() + direction.getDy();
+
+                if (hallController.getCurrentHall().getHallType() == Hall.HallType.EARTH &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 3 && hero.getY() == 11) || (hero.getX() == 4 && hero.getY() == 11))) {
+                    if(hallController.canGoNextHall()){
+                        goNextHall();
+                    }
+                    repaint();
+                    return;
+                }
+                if (hallController.getCurrentHall().getHallType() == Hall.HallType.WATER &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 8 && hero.getY() == 11) || (hero.getX() == 9 && hero.getY() == 11))) {
+                    if(hallController.canGoNextHall()){
+                        goNextHall();
+                    }
+                    repaint();
+                    return;
+                }
+
+                if (hallController.getCurrentHall().getHallType() == Hall.HallType.FIRE &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 9 && hero.getY() == 11) || (hero.getX() == 10 && hero.getY() == 11))) {
+                    if(hallController.canGoNextHall()){
+                        goNextHall();
+                    }
+                    repaint();
+                    return;
+                }
+
+                /*if (hallController.getCurrentHall().getHallType() == Hall.HallType.AIR &&
+                        rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 8 && hero.getY() == 11) || (hero.getX() == 9 && hero.getY() == 11))) {
+                    //SUCESFULL FINISHED EKLENECEK
+                    repaint();
+                    return;
+                }*/
 
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
