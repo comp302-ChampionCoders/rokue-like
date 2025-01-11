@@ -84,11 +84,12 @@ public class SpawnController {
         rune.teleport(x, y);
     }
 
-    public void spawnMonster(Hall hall) {
-        if (hall.getMonsters().size() >= 5) return;
+    public Monster spawnMonster(Hall hall) {
+        if (hall.getMonsters().size() >= 5) return null;
         Monster monster = SpawnFactory.createMonster(hall);
-        hall.addMonster(monster);
+        // hall.addMonster(monster);
         System.out.println("Monster spawned at: " + monster.getX() + ", " + monster.getY());
+        return monster;
     }
      
     public Enchantment spawnEnchantment(Hall hall) {

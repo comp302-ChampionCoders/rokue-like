@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/controller/ResetToBuildModeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/SpawnControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/SpawnControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/SpawnControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/controller/SpawnControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +74,7 @@
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "fatihTesting",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/tarikmb/Desktop/rokue-like/src/java/controller",
     "node.js.detected.package.eslint": "true",
@@ -100,57 +99,7 @@
       <recent name="domain.gameobjects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ResetToBuildModeTest">
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <module name="rokue-like" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Python.FlaskServer">
-      <module name="rokue-like" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="rokue-like" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -233,11 +182,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ResetToBuildModeTest" />
         <item itemvalue="JUnit.SpawnControllerTest" />
         <item itemvalue="JUnit.resetToBuildModeTest" />
         <item itemvalue="JUnit.resetToBuildModeTest.testResetToBuildModeVersions_RemovesNonGameObjects" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -265,6 +214,7 @@
       <workItem from="1736499288989" duration="8000" />
       <workItem from="1736499492866" duration="1683000" />
       <workItem from="1736512287400" duration="2817000" />
+      <workItem from="1736591340980" duration="611000" />
     </task>
     <servers />
   </component>

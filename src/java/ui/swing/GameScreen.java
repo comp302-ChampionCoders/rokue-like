@@ -299,7 +299,8 @@ public class GameScreen extends JFrame {
     private void initializeTimers() {
         timerController.initializeGameTimers(
             () -> moveMonsters(),
-            () -> spawnController.spawnMonster(hallController.getCurrentHall()),
+                //() -> spawnController.spawnMonster(hallController.getCurrentHall())
+                () -> spawnMonster(),
             () -> teleportRune(),
             () -> checkArcherAttacks(),
             () -> updateTime(),
@@ -537,6 +538,11 @@ public class GameScreen extends JFrame {
         enchantments.add(enchantment);
         repaint();
     }
+    private void spawnMonster() {
+        Monster monster = spawnController.spawnMonster(hallController.getCurrentHall());
+        monsters.add(monster);
+        repaint();
+    }
 
     private void removeEnchantment(){
         spawnController.removeEnchantment(null);
@@ -593,14 +599,17 @@ public class GameScreen extends JFrame {
             drawMonsters(g, offsetX, offsetY);
             drawRune(g, offsetX, offsetY);
             drawEnchantments(g, offsetX, offsetY);
+            drawReveal(g, offsetX, offsetY);
+        }
 
+        private void drawReveal(Graphics g, int offsetX, int offsetY) {
             for (Enchantment enchantment : enchantments) { // needs to be moved out of this method
                 if (enchantment instanceof Reveal) {
                     Reveal reveal = (Reveal) enchantment;
                     if (reveal.hasHighlight()) {
                         int highlightX = reveal.getHighlightX();
                         int highlightY = reveal.getHighlightY();
-        
+
                         g.setColor(new Color(0, 255, 0, 128)); // Transparent green
                         for (int dx = -2; dx <= 1; dx++) {
                             for (int dy = -2; dy <= 1; dy++) {
@@ -608,10 +617,10 @@ public class GameScreen extends JFrame {
                                 int drawY = highlightY + dy;
                                 if (drawX >= 0 && drawX < GRID_COLUMNS && drawY >= 0 && drawY < GRID_ROWS) {
                                     g.fillRect(
-                                        offsetX + drawX * CELL_SIZE,
-                                        offsetY + drawY * CELL_SIZE,
-                                        CELL_SIZE,
-                                        CELL_SIZE
+                                            offsetX + drawX * CELL_SIZE,
+                                            offsetY + drawY * CELL_SIZE,
+                                            CELL_SIZE,
+                                            CELL_SIZE
                                     );
                                 }
                             }
@@ -620,7 +629,6 @@ public class GameScreen extends JFrame {
                 }
             }
         }
-
         private void drawGrid(Graphics g, int offsetX, int offsetY) {
             g.setColor(Color.GRAY);
             for (int i = 0; i <= GRID_ROWS; i++) {
