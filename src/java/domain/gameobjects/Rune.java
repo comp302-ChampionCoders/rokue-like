@@ -42,6 +42,13 @@ public class Rune implements Collectible, GridElement {
         }
     }
 
+    public void unCollect(Hero hero) {
+        if (isCollected && !isAvailable) {
+            isCollected = false;
+            isAvailable = true;
+        }
+    }
+
     public boolean isCollected() {
         return isCollected;
     }
