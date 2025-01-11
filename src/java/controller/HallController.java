@@ -56,6 +56,7 @@ public class HallController {
                     hall.setHero(null);
                 }
             }
+            hall.clearMonsters();
         }
     }
 

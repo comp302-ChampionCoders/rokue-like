@@ -202,6 +202,10 @@ public class Hall {
         monsters.add(monster);
     }
 
+    public void clearMonsters(){
+        this.monsters.clear();
+    }
+
     public boolean isLocked() { return isLocked; }
     public GridElement[][] getGrid() { return grid; }
     public List<Monster> getMonsters() { return new ArrayList<>(monsters); }
