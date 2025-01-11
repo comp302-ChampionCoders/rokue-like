@@ -53,9 +53,9 @@ public class HallController {
             for(GridElement gridElement : hall.getGridElements().values()){
                 if(!(gridElement instanceof GameObject)){
                     hall.removeGridElement(gridElement.getX(), gridElement.getY());
-                    hall.setHero(null);
                 }
             }
+            hall.setHero(null);
             hall.clearMonsters();
         }
     }

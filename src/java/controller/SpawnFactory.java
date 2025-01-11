@@ -32,12 +32,12 @@ public class SpawnFactory {
                 break;
             case 2:
                 newMonster = new WizardMonster(x, y);
-                hall.addMonster(newMonster);
                 break;
             default:
                 throw new IllegalStateException("Unexpected monster type: " + monsterType);
         }
 
+        hall.addMonster(newMonster);
         hall.addGridElement(newMonster, x, y);
         return newMonster;
     }

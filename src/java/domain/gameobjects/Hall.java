@@ -33,7 +33,7 @@ public class Hall {
     private final GridElement[][] grid;
     private final Map<Point, GridElement> gridElements;
     private  Hero hero;
-    private final List<Monster> monsters;
+    private  List<Monster> monsters;
     private final Map<Point, GameObject> objects;
     private Rune rune;
     private Door door;
@@ -203,7 +203,7 @@ public class Hall {
     }
 
     public void clearMonsters(){
-        this.monsters.clear();
+        this.monsters = new ArrayList<>();
     }
 
     public boolean isLocked() { return isLocked; }

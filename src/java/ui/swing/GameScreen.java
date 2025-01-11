@@ -387,7 +387,9 @@ public class GameScreen extends JFrame {
 
                 // Check boundaries and prevent overlap
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
+                    hallController.getCurrentHall().removeGridElement(monster.getX(), monster.getY());
                     monster.move(randomDirection);
+                    hallController.getCurrentHall().addGridElement(monster, monster.getX(), monster.getY());
                 }
             }
         }
