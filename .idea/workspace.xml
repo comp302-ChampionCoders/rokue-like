@@ -6,14 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Rune.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Rune.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/SoundPlayerUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/utils/SoundPlayerUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,35 +57,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.MinObjectControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SpawnControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Test-Derin&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/DERİN/Desktop/rokue-like&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.MinObjectControllerTest.executor": "Run",
+    "JUnit.SpawnControllerTest.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "Derin-RandomHalls",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/DERİN/Desktop/rokue-like",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />

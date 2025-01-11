@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -259,6 +260,16 @@ public class BuildModeScreen extends JFrame {
             });
             randomizeButton.addActionListener(e -> {
                 SoundPlayerUtil.playClickSound();
+                addRandomObjectsToHalls(); // Rastgele objeleri ekle
+                for (Hall hall : hallController.getHalls()) {
+                    int objectCount = hall.getObjects().size();
+                    int totalTime = objectCount * 5;
+                    timerController.setRemainingTimeForHall(hall.getHallType(), totalTime);
+
+                }
+
+                onSwitchToPlayMode.execute();
+
             });
 
             parent.add(randomizeButton);
@@ -267,7 +278,74 @@ public class BuildModeScreen extends JFrame {
             e.printStackTrace();
         }
     }
-    
+
+
+
+    private void addRandomObjectsToHalls() {
+        Random random = new Random();
+
+        for (Hall hall : hallController.getHalls()) {
+            int requiredObjectCount = getRequiredObjectCount(hall.getHallType());
+            int currentObjectCount = hall.getObjects().size();
+
+            int width = hall.getWidth();
+            int height = hall.getHeight();
+
+            if (width <= 0 || height <= 0) {
+                System.err.println("Invalid hall dimensions: width=" + width + ", height=" + height);
+                continue;
+            }
+
+            int maxAttempts = 100;
+            int attempts = 0;
+
+            while (currentObjectCount < requiredObjectCount && attempts < maxAttempts) {
+                attempts++;
+                int x = random.nextInt(width);
+                int y = random.nextInt(height);
+
+                if (hall.isValidPosition(x, y)) {
+                    try {
+
+                        String randomImagePath = spriteFiles[random.nextInt(spriteFiles.length)];
+                        BufferedImage randomObjectImage = ImageIO.read(new File(randomImagePath));
+
+
+                        GameObject randomObject = new GameObject(x, y, randomObjectImage);
+                        hallController.addObjectToHall(hall.getHallType(), randomObject);
+
+                        currentObjectCount++;
+                    } catch (IOException e) {
+                        System.err.println("Failed to load object image: " + e.getMessage());
+                    }
+                }
+            }
+
+            if (attempts == maxAttempts) {
+                System.err.println("Failed to place all objects for hall: " + hall.getHallType());
+            }
+        }
+
+        repaint();
+        System.out.println("Random objects added to all halls with random images.");
+    }
+
+    private int getRequiredObjectCount(Hall.HallType hallType) {
+        switch (hallType) {
+            case EARTH:
+                return 6;
+            case WATER:
+                return 11;
+            case FIRE:
+                return 14;
+            case AIR:
+                return 17;
+            default:
+                throw new IllegalArgumentException("Invalid hall type: " + hallType);
+        }
+    }
+
+
     private void addBottomWalls(JPanel parent) {
         int bottomWallY = GRID_START_Y + GRID_ROWS * GRID_CELL_SIZE; 
         int wallWidth = GRID_COLUMNS * GRID_CELL_SIZE + 17; 
