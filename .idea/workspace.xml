@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/rokue-like.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/controller/SpawnFactoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -53,42 +52,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.CloakOfProtectionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MinObjectControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MoveHeroTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResetToBuildModeTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.RevealTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SpawnControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.addGridElementTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.resetToBuildModeTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.resetToBuildModeTest.testResetToBuildModeVersions_RemovesNonGameObjects.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/DERİN/Desktop/değişiklikler-rokue-like&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.CloakOfProtectionTest.executor": "Run",
+    "JUnit.MinObjectControllerTest.executor": "Run",
+    "JUnit.MoveHeroTest.executor": "Run",
+    "JUnit.ResetToBuildModeTest.executor": "Run",
+    "JUnit.RevealTest.executor": "Run",
+    "JUnit.SpawnControllerTest.executor": "Run",
+    "JUnit.addGridElementTest.executor": "Run",
+    "JUnit.resetToBuildModeTest.executor": "Run",
+    "JUnit.resetToBuildModeTest.testResetToBuildModeVersions_RemovesNonGameObjects.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "classTest",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/Users/tarikmb/Desktop/rokue-like/src/test/java/controller",
+    "last_opened_file_path": "C:/Users/DERİN/Desktop/değişiklikler-rokue-like",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/java/controller" />
@@ -101,7 +101,7 @@
       <recent name="domain.gameobjects" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.SpawnFactoryTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -145,32 +145,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="resetToBuildModeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SpawnFactoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="rokue-like" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="controller" />
-      <option name="MAIN_CLASS_NAME" value="controller.resetToBuildModeTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SpawnFactoryTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="resetToBuildModeTest.testResetToBuildModeVersions_RemovesNonGameObjects" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SpawnFactoryTest.testCreateMonster_ValidPosition" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="rokue-like" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="controller" />
-      <option name="MAIN_CLASS_NAME" value="controller.resetToBuildModeTest" />
-      <option name="METHOD_NAME" value="testResetToBuildModeVersions_RemovesNonGameObjects" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SpawnFactoryTest" />
+      <option name="METHOD_NAME" value="testCreateMonster_ValidPosition" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -184,11 +172,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SpawnFactoryTest" />
+        <item itemvalue="JUnit.SpawnFactoryTest.testCreateMonster_ValidPosition" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ResetToBuildModeTest" />
         <item itemvalue="JUnit.SpawnControllerTest" />
-        <item itemvalue="JUnit.resetToBuildModeTest" />
-        <item itemvalue="JUnit.resetToBuildModeTest.testResetToBuildModeVersions_RemovesNonGameObjects" />
       </list>
     </recent_temporary>
   </component>
