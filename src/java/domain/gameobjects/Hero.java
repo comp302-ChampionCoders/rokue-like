@@ -15,7 +15,17 @@ public class Hero implements Moveable, GridElement {
     private boolean isCloaked;
     private boolean isDamaged;
     private String direction = "RIGHT";
-    
+    private boolean extraLifeAngel = true;
+    private boolean isThrowing = false;
+
+    public boolean isThrowing() {
+        return isThrowing;
+    }
+
+    public void setThrowing(boolean throwing) {
+        isThrowing = throwing;
+    }
+
     public Hero(int x, int y) {
         this.x = x;
         this.y = y;
@@ -124,4 +134,11 @@ public class Hero implements Moveable, GridElement {
         this.isCloaked = isCloaked;
     }
 
+    public boolean isExtraLifeAngel() {
+        return extraLifeAngel;
+    }
+
+    public void setExtraLifeAngel(boolean extraLifeAngel) {
+        this.extraLifeAngel = extraLifeAngel;
+    }
 }

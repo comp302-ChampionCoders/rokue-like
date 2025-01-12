@@ -44,27 +44,29 @@ public class SpawnFactory {
 
     public static Enchantment createEnchantment(Hall hall) {
         int x, y;
+        boolean extraLifeAngel = hall.getHero().isExtraLifeAngel();
         do {
             x = RANDOM.nextInt(hall.getWidth());
             y = RANDOM.nextInt(hall.getHeight());
         } while (hall.isPositionOccupied(x, y));
 
         boolean maxLives = hall.getHero().getLives() == 4;
+        boolean lastLife = hall.getHero().getLives() == 1;
         int enchantmentType = RANDOM.nextInt(5); // 0: Reveal, 1: Cloak, 2: Luring Gem, 3: Extra Time, 4: Extra Life
 
         Enchantment enchantment;
         switch (enchantmentType) {
             case 0:
-                enchantment = new Reveal();
+                enchantment = (extraLifeAngel && lastLife) ? new ExtraLife() : new Reveal();
                 break;
             case 1:
-                enchantment = new CloakOfProtection();
+                enchantment = (extraLifeAngel && lastLife) ? new ExtraLife() : new CloakOfProtection();
                 break;
             case 2:
-                enchantment = new LuringGem();
+                enchantment = (extraLifeAngel && lastLife) ? new ExtraLife() : new LuringGem();
                 break;
             case 3:
-                enchantment = new ExtraTime();
+                enchantment = (extraLifeAngel && lastLife) ? new ExtraLife() : new ExtraTime();
                 break;
             case 4:
                 enchantment = maxLives ? new ExtraTime() : new ExtraLife();

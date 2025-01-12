@@ -382,15 +382,24 @@ public class GameScreen extends JFrame {
         Direction[] directions = Direction.values();
         for (Monster monster : monsters) {
             if ((monster instanceof FighterMonster)) { // Sadece fighter monster hareket ediyor
-                Direction randomDirection = directions[random.nextInt(directions.length)];
-                int newX = monster.getX() + randomDirection.getDx();
-                int newY = monster.getY() + randomDirection.getDy();
-
-                // Check boundaries and prevent overlap
-                if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
+                if (((FighterMonster) monster).isLured()) {
+                    int newX = ((FighterMonster) monster).getLureX();
+                    int newY = ((FighterMonster) monster).getLureY();
                     hallController.getCurrentHall().removeGridElement(monster.getX(), monster.getY());
-                    monster.move(randomDirection);
+                    ((FighterMonster) monster).moveTowardsPoint(newX, newY);
                     hallController.getCurrentHall().addGridElement(monster, monster.getX(), monster.getY());
+                }
+                else {
+                    Direction randomDirection = directions[random.nextInt(directions.length)];
+                    int newX = monster.getX() + randomDirection.getDx();
+                    int newY = monster.getY() + randomDirection.getDy();
+
+                    // Check boundaries and prevent overlap
+                    if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
+                        hallController.getCurrentHall().removeGridElement(monster.getX(), monster.getY());
+                        monster.move(randomDirection);
+                        hallController.getCurrentHall().addGridElement(monster, monster.getX(), monster.getY());
+                    }
                 }
             }
         }
@@ -1003,6 +1012,79 @@ public class GameScreen extends JFrame {
                 }
             }).start();
         }
+        private void activateLuringGem(String direction) {
+            int x;
+            int y;
+            boolean isValid = false;
+            if (direction == "up") {
+                x = hero.getX();
+                y = 0;
+                while (!isValid) {
+                    if (hallController.getCurrentHall().isValidPosition(x,y)) {
+                        for (Monster monster : monsters) {
+                            if (monster instanceof FighterMonster) {
+                                ((FighterMonster) monster).setLuringGemLocation(x, y);
+                            }
+                        }
+                        isValid = true;
+                    }
+                    else {
+                        y++;
+                    }
+                }
+            }
+            else if (direction == "down") {
+                x = hero.getX();
+                y = 11;
+                while (!isValid) {
+                    if (hallController.getCurrentHall().isValidPosition(x,y)) {
+                        for (Monster monster : monsters) {
+                            if (monster instanceof FighterMonster) {
+                                ((FighterMonster) monster).setLuringGemLocation(x, y);
+                            }
+                        }
+                        isValid = true;
+                    }
+                    else {
+                        y--;
+                    }
+                }
+            }
+            else if (direction == "left") {
+                x = 0;
+                y = hero.getY();
+                while (!isValid) {
+                    if (hallController.getCurrentHall().isValidPosition(x,y)) {
+                        for (Monster monster : monsters) {
+                            if (monster instanceof FighterMonster) {
+                                ((FighterMonster) monster).setLuringGemLocation(x, y);
+                            }
+                        }
+                        isValid = true;
+                    }
+                    else {
+                        x++;
+                    }
+                }
+            }
+            else if (direction == "right") {
+                x = 15;
+                y = hero.getY();
+                while (!isValid) {
+                    if (hallController.getCurrentHall().isValidPosition(x,y)) {
+                        for (Monster monster : monsters) {
+                            if (monster instanceof FighterMonster) {
+                                ((FighterMonster) monster).setLuringGemLocation(x, y);
+                            }
+                        }
+                        isValid = true;
+                    }
+                    else {
+                        x--;
+                    }
+                }
+            }
+        }
         
 
         @Override
@@ -1022,18 +1104,42 @@ public class GameScreen extends JFrame {
             Direction direction = null;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
-                    direction = Direction.UP;
+                    if (hero.isThrowing()) {
+                        activateLuringGem("up");
+                        hero.setThrowing(false);
+                    }
+                    else {
+                        direction = Direction.UP;
+                    }
                     break;
                 case KeyEvent.VK_DOWN:
-                    direction = Direction.DOWN;
+                    if (hero.isThrowing()) {
+                        activateLuringGem("down");
+                        hero.setThrowing(false);
+                    }
+                    else {
+                        direction = Direction.DOWN;
+                    }
                     break;
                 case KeyEvent.VK_LEFT:
-                    hero.setDirection("LEFT");
-                    direction = Direction.LEFT;
+                    if (hero.isThrowing()) {
+                        activateLuringGem("left");
+                        hero.setThrowing(false);
+                    }
+                    else {
+                        hero.setDirection("LEFT");
+                        direction = Direction.LEFT;
+                    }
                     break;
                 case KeyEvent.VK_RIGHT:
-                    hero.setDirection("RIGHT");
-                    direction = Direction.RIGHT;
+                    if (hero.isThrowing()) {
+                        activateLuringGem("up");
+                        hero.setThrowing(false);
+                    }
+                    else {
+                        hero.setDirection("RIGHT");
+                        direction = Direction.RIGHT;
+                    }
                     break;
                 case KeyEvent.VK_R: // Reveal
                     System.out.println("R key pressed. Checking for Reveal...");
@@ -1043,6 +1149,17 @@ public class GameScreen extends JFrame {
                         activateReveal();
                     } else {
                         System.out.println("No Reveal enchantment found in inventory.");
+                    }
+                    break;
+                case KeyEvent.VK_B: // Luring Gem
+                    System.out.println("B key pressed. Checking for Luring Gem...");
+                    if (hero.getInventory().hasItem("Luring Gem")) {
+                        System.out.println("Luring Gem found. Using enchantment...");
+                        hero.getInventory().useItem("Luring Gem");
+                        hero.setThrowing(true);
+                    }
+                    else {
+                        System.out.println("No Luring Gem enchantment found in inventory.");
                     }
                     break;
                 case KeyEvent.VK_P: // Cloak of Protection

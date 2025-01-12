@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
+    <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="createEnchantmentTest and Luring Gem">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest$MockGameObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/ResetToBuildModeTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/SpawnControllerTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/enchantments/CloakOfProtectionTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/addGridElementTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/createEnchantmentTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/createEnchantmentTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +99,7 @@
       <recent name="domain.gameobjects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.InventoryTest">
+  <component name="RunManager" selected="JUnit.createEnchantmentTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -163,7 +158,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="resetToBuildModeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="createEnchantmentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="rokue-like" />
       <extension name="coverage">
         <pattern>
@@ -172,7 +167,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="controller" />
-      <option name="MAIN_CLASS_NAME" value="controller.resetToBuildModeTest" />
+      <option name="MAIN_CLASS_NAME" value="controller.createEnchantmentTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -184,13 +179,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.InventoryTest" />
+      <item itemvalue="JUnit.createEnchantmentTest" />
+      <item itemvalue="JUnit.ResetToBuildModeTest" />
+      <item itemvalue="JUnit.SpawnControllerTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.InventoryTest" />
+        <item itemvalue="JUnit.createEnchantmentTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.InventoryTest" />
         <item itemvalue="JUnit.ResetToBuildModeTest" />
         <item itemvalue="JUnit.SpawnControllerTest" />
-        <item itemvalue="JUnit.resetToBuildModeTest" />
       </list>
     </recent_temporary>
   </component>
@@ -221,7 +223,17 @@
       <workItem from="1736591340980" duration="611000" />
       <workItem from="1736611987398" duration="5584000" />
       <workItem from="1736625645459" duration="158000" />
+      <workItem from="1736645123029" duration="312000" />
     </task>
+    <task id="LOCAL-00001" summary="createEnchantmentTest and Luring Gem">
+      <option name="closed" value="true" />
+      <created>1736645024391</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736645024391</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,15 +250,8 @@
       </map>
     </option>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/java/ui/application/Main.java</url>
-          <line>5</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="createEnchantmentTest and Luring Gem" />
+    <option name="LAST_COMMIT_MESSAGE" value="createEnchantmentTest and Luring Gem" />
   </component>
 </project>
