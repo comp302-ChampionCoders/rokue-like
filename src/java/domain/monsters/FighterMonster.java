@@ -40,7 +40,31 @@ public class FighterMonster extends Monster {
         }
     }
 
-    private void moveTowardsPoint(int targetX, int targetY) {
+    public int getLureX() {
+        return lureX;
+    }
+
+    public void setLureX(int lureX) {
+        this.lureX = lureX;
+    }
+
+    public int getLureY() {
+        return lureY;
+    }
+
+    public void setLureY(int lureY) {
+        this.lureY = lureY;
+    }
+
+    public boolean isLured() {
+        return isLured;
+    }
+
+    public void setLured(boolean lured) {
+        isLured = lured;
+    }
+
+    public void moveTowardsPoint(int targetX, int targetY) {
         if (targetX > getX()) move(Direction.RIGHT);
         else if (targetX < getX()) move(Direction.LEFT);
         

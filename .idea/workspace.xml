@@ -5,7 +5,71 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e6ed2f9-8c66-41c5-a172-af4d3648ce38" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/controller/createEnchantmentTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/HallController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/MinObjectController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/ModeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/ScreenTransition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/behaviors/Collectible.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/behaviors/Direction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/behaviors/GridElement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/behaviors/Moveable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/core/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/CloakOfProtection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/ExtraLife.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/ExtraTime.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/LuringGem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Reveal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Door.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/GameObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall$HallType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hero.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Inventory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Rune.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/monsters/ArcherMonster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/monsters/FighterMonster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/monsters/Monster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/monsters/WizardMonster.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/application/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/CursorUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/SoundPlayerUtil.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest$MockGameObject.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" beforeDir="false" />
@@ -104,7 +168,7 @@
       <recent name="domain.gameobjects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.InventoryTest">
+  <component name="RunManager" selected="JUnit.createEnchantmentTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -163,7 +227,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="resetToBuildModeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="createEnchantmentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="rokue-like" />
       <extension name="coverage">
         <pattern>
@@ -172,7 +236,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="controller" />
-      <option name="MAIN_CLASS_NAME" value="controller.resetToBuildModeTest" />
+      <option name="MAIN_CLASS_NAME" value="controller.createEnchantmentTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -184,13 +248,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.InventoryTest" />
+      <item itemvalue="JUnit.createEnchantmentTest" />
+      <item itemvalue="JUnit.ResetToBuildModeTest" />
+      <item itemvalue="JUnit.SpawnControllerTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.InventoryTest" />
+        <item itemvalue="JUnit.createEnchantmentTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.InventoryTest" />
         <item itemvalue="JUnit.ResetToBuildModeTest" />
         <item itemvalue="JUnit.SpawnControllerTest" />
-        <item itemvalue="JUnit.resetToBuildModeTest" />
       </list>
     </recent_temporary>
   </component>
