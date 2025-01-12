@@ -3,7 +3,7 @@
 ## Some Useful Instructions for Running the Code
 -> Check out ui/application/Main.java to Run the code. It calls the Game object to start the game.
 
-# For Potential Errors:
+## For Potential Errors:
 Mark src/java as Sources root and test as Test Source Root:
 
 
