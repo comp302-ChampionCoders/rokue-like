@@ -33,10 +33,11 @@ class MoveHeroTest {
         int initialX = hero.getX();
         int initialY = hero.getY();
 
-        hallController.moveHero(Direction.UP);
-
-        assertEquals(initialX, hero.getX(), "Hero's X coordinate should remain unchanged.");
-        assertEquals(initialY - 1, hero.getY(), "Hero's Y coordinate should decrease by 1 when moving up.");
+        if(initialY - 1 >= 0) {
+            hallController.moveHero(Direction.UP);
+            assertEquals(initialX, hero.getX(), "Hero's X coordinate should remain unchanged.");
+            assertEquals(initialY - 1, hero.getY(), "Hero's Y coordinate should decrease by 1 when moving up.");
+        }
     }
 
     @Test

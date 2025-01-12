@@ -211,16 +211,7 @@ public class GameScreen extends JFrame {
             SoundPlayerUtil.playClickSound();
             returnToGameOverScreen.execute();
         });
-    
-        JButton nextHallButton = new JButton("Next");
 
-        nextHallButton.addActionListener(e -> {
-            if(hallController.canGoNextHall()){
-                goNextHall();
-            }
-        });
-
-        buttonPanel.add(nextHallButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(exitButton);
     

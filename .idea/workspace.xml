@@ -5,24 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/domain/gameobjects/RuneTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/RuneTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rokue-like.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rokue-like.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/MoveHeroTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/MoveHeroTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Rune.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Rune.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2rWXkzxJOcW20dLKgebv61cvy5V" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -31,7 +42,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "JUnit.CloakOfProtectionTest.executor": "Run",
+    "JUnit.InventoryTest.executor": "Run",
+    "JUnit.MinObjectControllerTest.executor": "Run",
+    "JUnit.MoveHeroTest.executor": "Run",
+    "JUnit.ResetToBuildModeTest.executor": "Run",
+    "JUnit.RuneTest.executor": "Run",
     "JUnit.SpawnControllerTest.executor": "Run",
+    "JUnit.addGridElementTest.executor": "Run",
     "JUnit.createEnchantmentTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -45,6 +63,90 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager" selected="JUnit.RuneTest">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
+      <module name="rokue-like" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ui.application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CloakOfProtectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rokue-like" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="domain.enchantments.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="domain.enchantments" />
+      <option name="MAIN_CLASS_NAME" value="domain.enchantments.CloakOfProtectionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InventoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rokue-like" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="domain.gameobjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="domain.gameobjects" />
+      <option name="MAIN_CLASS_NAME" value="domain.gameobjects.InventoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RuneTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rokue-like" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="domain.gameobjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="domain.gameobjects" />
+      <option name="MAIN_CLASS_NAME" value="domain.gameobjects.RuneTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="addGridElementTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rokue-like" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="domain.gameobjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="domain.gameobjects" />
+      <option name="MAIN_CLASS_NAME" value="domain.gameobjects.addGridElementTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.RuneTest" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.InventoryTest" />
+        <item itemvalue="JUnit.addGridElementTest" />
+        <item itemvalue="JUnit.CloakOfProtectionTest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -62,6 +164,7 @@
       <option name="presentableId" value="Default" />
       <updated>1736675953967</updated>
       <workItem from="1736675955564" duration="963000" />
+      <workItem from="1736707663657" duration="4215000" />
     </task>
     <servers />
   </component>

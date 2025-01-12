@@ -81,7 +81,7 @@ public class Rune implements Collectible, GridElement {
 
     @Override
     public void disappear() {
-        this.isAvailable = false;
+        return;
     }
 
     // Method for Wizard Monster to teleport the rune
