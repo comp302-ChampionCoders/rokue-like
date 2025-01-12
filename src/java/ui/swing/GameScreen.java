@@ -1104,42 +1104,16 @@ public class GameScreen extends JFrame {
             Direction direction = null;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
-                    if (hero.isThrowing()) {
-                        activateLuringGem("up");
-                        hero.setThrowing(false);
-                    }
-                    else {
                         direction = Direction.UP;
-                    }
                     break;
                 case KeyEvent.VK_DOWN:
-                    if (hero.isThrowing()) {
-                        activateLuringGem("down");
-                        hero.setThrowing(false);
-                    }
-                    else {
                         direction = Direction.DOWN;
-                    }
                     break;
                 case KeyEvent.VK_LEFT:
-                    if (hero.isThrowing()) {
-                        activateLuringGem("left");
-                        hero.setThrowing(false);
-                    }
-                    else {
-                        hero.setDirection("LEFT");
                         direction = Direction.LEFT;
-                    }
                     break;
                 case KeyEvent.VK_RIGHT:
-                    if (hero.isThrowing()) {
-                        activateLuringGem("up");
-                        hero.setThrowing(false);
-                    }
-                    else {
-                        hero.setDirection("RIGHT");
                         direction = Direction.RIGHT;
-                    }
                     break;
                 case KeyEvent.VK_R: // Reveal
                     System.out.println("R key pressed. Checking for Reveal...");
@@ -1174,7 +1148,31 @@ public class GameScreen extends JFrame {
                         System.out.println("No Cloak of Protection found in inventory.");
                     }
                     break;
-                
+                // Luring gem throw using WASD keys
+                case KeyEvent.VK_W:
+                    if (hero.isThrowing()) {
+                        activateLuringGem("up");
+                        hero.setThrowing(false);
+                    }
+                    break;
+                case KeyEvent.VK_A:
+                    if (hero.isThrowing()) {
+                        activateLuringGem("left");
+                        hero.setThrowing(false);
+                    }
+                    break;
+                case KeyEvent.VK_S:
+                    if (hero.isThrowing()) {
+                        activateLuringGem("down");
+                        hero.setThrowing(false);
+                    }
+                    break;
+                case KeyEvent.VK_D:
+                    if (hero.isThrowing()) {
+                        activateLuringGem("right");
+                        hero.setThrowing(false);
+                    }
+                    break;
             }
 
             if (direction != null) {
