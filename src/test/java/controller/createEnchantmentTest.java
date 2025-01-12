@@ -16,20 +16,28 @@ class createEnchantmentTest {
     @BeforeEach
     void setUp() {
         hero = new Hero(0, 0);
-        hall = new Hall(10, 10, Hall.HallType.EARTH); // A 10x10 hall
+        hall = new Hall(12, 16, Hall.HallType.EARTH); // A 12x12 hall
         hall.setHero(hero);
     }
 
     @Test
-    void testGenerateExtraTimeWhenHeroHasMaxLives() {
+    void testNotGenerateExtraLifeWhenHeroHasMaxLives() {
         // Set hero's lives to 4 (max)
         hero.setLives(4);
 
-        // Generate an enchantment
-        Enchantment enchantment = SpawnFactory.createEnchantment(hall);
+        boolean extraLifeGenerated = false;
 
-        // Assert that the enchantment generated is ExtraTime
-        assertTrue(enchantment instanceof ExtraTime, "Expected ExtraTime when hero has max lives.");
+        // Try generating enchantments 20 times
+        for (int i = 0; i < 20; i++) {
+            Enchantment enchantment = SpawnFactory.createEnchantment(hall);
+            if (enchantment instanceof ExtraLife) {
+                extraLifeGenerated = true;
+                break;
+            }
+        }
+
+        // Assert that ExtraLife is not generated
+        assertFalse(extraLifeGenerated, "ExtraLife should not be generated when hero has max lives.");
     }
 
     @Test
