@@ -1,7 +1,10 @@
-# RoKUe Like
+![image](https://github.com/user-attachments/assets/80288a49-22a9-416f-874b-036b1549b3df)# RoKUe Like
 RoKUe Like is a rogue-like game for COMP302 Fall 2024 Term Project, designed by ChampionCoders!
 
 # Some Useful Instructions for Running the Code
--> Check out ui/application/Main.java to Run the code. It calls the ModeController and provides the necessary ScreenTransitions for UI layer classes.
+-> Check out ui/application/Main.java to Run the code. It calls the Game object to start the game.
 
--> ScreenTransition is a functional interface and is given as a parameter to each screen for transitions by ModeController. ModeController provides its necessary methods through this functional interface and needed class objects to UI classes. (Observer and Controller Pattern)
+# For Potential Errors:
+Mark src/java as Sources root and test as Test Source Root
+![image](https://github.com/user-attachments/assets/6c105640-ff3b-4f95-9742-677dc0c7e7e4)
+
