@@ -4,6 +4,7 @@ import controller.HallController;
 import controller.ScreenTransition;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
+import ui.utils.TaskBarIconUtil;
 
 import java.awt.*;
 import java.io.File;
@@ -25,6 +26,16 @@ public class GameOverScreen extends JFrame {
         this.hallController = hallController;
 
         initializeFrame();
+
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("win")) {
+            configureForWindows();
+        } else if (osName.contains("mac")) {
+            configureForMacOS();
+        } else {
+            configureForOther();
+        }
+
         createMainPanel();
         setVisible(true);
     }
@@ -36,6 +47,17 @@ public class GameOverScreen extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
+    }
+
+    private void configureForMacOS(){
+        TaskBarIconUtil.setMacTaskbarIcon();
+    }
+
+    public void configureForWindows(){
+        TaskBarIconUtil.setWindowsTaskbarIcon(this);
+    }
+
+    public void configureForOther(){
     }
 
     private void createMainPanel() {

@@ -5,6 +5,7 @@ import javax.swing.*;
 import controller.ScreenTransition;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
+import ui.utils.TaskBarIconUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,11 +25,23 @@ public class MainMenu extends JFrame {
     public MainMenu(ScreenTransition onStartBuildMode) {
         this.onStartBuildMode = onStartBuildMode;
         initializeFrame();
+
+        String osName = System.getProperty("os.name").toLowerCase();
+
+        if (osName.contains("win")) {
+            configureForWindows();
+        } else if (osName.contains("mac")) {
+            configureForMacOS();
+        } else {
+            configureForOther();
+        }
+
         loadImages();
         createMainPanel();
         addButtons();
         setVisible(true);
     }
+
 
     private void initializeFrame() {
         setTitle("Rokue-Like");
@@ -37,14 +50,18 @@ public class MainMenu extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
-        
-        // Set window icon
-        try {
-            setIconImage(ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png")));
-        } catch (IOException e) {
-            System.err.println("Failed to load logo: " + e.getMessage());
-        }
-    }    
+    }
+
+    private void configureForMacOS(){
+        TaskBarIconUtil.setMacTaskbarIcon();
+    }
+
+    public void configureForWindows(){
+        TaskBarIconUtil.setWindowsTaskbarIcon(this);
+    }
+
+    public void configureForOther(){
+    }
 
     private void loadImages() {
         try {

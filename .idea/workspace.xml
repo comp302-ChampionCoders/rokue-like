@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/domain/gameobjects/RuneTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/RuneTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/ui/utils/TaskBarIconUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Rune.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameOverScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameOverScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/MoveHeroTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/MoveHeroTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Rune.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Rune.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,10 +62,13 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.RuneTest">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -139,8 +144,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.RuneTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.RuneTest" />
         <item itemvalue="JUnit.InventoryTest" />
         <item itemvalue="JUnit.addGridElementTest" />
         <item itemvalue="JUnit.CloakOfProtectionTest" />
@@ -165,6 +170,7 @@
       <updated>1736675953967</updated>
       <workItem from="1736675955564" duration="963000" />
       <workItem from="1736707663657" duration="4215000" />
+      <workItem from="1736766771659" duration="1505000" />
     </task>
     <servers />
   </component>

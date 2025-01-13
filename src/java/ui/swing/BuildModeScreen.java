@@ -39,6 +39,7 @@ import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
+import ui.utils.TaskBarIconUtil;
 
 public class BuildModeScreen extends JFrame {
     private final int GRID_CELL_SIZE = 24; 
@@ -100,7 +101,6 @@ public class BuildModeScreen extends JFrame {
         GraphicsDevice gd = ge.getDefaultScreenDevice();
 
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        setTaskbarIcon();
         loadImages();
         initializeScreen();
     }
@@ -110,6 +110,7 @@ public class BuildModeScreen extends JFrame {
         setUndecorated(false); 
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        TaskBarIconUtil.setMacTaskbarIcon();
     }
 
     public void configureForWindows(){
@@ -117,6 +118,7 @@ public class BuildModeScreen extends JFrame {
         setUndecorated(true); 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        TaskBarIconUtil.setWindowsTaskbarIcon(this);
     }
 
     public void configureForOther(){
@@ -124,18 +126,6 @@ public class BuildModeScreen extends JFrame {
         setUndecorated(false); 
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private void setTaskbarIcon() {
-        try {
-            BufferedImage logoImage = ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png"));
-            Taskbar taskbar = Taskbar.getTaskbar();
-            taskbar.setIconImage(logoImage);
-        } catch (UnsupportedOperationException e) {
-            System.err.println("The Taskbar feature is not supported on this platform: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("Failed to load the taskbar icon image: " + e.getMessage());
-        }
     }
 
     // Load images for the object section and top wall

@@ -56,6 +56,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
+import ui.utils.TaskBarIconUtil;
 
 
 public class GameScreen extends JFrame {
@@ -145,6 +146,7 @@ public class GameScreen extends JFrame {
         setUndecorated(false); 
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        TaskBarIconUtil.setMacTaskbarIcon();
     }
 
     public void configureForWindows(){
@@ -152,6 +154,7 @@ public class GameScreen extends JFrame {
         setUndecorated(true); 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        TaskBarIconUtil.setWindowsTaskbarIcon(this);
     }
 
     public void configureForOther(){
