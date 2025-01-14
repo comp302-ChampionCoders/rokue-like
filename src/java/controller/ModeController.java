@@ -49,7 +49,7 @@ public class ModeController {
     }
 
     public void switchToPlayMode() {
-        if (minObjectController.areAllMinimumRequirementsMet()) {
+        if (!minObjectController.areAllMinimumRequirementsMet()) {
             showWarning("Minimum requirements not met for all Halls. Please check and try again.");
             return;
         }else{

@@ -303,18 +303,7 @@ public class BuildModeScreen extends JFrame {
         System.out.println("Random objects added to all halls with random images.");
     }
     private int getRequiredObjectCount(Hall.HallType hallType) {
-        switch (hallType) {
-            case EARTH:
-                return 6;
-            case WATER:
-                return 11;
-            case FIRE:
-                return 14;
-            case AIR:
-                return 17;
-            default:
-                throw new IllegalArgumentException("Invalid hall type: " + hallType);
-        }
+        return hallType.getMinObjects();
     }
 
 
