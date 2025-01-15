@@ -1000,6 +1000,8 @@ public class GameScreen extends JFrame {
                 try {
                     Thread.sleep(20000); // 20 seconds in milliseconds
                     hero.toggleVisibility(); // Reset isVisible to true
+                    hero.setIsCloaked(false);
+                    updateHeroImage();
                     System.out.println("Hero is now visible to archers again.");
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
