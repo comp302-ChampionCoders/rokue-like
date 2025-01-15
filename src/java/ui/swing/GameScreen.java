@@ -370,8 +370,7 @@ public class GameScreen extends JFrame {
             e.printStackTrace();
         }
     }
-    
-    //bu classtan çıkarılmalı
+
     private void moveMonsters() {
         Direction[] directions = Direction.values();
         for (Monster monster : monsters) {
@@ -401,12 +400,12 @@ public class GameScreen extends JFrame {
         repaint();
     }
 
-    // addrandom monster'a bağlı. bu classtan çıakrılmalı
-    private boolean isWithinHeroProximity(int x, int y) {
-        int dx = Math.abs(x - hero.getX());
-        int dy = Math.abs(y - hero.getY());
-        return dx <= 3 && dy <= 3; // Hero'nun 3x3 alanını kontrol eder
-    }
+//    // addrandom monster'a bağlı. bu classtan çıakrılmalı
+//    private boolean isWithinHeroProximity(int x, int y) {
+//        int dx = Math.abs(x - hero.getX());
+//        int dy = Math.abs(y - hero.getY());
+//        return dx <= 3 && dy <= 3; // Hero'nun 3x3 alanını kontrol eder
+//    }
 
     // bu classtan çıakrılmalı
     private boolean isPositionOccupied(int x, int y) {
@@ -445,7 +444,7 @@ public class GameScreen extends JFrame {
 
             // Update the rune's position
             Rune rune = hallController.getCurrentHall().getRune();
-            if (rune != null) {
+            if (rune != null && !hallController.getCurrentHall().getRune().isCollected()) {
                 rune.setPosition(randomPosition.x, randomPosition.y); // Update the rune's position
                 runePosition.setLocation(randomPosition); // Update runePosition to reflect the new location
                 System.out.println("Rune teleported to an object at position: X=" + randomPosition.x + ", Y=" + randomPosition.y);
@@ -640,7 +639,7 @@ public class GameScreen extends JFrame {
                         }
                     }
                 } else {
-                    System.out.println("No Rune is highlighted in the current hall.");
+                    // System.out.println("No Rune is highlighted in the current hall."); // debug
                 }
             } else {
                 System.out.println("No current hall available.");
@@ -705,7 +704,7 @@ public class GameScreen extends JFrame {
             Hall currentHall = hallController.getCurrentHall(); // Access the current hall
             if (currentHall != null) {
                 Rune rune = currentHall.getRune(); // Get the Rune from the current hall
-                if (rune != null) {
+                if (rune != null && !hallController.getCurrentHall().getRune().isCollected()) { // second statement rune is NOT collected
                     rune.setHighlighted(true); // Set the rune as highlighted
                     System.out.println("Rune is now highlighted at: (" + rune.getX() + ", " + rune.getY() + ")");
 
