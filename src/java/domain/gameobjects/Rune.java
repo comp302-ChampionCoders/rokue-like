@@ -8,12 +8,14 @@ public class Rune implements Collectible, GridElement {
     private int y;
     private boolean isCollected;
     private boolean isAvailable;
+    private boolean isHighlighted; // for reveal
 
     public Rune(int x, int y, Hall hall) {
         this.x = x;
         this.y = y;
         this.isAvailable = true;
         this.isCollected = false;
+        this.isHighlighted = false;
     }
 
     // GridElement interface implementation
@@ -31,6 +33,7 @@ public class Rune implements Collectible, GridElement {
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+        System.out.println("Rune position updated to: (" + x + ", " + y + ")"); // debug
     }
 
     @Override
@@ -56,6 +59,14 @@ public class Rune implements Collectible, GridElement {
     @Override
     public boolean canBeCollected() {
         return !isCollected && isAvailable;
+    }
+
+    public boolean isHighlighted() {
+        return isHighlighted;
+    }
+
+    public void setHighlighted(boolean highlighted) {
+        this.isHighlighted = highlighted;
     }
 
     @Override

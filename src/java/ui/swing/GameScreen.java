@@ -433,23 +433,27 @@ public class GameScreen extends JFrame {
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
         if (wizardExists) {
             Map<Point, GameObject> objects = hallController.getCurrentHall().getObjects();
-    
+
             if (objects.isEmpty()) {
                 System.out.println("No objects available in the hall to teleport the rune.");
                 return; // No objects to teleport the rune to
             }
-    
+
             // Randomly select a new position from the available objects
             List<Point> objectPositions = new ArrayList<>(objects.keySet());
             Point randomPosition = objectPositions.get(random.nextInt(objectPositions.size()));
-    
+
             // Update the rune's position
-            runePosition.setLocation(randomPosition);
-            System.out.println("Rune teleported to an object at position: X=" + randomPosition.x + ", Y=" + randomPosition.y);
-    
+            Rune rune = hallController.getCurrentHall().getRune();
+            if (rune != null) {
+                rune.setPosition(randomPosition.x, randomPosition.y); // Update the rune's position
+                runePosition.setLocation(randomPosition); // Update runePosition to reflect the new location
+                System.out.println("Rune teleported to an object at position: X=" + randomPosition.x + ", Y=" + randomPosition.y);
+            }
             repaint(); // Update the game screen
         }
     }
+
 
 
     // bu classtan çıakrılmalı
@@ -612,32 +616,37 @@ public class GameScreen extends JFrame {
         }
 
         private void drawReveal(Graphics g, int offsetX, int offsetY) {
-            for (Enchantment enchantment : enchantments) { // needs to be moved out of this method
-                if (enchantment instanceof Reveal) {
-                    Reveal reveal = (Reveal) enchantment;
-                    if (reveal.hasHighlight()) {
-                        int highlightX = reveal.getHighlightX();
-                        int highlightY = reveal.getHighlightY();
+            Hall currentHall = hallController.getCurrentHall(); // Access the current hall
+            if (currentHall != null) {
+                Rune rune = currentHall.getRune(); // Get the Rune from the current hall
+                if (rune != null && rune.isHighlighted()) { // Check if the Rune is highlighted
+                    int highlightX = rune.getX();
+                    int highlightY = rune.getY();
+                    System.out.println("Drawing Rune highlight at: (" + highlightX + ", " + highlightY + ")");
+                    g.setColor(new Color(0, 255, 0, 128)); // Transparent green
+                    for (int dx = -1; dx <= 2; dx++) { // 4x4 area
+                        for (int dy = -1; dy <= 2; dy++) {
+                            int drawX = highlightX + dx;
+                            int drawY = highlightY + dy;
 
-                        g.setColor(new Color(0, 255, 0, 128)); // Transparent green
-                        for (int dx = -2; dx <= 1; dx++) {
-                            for (int dy = -2; dy <= 1; dy++) {
-                                int drawX = highlightX + dx;
-                                int drawY = highlightY + dy;
-                                if (drawX >= 0 && drawX < GRID_COLUMNS && drawY >= 0 && drawY < GRID_ROWS) {
-                                    g.fillRect(
-                                            offsetX + drawX * CELL_SIZE,
-                                            offsetY + drawY * CELL_SIZE,
-                                            CELL_SIZE,
-                                            CELL_SIZE
-                                    );
-                                }
+                            if (drawX >= 0 && drawX < GRID_COLUMNS && drawY >= 0 && drawY < GRID_ROWS) {
+                                g.fillRect(
+                                        offsetX + drawX * CELL_SIZE, // Screen X
+                                        offsetY + drawY * CELL_SIZE, // Screen Y
+                                        CELL_SIZE,                  // Width
+                                        CELL_SIZE                   // Height
+                                );
                             }
                         }
                     }
+                } else {
+                    System.out.println("No Rune is highlighted in the current hall.");
                 }
+            } else {
+                System.out.println("No current hall available.");
             }
         }
+
         private void drawGrid(Graphics g, int offsetX, int offsetY) {
             g.setColor(Color.GRAY);
             for (int i = 0; i <= GRID_ROWS; i++) {
@@ -690,6 +699,35 @@ public class GameScreen extends JFrame {
             hero.setIsCloaked(true);
             updateHeroImage(); 
             repaint();
+        }
+
+        public void showRuneRevealedEffect() {
+            Hall currentHall = hallController.getCurrentHall(); // Access the current hall
+            if (currentHall != null) {
+                Rune rune = currentHall.getRune(); // Get the Rune from the current hall
+                if (rune != null) {
+                    rune.setHighlighted(true); // Set the rune as highlighted
+                    System.out.println("Rune is now highlighted at: (" + rune.getX() + ", " + rune.getY() + ")");
+
+                    // Schedule to remove the highlight after the duration
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(5000); // Highlight duration: 5 seconds
+                            rune.setHighlighted(false); // Remove the highlight
+                            System.out.println("Rune highlight expired.");
+                            repaint(); // Redraw the panel to reflect the change
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }).start();
+
+                    repaint(); // Trigger an immediate redraw
+                } else {
+                    System.out.println("No Rune found in the current hall.");
+                }
+            } else {
+                System.out.println("No current hall available for Rune highlight.");
+            }
         }
         
 
@@ -980,14 +1018,12 @@ public class GameScreen extends JFrame {
         }
 
         private void activateReveal() {
-            for (Enchantment enchantment : enchantments) {
-                if (enchantment instanceof Reveal) {
-                    Reveal reveal = (Reveal) enchantment;
-                    System.out.println("Setting highlight center for Reveal...");
-                    reveal.setHighlightCenter(runePosition.x, runePosition.y);
-                    repaint(); // Trigger repaint to show the highlight
-                    break;
-                }
+            System.out.println("R key pressed. Checking for Reveal...");
+            if (hero.getInventory().hasItem("Reveal")) {
+                hero.getInventory().useItem("Reveal"); // Use the enchantment
+                showRuneRevealedEffect(); // Trigger the highlight effect
+            } else {
+                System.out.println("No Reveal enchantment found in inventory.");
             }
         }
         
@@ -1114,8 +1150,8 @@ public class GameScreen extends JFrame {
                 case KeyEvent.VK_R: // Reveal
                     System.out.println("R key pressed. Checking for Reveal...");
                     if (hero.getInventory().hasItem("Reveal")) {
-                        System.out.println("Reveal found. Using enchantment...");
-                        hero.getInventory().useItem("Reveal");
+//                        System.out.println("Reveal found. Using enchantment...");
+//                        hero.getInventory().useItem("Reveal");
                         activateReveal();
                     } else {
                         System.out.println("No Reveal enchantment found in inventory.");

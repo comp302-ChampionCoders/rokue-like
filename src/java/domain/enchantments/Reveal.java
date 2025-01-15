@@ -12,16 +12,30 @@ public class Reveal extends Enchantment {
         this.hasHighlight = false;
     }
 
+
     @Override
     public void applyEffect(Hero hero) {
-        activate();
-        System.out.println("Rune's approximate location is revealed for " + (DURATION/1000) + " seconds.");
-        
+
+    }
+
+    public void applyEffect(Hall hall) {
+        if (hall != null) {
+            Rune rune = hall.getRune(); // Access the rune from the hall
+            if (rune != null) {
+                setHighlightCenter(rune.getX(), rune.getY()); // Highlight the rune's position
+                System.out.println("Reveal enchantment activated: Highlighting rune's location.");
+            } else {
+                System.out.println("No rune found in the current hall.");
+            }
+        } else {
+            System.out.println("Invalid hall passed to Reveal.");
+        }
+
         // Schedule effect removal
         new Thread(() -> {
             try {
                 Thread.sleep(DURATION);
-                removeEffect(hero);
+                removeEffect(null); // Effect removal doesn't need specific input
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -41,6 +55,7 @@ public class Reveal extends Enchantment {
         this.highlightX = x;
         this.highlightY = y;
         this.hasHighlight = true;
+        System.out.println("Highlight set at: (" + x + ", " + y + ")"); // debug
     }
 
     public int getHighlightX() {
