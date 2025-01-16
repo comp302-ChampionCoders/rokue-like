@@ -1142,9 +1142,11 @@ public class GameScreen extends JFrame {
                     break;
                 case KeyEvent.VK_LEFT:
                         direction = Direction.LEFT;
+                        hero.setDirection("LEFT");
                     break;
                 case KeyEvent.VK_RIGHT:
                         direction = Direction.RIGHT;
+                        hero.setDirection("RIGHT");
                     break;
                 case KeyEvent.VK_R: // Reveal
                     System.out.println("R key pressed. Checking for Reveal...");
