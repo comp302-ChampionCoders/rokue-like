@@ -16,7 +16,7 @@ public class MinObjectController {
 
             if (currentObjectCount < requiredObjectCount) {
                 System.out.println("Minimum requirement not met for Hall: " + hall.getHallType());
-                //return false;
+                return false;
             }
         }
         return true;
