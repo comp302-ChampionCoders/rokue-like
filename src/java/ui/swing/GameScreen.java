@@ -379,6 +379,7 @@ public class GameScreen extends JFrame {
         initializeHeroPosition();
         initializeTimers();
         initializeRunePosition();
+        updateInventory();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         monsters = new ArrayList<>();
