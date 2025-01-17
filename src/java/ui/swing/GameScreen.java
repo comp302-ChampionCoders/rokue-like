@@ -4,6 +4,7 @@ import controller.HallController;
 import controller.ScreenTransition;
 import controller.TimerController;
 import controller.SpawnController;
+import domain.behaviors.Collectible;
 import domain.behaviors.Direction;
 import domain.enchantments.*;
 import domain.gameobjects.GameObject;
@@ -36,24 +37,11 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.Timer;
+
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 import ui.utils.TaskBarIconUtil;
@@ -82,7 +70,8 @@ public class GameScreen extends JFrame {
 
     private GamePanel gamePanel;
     private JPanel sidePanel; 
-    private JLabel[] heartLabels; 
+    private JLabel[] heartLabels;
+    private JLabel[] enchantmentLabels = new JLabel[6];
     private JLabel timerLabel; 
     private Font timerFont;
     private HallController hallController;
@@ -245,11 +234,30 @@ public class GameScreen extends JFrame {
             heartsPanel.add(heartLabels[i]);
         }
         updateHearts();
-    
+
+        JLayeredPane inventoryLayeredPane = new JLayeredPane();
+        inventoryLayeredPane.setPreferredSize(new Dimension(250, 150)); // Adjust size to match the inventory design
+        inventoryLayeredPane.setLayout(null); // Use null layout for absolute positioning
+
         // Inventory chest icon
         JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x_3.png"));
         chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
+        inventoryLayeredPane.add(chestIcon, Integer.valueOf(0));
+
+        // Add enchantment slots on top of the chest icon
+        int slotSize = 25;
+        int startX = 35; // Adjust to align with the inventory background
+        int startY = 92; // Adjust to align with the inventory background
+        int gap = 7;
+
+        for (int i = 0; i < 6; i++) {
+            enchantmentLabels[i] = new JLabel();
+            enchantmentLabels[i].setBounds(startX + (i % 3) * (slotSize + gap), startY + (i / 3) * (slotSize + gap), slotSize, slotSize);
+            enchantmentLabels[i].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); // Border for empty slots
+            chestIcon.add(enchantmentLabels[i], Integer.valueOf(1)); // Add to the top layer (foreground)
+        }
+        updateInventory();
+
         containerPanel.add(Box.createRigidArea(new Dimension(0, 60)));
         containerPanel.add(buttonPanel); 
         containerPanel.add(timerHeader);
@@ -261,6 +269,8 @@ public class GameScreen extends JFrame {
         containerPanel.add(Box.createVerticalGlue()); 
 
         sidePanel.add(containerPanel);
+        sidePanel.add(inventoryLayeredPane);
+        inventoryLayeredPane.setBounds(50, 300, 250, 150);
     }
     
     private JButton createButton(String imagePath) {
@@ -276,6 +286,30 @@ public class GameScreen extends JFrame {
         Image img = ((ImageIcon) icon).getImage();
         Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImg);
+    }
+
+    private void updateInventory() {
+        for (JLabel enchantmentLabel : enchantmentLabels) {
+            enchantmentLabel.setIcon(null);
+        }
+
+        List<Collectible> inventoryItems = hero.getInventory().getAllItems(); // Get all items
+
+        // Loop through inventory and update labels
+        for (int i = 0; i < inventoryItems.size() && i < enchantmentLabels.length; i++) {
+            Collectible item = inventoryItems.get(i);
+            String type = item.getType();
+            String imagePath = switch (type) {
+                case "Cloak of Protection" -> "src/resources/images/cloak32x32.png";
+                case "Luring Gem" -> "src/resources/images/lure32x32.png";
+                case "Reveal" -> "src/resources/images/reveal32x32.png";
+                default -> null;
+            };
+
+            if (imagePath != null) {
+                enchantmentLabels[i].setIcon(new ImageIcon(imagePath));
+            }
+        }
     }
 
     // heart controller eklenmeli
@@ -984,22 +1018,33 @@ public class GameScreen extends JFrame {
 
         private void handleEnchantmentClick(Enchantment clickedEnchantment) {
             String enc = clickedEnchantment.getType();
-            if (enc == "Extra Time") {
+            if (Objects.equals(enc, "Extra Time")) {
                 activeExtraTime();
                 System.out.println("5 seconds added!");
+                collectEnchantment(clickedEnchantment);
             }
-            else if (enc == "Extra Life") {
+            else if (Objects.equals(enc, "Extra Life")) {
                 activateExtraLife();
                 updateHearts();
+                collectEnchantment(clickedEnchantment);
             }
             else {
-                hero.getInventory().addItem(clickedEnchantment);
-                System.out.println("Added enchantment " + clickedEnchantment.getType() + " to inventory.");
-                
+                if(hero.getInventory().hasEmptySpace()){
+                    hero.getInventory().addItem(clickedEnchantment);
+                    System.out.println("Added enchantment " + clickedEnchantment.getType() + " to inventory.");
+                    collectEnchantment(clickedEnchantment);
+                    updateInventory();
+                }else{
+                    System.out.println("Inventory is full! Cannot pick up " + clickedEnchantment.getType());
+                    SoundPlayerUtil.playErrorSound();
+                }
             }
-            enchantments.remove(clickedEnchantment);
-            hallController.getCurrentHall().removeGridElement(clickedEnchantment.getX(), clickedEnchantment.getY());
-            clickedEnchantment.disappear();
+        }
+
+        private void collectEnchantment(Enchantment enchantment) {
+            enchantments.remove(enchantment);
+            hallController.getCurrentHall().removeGridElement(enchantment.getX(), enchantment.getY());
+            enchantment.disappear();
             System.out.println(hero.getInventory().getInventoryContents());
             System.out.println(hero.getInventory().getTotalCount());
         }
@@ -1154,6 +1199,7 @@ public class GameScreen extends JFrame {
 //                        System.out.println("Reveal found. Using enchantment...");
 //                        hero.getInventory().useItem("Reveal");
                         activateReveal();
+                        updateInventory();
                     } else {
                         System.out.println("No Reveal enchantment found in inventory.");
                     }
@@ -1164,6 +1210,7 @@ public class GameScreen extends JFrame {
                         System.out.println("Luring Gem found. Using enchantment...");
                         hero.getInventory().useItem("Luring Gem");
                         hero.setThrowing(true);
+                        updateInventory();
                     }
                     else {
                         System.out.println("No Luring Gem enchantment found in inventory.");
@@ -1177,6 +1224,7 @@ public class GameScreen extends JFrame {
                         hero.getInventory().useItem("Cloak of Protection");
                         activateCloakOfProtection();
                         gamePanel.showHeroCloakedEffect();
+                        updateInventory();
                     } else {
                         System.out.println("No Cloak of Protection found in inventory.");
                     }
