@@ -15,6 +15,10 @@ public class Inventory {
         items.computeIfAbsent(type, k -> new ArrayList<>()).add(item);
     }
 
+    public boolean hasEmptySpace() {
+        return getTotalCount() < 6;
+    }
+
     public boolean contains(String type) {
         return items.containsKey(type) && !items.get(type).isEmpty();
     }
@@ -58,6 +62,14 @@ public class Inventory {
 
     public List<Collectible> getItems(String type) {
         return items.getOrDefault(type, new ArrayList<>());
+    }
+
+    public List<Collectible> getAllItems() {
+        List<Collectible> allItems = new ArrayList<>();
+        for (List<Collectible> itemList : items.values()) {
+            allItems.addAll(itemList);
+        }
+        return allItems;
     }
 
     public Map<String, Integer> getInventoryContents() {
