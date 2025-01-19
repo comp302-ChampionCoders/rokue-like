@@ -424,7 +424,7 @@ public class GameScreen extends JFrame {
                     int newY = monster.getY() + randomDirection.getDy();
 
                     // Check boundaries and prevent overlap
-                    if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
+                    if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !hallController.getCurrentHall().isPositionOccupied(newX, newY)) {
                         hallController.getCurrentHall().removeGridElement(monster.getX(), monster.getY());
                         monster.move(randomDirection);
                         hallController.getCurrentHall().addGridElement(monster, monster.getX(), monster.getY());
@@ -435,35 +435,6 @@ public class GameScreen extends JFrame {
         checkHeroMonsterCollision();
         repaint();
     }
-
-//    // addrandom monster'a bağlı. bu classtan çıakrılmalı
-//    private boolean isWithinHeroProximity(int x, int y) {
-//        int dx = Math.abs(x - hero.getX());
-//        int dy = Math.abs(y - hero.getY());
-//        return dx <= 3 && dy <= 3; // Hero'nun 3x3 alanını kontrol eder
-//    }
-
-    // bu classtan çıakrılmalı
-    private boolean isPositionOccupied(int x, int y) {
-        if (hero != null) {
-            if (hero.getX() == x && hero.getY() == y) return true;
-        }
-        if (runePosition != null){
-            if (runePosition.x == x && runePosition.y == y) return true;
-        }
-        for (Monster monster : monsters) {
-            if (monster.getX() == x && monster.getY() == y) return true;
-        }
-        for(GameObject obj : hallController.getCurrentHall().getObjects().values()){
-            if(obj.getX() == x && obj.getY() == y) return true;
-        }
-        for (Enchantment enchantment : enchantments) {
-            if (enchantment.getX() == x && enchantment.getY() == y) return true;
-        }
-        return false;
-    }
-
-
     // bu classtan çıakrılmalı
     private void teleportRune() {
         boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
@@ -529,14 +500,14 @@ public class GameScreen extends JFrame {
             int startY = Math.min(archerY, heroY);
             int endY = Math.max(archerY, heroY);
             for (int y = startY + 1; y < endY; y++) {
-                if (isPositionOccupied(archerX, y)) return true;
+                if (hallController.getCurrentHall().isPositionOccupied(archerX, y)) return true;
             }
         } else if (archerY == heroY) {
             // Check horizontal path
             int startX = Math.min(archerX, heroX);
             int endX = Math.max(archerX, heroX);
             for (int x = startX + 1; x < endX; x++) {
-                if (isPositionOccupied(x, archerY)) return true;
+                if (hallController.getCurrentHall().isPositionOccupied(x, archerY)) return true;
             }
         }
         return false;
@@ -926,19 +897,19 @@ public class GameScreen extends JFrame {
         
                     for (int i = 1; i <= 3; i++) {
                         // Up
-                        if (monsterY - i >= 0 && !isPositionOccupied(monsterX, monsterY - i)) {
+                        if (monsterY - i >= 0 && !hallController.getCurrentHall().isPositionOccupied(monsterX, monsterY - i)) {
                             g.fillRect(offsetX + monsterX * CELL_SIZE, offsetY + (monsterY - i) * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
                         // Down
-                        if (monsterY + i < GRID_ROWS && !isPositionOccupied(monsterX, monsterY + i)) {
+                        if (monsterY + i < GRID_ROWS && !hallController.getCurrentHall().isPositionOccupied(monsterX, monsterY + i)) {
                             g.fillRect(offsetX + monsterX * CELL_SIZE, offsetY + (monsterY + i) * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
                         // Left
-                        if (monsterX - i >= 0 && !isPositionOccupied(monsterX - i, monsterY)) {
+                        if (monsterX - i >= 0 && !hallController.getCurrentHall().isPositionOccupied(monsterX - i, monsterY)) {
                             g.fillRect(offsetX + (monsterX - i) * CELL_SIZE, offsetY + monsterY * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
                         // Right
-                        if (monsterX + i < GRID_COLUMNS && !isPositionOccupied(monsterX + i, monsterY)) {
+                        if (monsterX + i < GRID_COLUMNS && !hallController.getCurrentHall().isPositionOccupied(monsterX + i, monsterY)) {
                             g.fillRect(offsetX + (monsterX + i) * CELL_SIZE, offsetY + monsterY * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                         }
                     }
@@ -1301,7 +1272,7 @@ public class GameScreen extends JFrame {
                 }*/
 
 
-                if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !isPositionOccupied(newX, newY)) {
+                if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !hallController.getCurrentHall().isPositionOccupied(newX, newY)) {
                     hallController.moveHero(direction);
                     updateHeroImage();
                     SoundPlayerUtil.playMoveSound();
