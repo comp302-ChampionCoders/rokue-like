@@ -455,9 +455,10 @@ public class GameScreen extends JFrame {
             if (monster.getX() == x && monster.getY() == y) return true;
         }
         for(GameObject obj : hallController.getCurrentHall().getObjects().values()){
-            if(obj.getX() == x && obj.getY() == y){
-                return true;
-            }
+            if(obj.getX() == x && obj.getY() == y) return true;
+        }
+        for (Enchantment enchantment : enchantments) {
+            if (enchantment.getX() == x && enchantment.getY() == y) return true;
         }
         return false;
     }
