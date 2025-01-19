@@ -380,6 +380,7 @@ public class GameScreen extends JFrame {
         initializeTimers();
         initializeRunePosition();
         updateInventory();
+        updateHearts();
         timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
 
         monsters = new ArrayList<>();
@@ -454,9 +455,10 @@ public class GameScreen extends JFrame {
             if (monster.getX() == x && monster.getY() == y) return true;
         }
         for(GameObject obj : hallController.getCurrentHall().getObjects().values()){
-            if(obj.getX() == x && obj.getY() == y){
-                return true;
-            }
+            if(obj.getX() == x && obj.getY() == y) return true;
+        }
+        for (Enchantment enchantment : enchantments) {
+            if (enchantment.getX() == x && enchantment.getY() == y) return true;
         }
         return false;
     }
@@ -1203,6 +1205,7 @@ public class GameScreen extends JFrame {
                         updateInventory();
                     } else {
                         System.out.println("No Reveal enchantment found in inventory.");
+                        SoundPlayerUtil.playErrorSound();
                     }
                     break;
                 case KeyEvent.VK_B: // Luring Gem
@@ -1215,19 +1218,24 @@ public class GameScreen extends JFrame {
                     }
                     else {
                         System.out.println("No Luring Gem enchantment found in inventory.");
+                        SoundPlayerUtil.playErrorSound();
                     }
                     break;
                 case KeyEvent.VK_P: // Cloak of Protection
                     System.out.println("P key pressed. Checking for Cloak of Protection...");
-                    if (hero.getInventory().hasItem("Cloak of Protection")) {
+                    if (hero.getInventory().hasItem("Cloak of Protection") && hero.isVisible()) {
                         SoundPlayerUtil.playClothSound();
                         System.out.println("Using Cloak of Protection...");
                         hero.getInventory().useItem("Cloak of Protection");
                         activateCloakOfProtection();
                         gamePanel.showHeroCloakedEffect();
                         updateInventory();
-                    } else {
+                    } else if (!hero.getInventory().hasItem("Cloak of Protection")) {
                         System.out.println("No Cloak of Protection found in inventory.");
+                        SoundPlayerUtil.playErrorSound();
+                    } else {
+                        System.out.println("Cloak of Protection is already active");
+                        SoundPlayerUtil.playErrorSound();
                     }
                     break;
                 // Luring gem throw using WASD keys
