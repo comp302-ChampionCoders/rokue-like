@@ -59,10 +59,6 @@ public class Hero implements Moveable, GridElement {
         setPosition(newX, newY);
     }
 
-    public void toggleVisibility() {
-        this.isVisible = !this.isVisible;
-    }
-
     public boolean isVisible() {
         return isVisible;
     }   
@@ -108,6 +104,10 @@ public class Hero implements Moveable, GridElement {
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
     }
     
     public String getDirection() {

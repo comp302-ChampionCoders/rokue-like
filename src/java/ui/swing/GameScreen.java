@@ -1046,14 +1046,15 @@ public class GameScreen extends JFrame {
         }
         
         private void activateCloakOfProtection() {
-            hero.toggleVisibility(); // Set isVisible to false
+            hero.setIsVisible(false);
+            hero.setIsCloaked(true);
             System.out.println("Hero is now invisible to archers for 20 seconds.");
         
             // Schedule the visibility to reset after 20 seconds
             new Thread(() -> {
                 try {
                     Thread.sleep(20000); // 20 seconds in milliseconds
-                    hero.toggleVisibility(); // Reset isVisible to true
+                    hero.setIsVisible(true);
                     hero.setIsCloaked(false);
                     updateHeroImage();
                     System.out.println("Hero is now visible to archers again.");

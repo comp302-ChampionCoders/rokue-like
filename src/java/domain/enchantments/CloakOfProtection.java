@@ -11,7 +11,8 @@ public class CloakOfProtection extends Enchantment {
     @Override
     public void applyEffect(Hero hero) {
         activate();
-        hero.toggleVisibility();
+        hero.setIsVisible(false);
+        hero.setIsCloaked(true);
         System.out.println("Hero is now invisible to Archer Monsters for " + (DURATION/1000) + " seconds.");
         
         // Schedule effect removal
@@ -29,7 +30,8 @@ public class CloakOfProtection extends Enchantment {
     public void removeEffect(Hero hero) {
         if (isActive()) {
             deactivate();
-            hero.toggleVisibility();
+            hero.setIsVisible(true);
+            hero.setIsCloaked(false);
             System.out.println("Hero is no longer invisible to Archer Monsters.");
         }
     }

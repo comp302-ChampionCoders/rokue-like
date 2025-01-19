@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/CloakOfProtection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/CloakOfProtection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hero.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -170,7 +171,7 @@
       <workItem from="1737053367978" duration="722000" />
       <workItem from="1737120753716" duration="3494000" />
       <workItem from="1737287109071" duration="1534000" />
-      <workItem from="1737289233448" duration="971000" />
+      <workItem from="1737289233448" duration="2834000" />
     </task>
     <servers />
   </component>
