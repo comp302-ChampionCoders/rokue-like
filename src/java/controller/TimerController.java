@@ -28,6 +28,10 @@ public class TimerController {
     private Timer heroMoveTimer;
     private Runnable heroMoveAction;
 
+    private Map<String, Integer> remainingTimes; // Timer'ların kalan sürelerini tutar
+    private Map<String, Long> lastPausedTimes; // Timer'ların durdurulduğu zamanı tutar
+
+
     private TimerController() {
         timers = new HashMap<>();
         isPaused = false;
@@ -48,34 +52,43 @@ public class TimerController {
                                    Runnable timeUpdateAction,
                                    Runnable enchantmentSpawnAction,
                                    Runnable enchantmentRemoveAction) {
+        remainingTimes = new HashMap<>();
+        lastPausedTimes = new HashMap<>();
                                     
         timers.put("monsterMove", new Timer(MONSTER_MOVE_DELAY, e -> {
             if (!isPaused) monsterMoveAction.run();
         }));
+        remainingTimes.put("monsterMove", MONSTER_MOVE_DELAY);
 
         timers.put("monsterSpawn", new Timer(MONSTER_SPAWN_DELAY, e -> {
             if (!isPaused) monsterSpawnAction.run();
         }));
+        remainingTimes.put("monsterSpawn", MONSTER_SPAWN_DELAY);
 
         timers.put("runeTeleport", new Timer(RUNE_TELEPORT_DELAY, e -> {
             if (!isPaused) runeTeleportAction.run();
         }));
+        remainingTimes.put("runeTeleport", RUNE_TELEPORT_DELAY);
 
         timers.put("archerAttack", new Timer(ARCHER_ATTACK_DELAY, e -> {
             if (!isPaused) archerAttackAction.run();
         }));
+        remainingTimes.put("archerAttack", ARCHER_ATTACK_DELAY);
 
         timers.put("gameTimer", new Timer(GAME_TIMER_DELAY, e -> {
             if (!isPaused) timeUpdateAction.run();
         }));
+        remainingTimes.put("gameTimer", GAME_TIMER_DELAY);
 
         timers.put("enchantmentSpawn", new Timer(ENCHANTMENT_SPAWN_DELAY, e -> {
             if (!isPaused) enchantmentSpawnAction.run();
         }));
+        remainingTimes.put("enchantmentSpawn", ENCHANTMENT_SPAWN_DELAY);
 
         timers.put("enchantmentRemove", new Timer(ENCHANTMENT_REMOVE_DELAY, e -> {
             if (!isPaused) enchantmentRemoveAction.run();
         }));
+        remainingTimes.put("enchantmentRemove", ENCHANTMENT_REMOVE_DELAY);
     }
 
     public void startTimers() {
@@ -84,6 +97,17 @@ public class TimerController {
 
     public void stopTimers() {
         timers.values().forEach(Timer::stop);
+    }
+
+    public void pauseTimers() {
+        isPaused = true;
+        timers.values().forEach(Timer::stop); // Tüm timer'lar durdurulur
+    }
+
+    public void resumeTimers() {
+        if (!isPaused) return; // Eğer zaten çalışıyorsa, hiçbir şey yapma
+        isPaused = false;
+        timers.values().forEach(Timer::start); // Tüm timer'lar tekrar başlatılır
     }
 
     public void cleanup() {

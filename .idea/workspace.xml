@@ -6,9 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/CloakOfProtection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/CloakOfProtection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ModeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ModeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/TimerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/TimerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/PauseScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/ModeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/ModeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TimerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/PauseScreen.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +185,7 @@
       <workItem from="1737053367978" duration="722000" />
       <workItem from="1737120753716" duration="3494000" />
       <workItem from="1737287109071" duration="1534000" />
-      <workItem from="1737289233448" duration="2834000" />
+      <workItem from="1737289233448" duration="21310000" />
     </task>
     <servers />
   </component>
