@@ -2,6 +2,7 @@ package ui.swing;
 
 import controller.HallController;
 import controller.ScreenTransition;
+import controller.TimerController;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 import ui.utils.TaskBarIconUtil;
@@ -98,10 +99,14 @@ public class GameOverScreen extends JFrame {
         JButton restartButton = createStyledButton("RESTART GAME");
         JButton menuButton = createStyledButton("RETURN TO MENU");
 
+
         restartButton.addActionListener(e -> {
             hallController.resetToBuildModeVersions();
             SoundPlayerUtil.playClickSound();
+            TimerController.getInstance().reset();
             restartGame.execute();});
+
+
         menuButton.addActionListener(e -> {
             hallController.resetHalls();
             SoundPlayerUtil.playClickSound();

@@ -20,10 +20,12 @@ public class MainMenu extends JFrame {
     private BufferedImage backgroundImage;
     private BufferedImage logoImage;
     private final ScreenTransition onStartBuildMode;
+    private final ScreenTransition onLoadGame;
     private Font customFont;
 
-    public MainMenu(ScreenTransition onStartBuildMode) {
+    public MainMenu(ScreenTransition onStartBuildMode, ScreenTransition onLoadGame) {
         this.onStartBuildMode = onStartBuildMode;
+        this.onLoadGame = onLoadGame;
         initializeFrame();
 
         String osName = System.getProperty("os.name").toLowerCase();
@@ -113,6 +115,7 @@ public class MainMenu extends JFrame {
         buttonPanel.setBounds(SCREEN_WIDTH/4, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/3);
 
         JButton newGameButton = createStyledButton("START NEW GAME");
+        JButton loadScreenButton = createStyledButton("LOAD SCREEN");
         JButton helpButton = createStyledButton("HELP");
         JButton exitButton = createStyledButton("EXIT");
 
@@ -121,6 +124,12 @@ public class MainMenu extends JFrame {
             SoundPlayerUtil.playClickSound();
             onStartBuildMode.execute();
         });
+
+        loadScreenButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            onLoadGame.execute();
+        });
+
         helpButton.addActionListener(e -> {
             SoundPlayerUtil.playClickSound();
             showHelpScreen();
@@ -134,6 +143,8 @@ public class MainMenu extends JFrame {
         // Add buttons to panel with spacing
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(newGameButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        buttonPanel.add(loadScreenButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         buttonPanel.add(helpButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 20)));

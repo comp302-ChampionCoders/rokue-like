@@ -115,6 +115,13 @@ public class TimerController {
         timers.clear();
     }
 
+    public void reset() {
+        cleanup();
+        remainingTimes.clear();
+        lastPausedTimes.clear();
+        isPaused = false;
+    }
+
     public void resetGameTime() {
         remainingTime = DEFAULT_GAME_TIME; 
     }

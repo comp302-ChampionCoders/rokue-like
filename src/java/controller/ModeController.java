@@ -20,6 +20,7 @@ public class ModeController {
     private GameScreen gameScreen;
     private MainMenu mainMenu;
     private GameOverScreen gameOverScreen;
+    private LoadGameScreen loadGameScreen;
     private HallController hallController;
     private MinObjectController minObjectController;
 
@@ -32,9 +33,17 @@ public class ModeController {
     public void showMainMenu() {
         closeActiveScreens();
         if (mainMenu == null) {
-            mainMenu = new MainMenu(this::switchToBuildMode);
+            mainMenu = new MainMenu(this::switchToBuildMode,this::switchToLoadGameScreen);
         }
         mainMenu.setVisible(true);
+    }
+
+    public void switchToLoadGameScreen() {
+        closeActiveScreens();
+        if (loadGameScreen == null) {
+            loadGameScreen = new LoadGameScreen(this::showMainMenu, this::switchToPlayMode, hallController);
+        }
+        loadGameScreen.setVisible(true);
     }
 
     public void switchToBuildMode() {
