@@ -6,18 +6,21 @@ import domain.gameobjects.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.imageio.ImageIO;
 
-public abstract class Enchantment implements Collectible, GridElement {
+public abstract class Enchantment implements Collectible, GridElement, Serializable {
+    private final String imagePath;
     private String name; 
     private boolean isActive;
     private int x,y;
     private long spawnTime;
     private static final long DISAPPEAR_TIME = 6000; //6s in ms 
-    private BufferedImage image; // Image for the enchantment
+    private transient BufferedImage image; // Image for the enchantment
 
     public Enchantment(String name, String imagePath) {
         this.name = name;
+        this.imagePath = imagePath;
         this.isActive = false;
         
         loadImage(imagePath);
@@ -31,6 +34,13 @@ public abstract class Enchantment implements Collectible, GridElement {
             e.printStackTrace();
         }
     }
+
+    private void readObject(java.io.ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject(); // Diğer alanları deserialize et
+        // imagePath'i kullanarak image'i yeniden yükle
+        loadImage(this.imagePath);
+    }
+
 
     @Override
     public void collect(Hero hero) {
@@ -65,6 +75,7 @@ public abstract class Enchantment implements Collectible, GridElement {
     @Override
     public int getY() {return y;}
     
+    
     @Override
     public void setPosition(int x, int y) {
         this.x = x;
@@ -81,6 +92,10 @@ public abstract class Enchantment implements Collectible, GridElement {
         if (!isActive) return -1;
         long elapsedTime = System.currentTimeMillis() - spawnTime;
         return Math.max(0, DISAPPEAR_TIME - elapsedTime);
+    }
+
+    public String getImagePath(){
+        return imagePath;
     }
 
     public BufferedImage getImage() {

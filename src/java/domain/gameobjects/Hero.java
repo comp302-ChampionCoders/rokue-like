@@ -4,7 +4,9 @@ import domain.behaviors.Direction;
 import domain.behaviors.GridElement;
 import domain.behaviors.Moveable;
 
-public class Hero implements Moveable, GridElement {
+import java.io.Serializable;
+
+public class Hero implements Moveable, GridElement, Serializable {
     
     private int lives;
     private Inventory inventory;

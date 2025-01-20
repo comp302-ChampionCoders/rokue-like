@@ -5,12 +5,13 @@ import domain.behaviors.GridElement;
 import domain.enchantments.Enchantment;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.*;
 
 
 import controller.SpawnController;
 
-public class Hall {
+public class Hall implements Serializable {
     // Hall type enumeration
     public enum HallType {
         EARTH(6), AIR(9), WATER(13), FIRE(17);

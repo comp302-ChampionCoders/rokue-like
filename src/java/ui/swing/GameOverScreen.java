@@ -3,6 +3,7 @@ package ui.swing;
 import controller.HallController;
 import controller.ScreenTransition;
 import controller.TimerController;
+import domain.core.Game;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 import ui.utils.TaskBarIconUtil;

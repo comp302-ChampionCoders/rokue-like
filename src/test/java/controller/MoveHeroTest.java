@@ -50,7 +50,7 @@ class MoveHeroTest {
         // Place an object at a specific position
         int objectX = hero.getX();
         int objectY = hero.getY() + 1;
-        GameObject obstacle = new GameObject(objectX, objectY, null);
+        GameObject obstacle = new GameObject(objectX, objectY, null,null);
         currentHall.addObject(obstacle, objectX, objectY);
 
         // Attempt to move the hero down into the object's position

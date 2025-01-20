@@ -115,7 +115,7 @@ public class MainMenu extends JFrame {
         buttonPanel.setBounds(SCREEN_WIDTH/4, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/3);
 
         JButton newGameButton = createStyledButton("START NEW GAME");
-        JButton loadScreenButton = createStyledButton("LOAD SCREEN");
+        JButton loadScreenButton = createStyledButton("LOAD GAME");
         JButton helpButton = createStyledButton("HELP");
         JButton exitButton = createStyledButton("EXIT");
 

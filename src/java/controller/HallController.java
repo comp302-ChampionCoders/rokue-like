@@ -8,13 +8,16 @@ import domain.gameobjects.Hero;
 import domain.gameobjects.Rune;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class HallController {
-    private ArrayList<Hall> halls;
+    private List<Hall> halls;
     private Hero hero;
     private Rune rune;
     private Hall currentHall;
     int i;
+    private int currentHallRemainingTime;
     private SpawnController spawnController;;
 
     public HallController() {
@@ -68,7 +71,7 @@ public class HallController {
         return currentHall;
     }
 
-    public ArrayList<Hall> getHalls() {
+    public List<Hall> getHalls() {
         return halls;
     }
 
@@ -111,6 +114,10 @@ public class HallController {
         return halls.stream().filter(h -> h.getHallType() == type).findFirst().orElse(null);
     }
 
+    public int getCurrentHallRemainingTime(){
+        return currentHallRemainingTime;
+    }
+
     public void updateHero(){
         this.hero = spawnController.initializeHeroPosition(currentHall);
     }
@@ -142,6 +149,20 @@ public class HallController {
         } else {
             System.out.println("Geçersiz hareket: Kahraman bu pozisyona geçemez.");
         }
+    }
+
+    public GameState createGameState(Map<Hall.HallType, Integer> hallTimes, int timeRemaining) {
+        return new GameState(halls, i, hero, rune, hallTimes, timeRemaining);
+    }
+
+    public void loadGameState(GameState gameState) {
+        this.halls = gameState.getHalls();
+        this.i = gameState.getCurrentHallIndex();
+        this.currentHall = halls.get(i);
+        this.hero = gameState.getHero();
+        this.rune = gameState.getRune();
+        this.currentHallRemainingTime = gameState.getTimeRemaining();
+        // If needed, reset any runtime-specific data here
     }
 
     private boolean isValidMove(int x, int y) {

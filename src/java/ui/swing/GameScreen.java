@@ -1,11 +1,9 @@
 package ui.swing;
 
-import controller.HallController;
-import controller.ScreenTransition;
-import controller.TimerController;
-import controller.SpawnController;
+import controller.*;
 import domain.behaviors.Collectible;
 import domain.behaviors.Direction;
+import domain.behaviors.GridElement;
 import domain.enchantments.*;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
@@ -45,6 +43,7 @@ import javax.swing.Timer;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 import ui.utils.TaskBarIconUtil;
+import utils.SaveLoadUtil;
 
 
 public class GameScreen extends JFrame {
@@ -76,6 +75,7 @@ public class GameScreen extends JFrame {
     private Font timerFont;
     private HallController hallController;
     private boolean isPaused = false;
+    public static boolean isLoaded = false;
 
 
 
@@ -84,12 +84,40 @@ public class GameScreen extends JFrame {
 
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.hallController = hallController;
+
+        monsters = new ArrayList<>();
+        enchantments = new ArrayList<>();
+
+        Map<Point, GridElement> objects = hallController.getCurrentHall().getGridElements();
+
+        for (Map.Entry<Point, GridElement> entry : objects.entrySet()) {
+            Point position = entry.getKey();
+            GridElement element = entry.getValue();
+
+            if (element instanceof Enchantment) {
+                Enchantment enchantment = (Enchantment) element;
+                enchantments.add(enchantment);
+            }
+            else if (element instanceof Monster){
+                Monster monster = (Monster) element;
+                monsters.add(monster);
+            }
+        }
+
+
+
         initializeHeroPosition();
         initializeRunePosition();
         this.timerController = TimerController.getInstance();
         this.spawnController = SpawnController.getInstance();
         initializeTimers();
-        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
+
+        if(!isLoaded){
+            timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
+        }else{
+            timeRemaining = hallController.getCurrentHallRemainingTime();
+        }
+
 
         try {
             timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(34f);
@@ -115,9 +143,7 @@ public class GameScreen extends JFrame {
 
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
-        monsters = new ArrayList<>();
         random = new Random();
-        enchantments = new ArrayList<>();
         loadHall();
 
        //loadRuneImage();
@@ -192,6 +218,9 @@ public class GameScreen extends JFrame {
 
         saveButton.addActionListener(e -> {
             SoundPlayerUtil.playClickSound();
+            GameState gameState = hallController.createGameState(timerController.getHallTimes(),timeRemaining);
+            String saveName = "Save_" + System.currentTimeMillis();
+            SaveLoadUtil.saveGame(gameState, saveName);
                 });
 
         pauseButton.addMouseListener(new MouseAdapter() {
@@ -427,6 +456,8 @@ public class GameScreen extends JFrame {
         }
         repaint(); 
     }
+
+
 
     private void goNextHall(){ 
         hallController.goNextHall();

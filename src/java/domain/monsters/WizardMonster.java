@@ -3,7 +3,9 @@ package domain.monsters;
 import domain.behaviors.Direction;
 import domain.gameobjects.Hero;
 
-public class WizardMonster extends Monster {
+import java.io.Serializable;
+
+public class WizardMonster extends Monster implements Serializable {
     private static final int TELEPORT_RANGE = 0; // Wizard monsters don't move
     private long lastTeleportTime;
     private static final long TELEPORT_COOLDOWN = 5000; // 5 seconds in milliseconds

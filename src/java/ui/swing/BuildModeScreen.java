@@ -287,7 +287,7 @@ public class BuildModeScreen extends JFrame {
                     try {
                         String randomImagePath = spriteFiles[random.nextInt(spriteFiles.length)];
                         BufferedImage randomObjectImage = ImageIO.read(new File(randomImagePath));
-                        GameObject randomObject = new GameObject(x, y, randomObjectImage);
+                        GameObject randomObject = new GameObject(x, y, randomObjectImage, randomImagePath);
                         hallController.addObjectToHall(hall.getHallType(), randomObject);
                         currentObjectCount++;
                     } catch (IOException e) {
@@ -485,7 +485,7 @@ public class BuildModeScreen extends JFrame {
 
                     if (!copyInProgress) {
                         copyInProgress = true;
-                        makeDraggableCopyOnPress(addButton,resizedImage,gameModeVersion);
+                        makeDraggableCopyOnPress(addButton,resizedImage,gameModeVersion, spriteFile);
                     }
                 });
 
@@ -586,7 +586,7 @@ public class BuildModeScreen extends JFrame {
     
 
     
-    private void makeDraggableCopyOnPress(JButton plusButton, Image image, Image gameImage) {
+    private void makeDraggableCopyOnPress(JButton plusButton, Image image, Image gameImage, String imagePath) {
 
         JLabel copyLabel = new JLabel(new ImageIcon(image));
     
@@ -602,7 +602,7 @@ public class BuildModeScreen extends JFrame {
         background.add(copyLabel);
         background.setComponentZOrder(copyLabel, 0);
     
-        makeDraggableAndSnap(copyLabel, image, gameImage);
+        makeDraggableAndSnap(copyLabel, image, gameImage, imagePath);
         background.repaint();
     }
     
@@ -631,7 +631,7 @@ public class BuildModeScreen extends JFrame {
         }
     }
     
-    private void makeDraggableAndSnap(JLabel label, Image image, Image gameImage) {
+    private void makeDraggableAndSnap(JLabel label, Image image, Image gameImage, String imagePath) {
         final Point[] lastLocation = {label.getLocation()}; 
     
         label.addMouseListener(new MouseAdapter() {
@@ -663,7 +663,7 @@ public class BuildModeScreen extends JFrame {
                     int lastX = (lastLocation[0].x - lastGridStart[0]) / GRID_CELL_SIZE;
                     int lastY = (lastLocation[0].y - lastGridStart[1]) / GRID_CELL_SIZE;
     
-                    GameObject newObject = new GameObject(gridX, gridY, gameImage);
+                    GameObject newObject = new GameObject(gridX, gridY, gameImage,imagePath);
 
                     if (hallController.addObjectToHall(getHallTypeFromName(targetedHall), newObject)) {
                         if (lastHall != null) {

@@ -8,63 +8,84 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import controller.HallController;
+
+import controller.ScreenTransition;
+import ui.utils.SoundPlayerUtil;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import utils.SaveLoadUtil;
 
 public class LoadGameScreen extends JFrame {
-    private final ScreenTransition onMainMenu;
-    private final ScreenTransition onGameLoad;
-    private final HallController hallController;
+    private static final double WIDTH_RATIO = 0.4; // Ekran genişliğinin %40'ı
+    private static final double HEIGHT_RATIO = 0.5; // Ekran yüksekliğinin %50'si
 
-    public LoadGameScreen(ScreenTransition onMainMenu, ScreenTransition onGameLoad, HallController hallController) {
-        this.onMainMenu = onMainMenu;
-        this.onGameLoad = onGameLoad;
-        this.hallController = hallController;
+    public LoadGameScreen(ScreenTransition onExit, ScreenTransition onLoadGame,HallController hallController) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.width * WIDTH_RATIO);
+        int height = (int) (screenSize.height * HEIGHT_RATIO);
 
-
-        // JFrame özellikleri
         setTitle("Load Game");
-        setSize(400, 300);
+        setSize(width, height);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+        setResizable(false);
 
-        // Save dosyalarını listeleme
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        File saveDir = new File("saves");
-        if (saveDir.exists()) {
-            for (File file : saveDir.listFiles()) {
-                if (file.isFile() && file.getName().endsWith(".sav")) {
-                    listModel.addElement(file.getName());
-                }
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
+        // Save dosyalarını listeleme paneli
+        JPanel saveListPanel = new JPanel();
+        saveListPanel.setLayout(new BoxLayout(saveListPanel, BoxLayout.Y_AXIS));
+        saveListPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        String[] saveFiles = SaveLoadUtil.listSaveFiles();
+        if (saveFiles.length == 0) {
+            JLabel noSavesLabel = new JLabel("No saved games found.");
+            noSavesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            saveListPanel.add(noSavesLabel);
+        } else {
+            for (String save : saveFiles) {
+                JButton loadButton = new JButton(save.replace(".dat", "")); // Dosya adını temizle
+                loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                loadButton.addActionListener(e -> {
+                    SoundPlayerUtil.playClickSound();
+                    var gameState = SaveLoadUtil.loadGame(save);
+                    if (gameState != null) {
+                        hallController.loadGameState(gameState);
+                        GameScreen.isLoaded = true;
+                        onLoadGame.execute(); // Oyun yüklenir
+                        dispose();
+                    }
+                });
+                saveListPanel.add(loadButton);
+                saveListPanel.add(Box.createRigidArea(new Dimension(0, 10)));
             }
         }
 
-        JList<String> saveList = new JList<>(listModel);
-        JScrollPane scrollPane = new JScrollPane(saveList);
-        add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(saveListPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        // Load butonu
-        JButton loadButton = new JButton("Load");
-        loadButton.addActionListener(e -> {
-            String selectedFile = saveList.getSelectedValue();
-            if (selectedFile != null) {
-                //loadGame("saves/" + selectedFile);
-            } else {
-                JOptionPane.showMessageDialog(this, "Please select a save file to load.", "No File Selected", JOptionPane.WARNING_MESSAGE);
-            }
+        // Çıkış butonu
+        JButton exitButton = new JButton("Exit");
+        exitButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+            onExit.execute();
+            dispose();
         });
 
-        add(loadButton, BorderLayout.SOUTH);
-    }
+        // Panel düzenlemesi
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.add(exitButton);
 
-  /*  private void loadGame(String filePath) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            Game loadedGame = (Game) ois.readObject();
-            onGameLoad.execute(); // Yükleme sonrası oyun ekranına geçiş
-            dispose();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to load game. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }*/
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+
+        add(mainPanel);
+    }
 }
+
 

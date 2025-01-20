@@ -21,7 +21,7 @@ class addGridElementTest {
     @Test
     void testAddGridElementSuccess() {
         Hall hall = new Hall(10, 10, Hall.HallType.EARTH);
-        GameObject object = new GameObject(5, 5, null);
+        GameObject object = new GameObject(5, 5, null, null);
 
         boolean result = hall.addGridElement(object, 5, 5);
 
@@ -32,8 +32,8 @@ class addGridElementTest {
     @Test
     void testAddGridElementOccupied() {
         Hall hall = new Hall(10, 10, Hall.HallType.EARTH);
-        GameObject object1 = new GameObject(5, 5, null);
-        GameObject object2 = new GameObject(5, 5, null);
+        GameObject object1 = new GameObject(5, 5, null, null);
+        GameObject object2 = new GameObject(5, 5, null, null);
 
         hall.addGridElement(object1, 5, 5);
         boolean result = hall.addGridElement(object2, 5, 5);
@@ -44,7 +44,7 @@ class addGridElementTest {
     @Test
     void testAddGridElementOutOfBounds() {
         Hall hall = new Hall(10, 10, Hall.HallType.EARTH);
-        GameObject object = new GameObject(11, 11, null);
+        GameObject object = new GameObject(11, 11, null, null);
 
         boolean result = hall.addGridElement(object, 11, 11);
 

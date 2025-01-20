@@ -1,8 +1,9 @@
 package domain.gameobjects;
 
+import java.io.Serializable;
 import java.util.*;
 import domain.behaviors.Collectible;
-public class Inventory {
+public class Inventory implements Serializable {
 
     private HashMap<String, List<Collectible>> items;
 

@@ -5,7 +5,9 @@ import domain.gameobjects.Hero;
 import domain.behaviors.Moveable;
 import domain.behaviors.Direction;
 
-public abstract class Monster implements Moveable, GridElement {
+import java.io.Serializable;
+
+public abstract class Monster implements Moveable, GridElement, Serializable {
     protected int x, y;
     protected int detectionRange;
     protected boolean isActive;
