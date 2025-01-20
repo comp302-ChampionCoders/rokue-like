@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/java/domain/wizardStrategy/ChallengingBehavior.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/domain/wizardStrategy/HelpingBehavior.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/domain/wizardStrategy/WizardBehavior.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/TimerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/TimerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/ArcherMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/ArcherMonster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/WizardMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/WizardMonster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/wizardStrategy/ChallengingBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/wizardStrategy/ChallengingBehavior.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +178,7 @@
       <workItem from="1737120753716" duration="3494000" />
       <workItem from="1737287109071" duration="1534000" />
       <workItem from="1737289233448" duration="21310000" />
-      <workItem from="1737378980685" duration="5258000" />
+      <workItem from="1737378980685" duration="13648000" />
     </task>
     <servers />
   </component>

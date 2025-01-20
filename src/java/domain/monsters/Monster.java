@@ -4,6 +4,7 @@ import domain.behaviors.GridElement;
 import domain.gameobjects.Hero;
 import domain.behaviors.Moveable;
 import domain.behaviors.Direction;
+import domain.gameobjects.Rune;
 
 public abstract class Monster implements Moveable, GridElement {
     protected int x, y;
@@ -19,7 +20,9 @@ public abstract class Monster implements Moveable, GridElement {
         this.isActive = true;
     }
 
-    public abstract void performAction(Hero hero); // Abstract method to be implemented by subclasse
+    public abstract void performAction(Hero hero, Rune rune);
+    // Abstract method to be implemented by subclasse
+
     
     // GridElement implementation
     @Override

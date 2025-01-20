@@ -12,7 +12,7 @@ public class ChallengingBehavior implements WizardBehavior {
     public void execute(WizardMonster monster, Hero hero, double remainingTimePercentage, Rune rune) {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastTeleportTime >= TELEPORT_INTERVAL) {
-            // Teleport rune to a random location
+            // Teleport rune to a random location every 3 seconds
             // May need check for objects for teleport place
             int runeX = (int) (Math.random() * 16);
             int runeY = (int) (Math.random() * 12);

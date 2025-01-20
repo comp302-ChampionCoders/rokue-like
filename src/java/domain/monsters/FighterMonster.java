@@ -15,7 +15,7 @@ public class FighterMonster extends Monster {
     }
 
     @Override
-    public void performAction(Hero hero) {
+    public void performAction(Hero hero, Rune rune) {
         // If luring gem is active, move towards it instead of hero
         if (isLured) {
             moveTowardsPoint(lureX, lureY);

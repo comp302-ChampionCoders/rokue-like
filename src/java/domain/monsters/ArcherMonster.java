@@ -12,7 +12,7 @@ public class ArcherMonster extends Monster {
     }
 
     @Override
-    public void performAction(Hero hero) {
+    public void performAction(Hero hero, Rune rune) {
         // Don't attack if hero is invisible (using Cloak of Protection)
         if (!hero.isVisible()) {return;}
         

@@ -143,7 +143,7 @@ public class Hall {
     private void updateMonsters() {
         for (Monster monster : monsters) {
             if (monster.isActive()) {
-                monster.performAction(hero);
+                monster.performAction(hero, rune);
             }
         }
     }

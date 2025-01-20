@@ -21,7 +21,7 @@ public class TimerController {
     private static final int ENCHANTMENT_SPAWN_DELAY = 4000;
     private static final int ENCHANTMENT_REMOVE_DELAY = 6000;
 
-    private static final int DEFAULT_GAME_TIME = 50;
+    public static final int DEFAULT_GAME_TIME = 50; //public olarak güncellendi
     private static final int HERO_MOVE_DELAY = 200;
     private Map<HallType, Integer> hallRemainingTimes;
 
