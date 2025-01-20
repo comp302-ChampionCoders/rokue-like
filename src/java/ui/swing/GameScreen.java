@@ -75,6 +75,10 @@ public class GameScreen extends JFrame {
     private JLabel timerLabel; 
     private Font timerFont;
     private HallController hallController;
+    private boolean isPaused = false;
+
+
+
 
     public GameScreen(ScreenTransition returnToGameOverScreen, HallController hallController) {
 
@@ -170,8 +174,25 @@ public class GameScreen extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
         buttonPanel.setBackground(new Color(100, 70, 83));
-    
-        JButton pauseButton = createButton("src/resources/images/pause_button.png");
+
+
+        JButton saveButton = createButton("src/resources/images/save_button.png");
+        saveButton.setEnabled(false);
+
+        JButton pauseButton = createPauseResumeButton(saveButton);
+
+        saveButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                saveButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+            }
+            public void mouseExited(MouseEvent e) {
+                saveButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        saveButton.addActionListener(e -> {
+            SoundPlayerUtil.playClickSound();
+                });
 
         pauseButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
@@ -181,11 +202,6 @@ public class GameScreen extends JFrame {
                 pauseButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
-
-        pauseButton.addActionListener(e -> 
-        {System.out.println("Pause button clicked");
-        SoundPlayerUtil.playClickSound();}
-        );
     
         JButton exitButton = createButton("src/resources/images/exit_button.png");
 
@@ -206,7 +222,8 @@ public class GameScreen extends JFrame {
 
         buttonPanel.add(pauseButton);
         buttonPanel.add(exitButton);
-    
+        buttonPanel.add(saveButton);
+
         // Timer display
         JLabel timerHeader = new JLabel();
         timerHeader.setIcon(resizeIcon(new ImageIcon("src/resources/images/clock_icon.png"), 32, 32));
@@ -245,15 +262,15 @@ public class GameScreen extends JFrame {
         inventoryLayeredPane.add(chestIcon, Integer.valueOf(0));
 
         // Add enchantment slots on top of the chest icon
-        int slotSize = 25;
-        int startX = 35; // Adjust to align with the inventory background
-        int startY = 92; // Adjust to align with the inventory background
-        int gap = 7;
+        int slotSize = 30;
+        int startX = 33; // Adjust to align with the inventory background
+        int startY = 89; // Adjust to align with the inventory background
+        int gap = 2;
 
         for (int i = 0; i < 6; i++) {
             enchantmentLabels[i] = new JLabel();
             enchantmentLabels[i].setBounds(startX + (i % 3) * (slotSize + gap), startY + (i / 3) * (slotSize + gap), slotSize, slotSize);
-            enchantmentLabels[i].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); // Border for empty slots
+            //enchantmentLabels[i].setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 50), 1)); // Border for empty slots
             chestIcon.add(enchantmentLabels[i], Integer.valueOf(1)); // Add to the top layer (foreground)
         }
         updateInventory();
@@ -272,9 +289,48 @@ public class GameScreen extends JFrame {
         sidePanel.add(inventoryLayeredPane);
         inventoryLayeredPane.setBounds(50, 300, 250, 150);
     }
-    
+
+    private JButton createPauseResumeButton(JButton saveButton) {
+        JButton button = new JButton(new ImageIcon("src/resources/images/pause_button.png"));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+
+        button.addActionListener(e -> togglePauseResume(button, saveButton));
+        return button;
+    }
+
+    private void togglePauseResume(JButton button, JButton saveButton) {
+        if (isPaused) {
+            resumeGame(button, saveButton);
+        } else {
+            pauseGame(button, saveButton);
+        }
+    }
+
+    private void pauseGame(JButton pauseButton, JButton saveButton) {
+        SoundPlayerUtil.playClickSound();
+        isPaused = true;
+        pauseButton.setIcon(new ImageIcon("src/resources/images/play_button.png"));
+        timerController.pauseTimers();
+        saveButton.setEnabled(true);
+        System.out.println("Game paused.");
+    }
+
+    private void resumeGame(JButton pauseButton, JButton saveButton) {
+        SoundPlayerUtil.playClickSound();
+        isPaused = false;
+        pauseButton.setIcon(new ImageIcon("src/resources/images/pause_button.png"));
+        timerController.resumeTimers();
+        gamePanel.requestFocusInWindow();
+        saveButton.setEnabled(false);
+        System.out.println("Game resumed.");
+    }
+
     private JButton createButton(String imagePath) {
-        JButton button = new JButton(new ImageIcon(imagePath));
+        Icon resizedIcon = resizeIcon(new ImageIcon(imagePath), 32, 32);
+        JButton button = new JButton(resizedIcon);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
@@ -300,9 +356,9 @@ public class GameScreen extends JFrame {
             Collectible item = inventoryItems.get(i);
             String type = item.getType();
             String imagePath = switch (type) {
-                case "Cloak of Protection" -> "src/resources/images/cloak32x32.png";
-                case "Luring Gem" -> "src/resources/images/lure32x32.png";
-                case "Reveal" -> "src/resources/images/reveal32x32.png";
+                case "Cloak of Protection" -> "src/resources/images/cloak30x30.png";
+                case "Luring Gem" -> "src/resources/images/lure30x30.png";
+                case "Reveal" -> "src/resources/images/reveal30x30.png";
                 default -> null;
             };
 
@@ -513,6 +569,9 @@ public class GameScreen extends JFrame {
         return false;
     }
 
+    public JPanel getGamePanel() {
+        return gamePanel;
+    }
 
     // bu classtan çıakrılmalı
     // Add this new method for archer attacks
@@ -572,7 +631,7 @@ public class GameScreen extends JFrame {
         dispose();
     }
 
-    private class GamePanel extends JPanel implements KeyListener, MouseListener {
+    public class GamePanel extends JPanel implements KeyListener, MouseListener {
         private BufferedImage heroImage;
         private BufferedImage archerImage;
         private BufferedImage fighterImage;
@@ -939,6 +998,12 @@ public class GameScreen extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+
+            if (isPaused) {
+                System.out.println("Game is paused. Clicks are disabled.");
+                return;
+            }
+
             int panelWidth = getWidth();
             int panelHeight = getHeight();
 

@@ -13,10 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import ui.swing.BuildModeScreen;
-import ui.swing.GameOverScreen;
-import ui.swing.GameScreen;
-import ui.swing.MainMenu;
+import ui.swing.*;
 
 public class ModeController {
     private BuildModeScreen buildModeScreen;
@@ -67,7 +64,7 @@ public class ModeController {
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
     
-        int windowWidth = (int) (screenWidth * 0.35);
+        int windowWidth = (int) (screenWidth * 0.45);
         int windowHeight = (int) (screenHeight * 0.2);
     
 
