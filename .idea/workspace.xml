@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/domain/wizardStrategy/ChallengingBehavior.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/domain/wizardStrategy/HelpingBehavior.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/domain/wizardStrategy/WizardBehavior.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +18,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -171,7 +174,7 @@
       <workItem from="1737120753716" duration="3494000" />
       <workItem from="1737287109071" duration="1534000" />
       <workItem from="1737289233448" duration="21310000" />
-      <workItem from="1737378980685" duration="943000" />
+      <workItem from="1737378980685" duration="5258000" />
     </task>
     <servers />
   </component>
