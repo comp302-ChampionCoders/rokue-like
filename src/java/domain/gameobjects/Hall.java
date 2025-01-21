@@ -114,6 +114,9 @@ public class Hall implements Serializable {
         }
         return false;
     }
+    public GridElement getGridElement(int x, int y) {
+        return gridElements.get(new Point(x, y));
+    }
 
     public boolean addGridElement(GridElement element, int x, int y) {
         Point position = new Point(x, y);
