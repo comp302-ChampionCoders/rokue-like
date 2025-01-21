@@ -11,6 +11,10 @@ import java.util.*;
 import controller.SpawnController;
 
 public class Hall {
+    public GridElement getGridElement(int x, int y) {
+        return gridElements.get(new Point(x, y));
+    }
+
     // Hall type enumeration
     public enum HallType {
         EARTH(6), AIR(9), WATER(13), FIRE(17);

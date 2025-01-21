@@ -6,6 +6,7 @@ import controller.TimerController;
 import controller.SpawnController;
 import domain.behaviors.Collectible;
 import domain.behaviors.Direction;
+import domain.behaviors.GridElement;
 import domain.enchantments.*;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
@@ -471,7 +472,7 @@ public class GameScreen extends JFrame {
                     int newX = ((FighterMonster) monster).getLureX();
                     int newY = ((FighterMonster) monster).getLureY();
                     hallController.getCurrentHall().removeGridElement(monster.getX(), monster.getY());
-                    ((FighterMonster) monster).moveTowardsPoint(newX, newY);
+                    ((FighterMonster) monster).moveTowardsPoint(newX, newY, hallController.getCurrentHall());
                     hallController.getCurrentHall().addGridElement(monster, monster.getX(), monster.getY());
                 }
                 else {
@@ -1129,8 +1130,8 @@ public class GameScreen extends JFrame {
             }).start();
         }
         private void activateLuringGem(String direction) {
-            int x;
-            int y;
+            int x = 0;
+            int y = 0;
             boolean isValid = false;
             if (direction == "up") {
                 x = hero.getX();
@@ -1200,6 +1201,23 @@ public class GameScreen extends JFrame {
                     }
                 }
             }
+            GridElement lure = new Lure(x, y) {
+                @Override
+                public int getX() {
+                    return 0;
+                }
+
+                @Override
+                public int getY() {
+                    return 0;
+                }
+
+                @Override
+                public void setPosition(int x, int y) {
+
+                }
+            };
+            hallController.getCurrentHall().addGridElement(lure, x, y);
         }
         
 
