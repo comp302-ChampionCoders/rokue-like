@@ -13,7 +13,7 @@ public class Game {
     }
 
     private void initializeGame() {
-        hallController = new HallController();
+        hallController = HallController.getInstance();
         modeController = new ModeController(hallController);
         startGame();   
     }

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+import controller.HallController;
 import controller.TimerController;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
@@ -17,9 +18,11 @@ public class GameWinScreen extends JFrame {
     private JPanel mainPanel;
     private Font customFont;
     private final ScreenTransition returnToMainMenu;
+    private HallController hallController;
 
-    public GameWinScreen(ScreenTransition returnToMainMenu) {
+    public GameWinScreen(ScreenTransition returnToMainMenu, HallController hallController) {
         this.returnToMainMenu = returnToMainMenu;
+        this.hallController = hallController;
         initializeFrame();
 
         String osName = System.getProperty("os.name").toLowerCase();
@@ -99,6 +102,7 @@ public class GameWinScreen extends JFrame {
         mainMenuButton.addActionListener(e -> {
             SoundPlayerUtil.playClickSound();
             TimerController.getInstance().reset();
+            hallController.resetHalls();
             returnToMainMenu.execute();
             dispose();
         });
