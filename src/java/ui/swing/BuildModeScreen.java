@@ -207,6 +207,8 @@ public class BuildModeScreen extends JFrame {
                 for (Hall hall : hallController.getHalls()) {
                     int objectCount = hall.getObjects().size();
                     int totalTime = objectCount * 5;
+                    hall.updateInitialTime();
+                    GameScreen.isLoaded = false;
                     timerController.setRemainingTimeForHall(hall.getHallType(), totalTime);
             
                 }
@@ -254,6 +256,8 @@ public class BuildModeScreen extends JFrame {
                 for (Hall hall : hallController.getHalls()) {
                     int objectCount = hall.getObjects().size();
                     int totalTime = objectCount * 5;
+                    hall.updateInitialTime();
+                    GameScreen.isLoaded = false;
                     timerController.setRemainingTimeForHall(hall.getHallType(), totalTime);
                 }
                 onSwitchToPlayMode.execute();

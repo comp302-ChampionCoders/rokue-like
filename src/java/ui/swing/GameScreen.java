@@ -104,8 +104,6 @@ public class GameScreen extends JFrame {
             }
         }
 
-
-
         initializeHeroPosition();
         initializeRunePosition();
         this.timerController = TimerController.getInstance();
@@ -113,7 +111,7 @@ public class GameScreen extends JFrame {
         initializeTimers();
 
         if(!isLoaded){
-            timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
+            timeRemaining = hallController.getCurrentHall().getInitialTime();
         }else{
             timeRemaining = hallController.getCurrentHallRemainingTime();
         }
@@ -246,6 +244,7 @@ public class GameScreen extends JFrame {
         exitButton.addActionListener(e -> {
             stopGame();
             SoundPlayerUtil.playClickSound();
+            TimerController.getInstance().reset();
             returnToGameOverScreen.execute();
         });
 
@@ -426,7 +425,6 @@ public class GameScreen extends JFrame {
     private void initializeHeroPosition() {
         hallController.updateHero();
         hero = hallController.getHero();
-        //terminaldeki H gride yazılacak farklı bi classta yapılıp buraya çekilmeli
     }
 
     private void updateTime() {
@@ -459,7 +457,8 @@ public class GameScreen extends JFrame {
 
 
 
-    private void goNextHall(){ 
+    private void goNextHall(){
+        isLoaded = false;
         hallController.goNextHall();
         timerController.cleanup();
         timerController.resetGameTime();
@@ -468,7 +467,7 @@ public class GameScreen extends JFrame {
         initializeRunePosition();
         updateInventory();
         updateHearts();
-        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
+        timeRemaining = hallController.getCurrentHall().getInitialTime();
 
         monsters = new ArrayList<>();
         random = new Random();
@@ -478,7 +477,9 @@ public class GameScreen extends JFrame {
     }
     
     private void initializeRunePosition() {
-        hallController.updateRune();
+        if(!isLoaded){
+            hallController.updateRune();
+        }
         rune = hallController.getRune();
         Point point = new Point(rune.getX(), rune.getY());
         runePosition = point;

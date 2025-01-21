@@ -105,12 +105,14 @@ public class GameOverScreen extends JFrame {
             hallController.resetToBuildModeVersions();
             SoundPlayerUtil.playClickSound();
             TimerController.getInstance().reset();
+            GameScreen.isLoaded = false;
             restartGame.execute();});
 
 
         menuButton.addActionListener(e -> {
             hallController.resetHalls();
             SoundPlayerUtil.playClickSound();
+            TimerController.getInstance().reset();
             returnToMenu.execute();
         });
 

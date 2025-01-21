@@ -41,6 +41,7 @@ public class Hall implements Serializable {
     private boolean isLocked;
     private boolean isActive;
     private SpawnController spawnController;
+    private int initialTime;
 
     public Hall(int width, int height,HallType hallType) {
         this.width = width;
@@ -70,6 +71,14 @@ public class Hall implements Serializable {
                 grid[i][j] = null;
             }
         }
+    }
+
+    public void updateInitialTime(){
+        initialTime = objects.size() * 5;
+    }
+
+    public int getInitialTime(){
+        return initialTime;
     }
 
     public Rune getRune(){

@@ -145,5 +145,10 @@ public class ModeController {
             gameOverScreen.dispose();
             gameOverScreen = null;
         }
+
+        if (loadGameScreen != null) {
+            loadGameScreen.dispose();
+            loadGameScreen = null;
+        }
     }
 }
