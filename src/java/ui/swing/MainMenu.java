@@ -215,20 +215,24 @@ public class MainMenu extends JFrame {
             "   - EARTH HALL: 6 OBJECTS\n" +
             "   - AIR HALL: 9 OBJECTS\n" +
             "   - WATER HALL: 13 OBJECTS\n" +
-            "   - FIRE HALL: 17 OBJECTS\n\n" +
+            "   - FIRE HALL: 17 OBJECTS\n" +
+            "   - RANDOM!: YOU DO NOT HAVE TO BUILD EVERYTHING\n\n" +
             "2. GAME CONTROLS:\n" +
             "   - ARROW KEYS TO MOVE THE HERO\n" +
-            "   - CLICK OBJECTS TO SEARCH FOR RUNES\n" +
-            "   - CLICK PAUSE BUTTON TO HALT THE GAME\n\n" +
+            "   - CLICK OBJECTS TO SEARCH FOR RUNES\n\n" +
             "3. ENCHANTMENTS:\n" +
             "   - COLLECT ENCHANTMENTS FOR SPECIAL POWERS\n" +
-            "   - USE 'R' FOR REVEAL ENCHANTMENT\n" +
-            "   - USE 'P' FOR CLOAK OF PROTECTION\n" +
-            "   - USE 'B' + DIRECTION FOR LURING GEM\n\n" +
+            "   - USE 'R' FOR REVEAL ENCHANTMENT TO REVEAL A 4X4 AREA WHICH THE RUNE IS LOCATED WITHIN\n" +
+            "   - USE 'P' FOR CLOAK OF PROTECTION TO AVOID ARCHER MONSTERS\n" +
+            "   - USE 'B' + DIRECTION FOR LURING GEM TO DISTRACT FIGHTER MONSTERS\n\n" +
             "4. OBJECTIVE:\n" +
             "   - FIND THE RUNE IN EACH HALL\n" +
             "   - AVOID OR OUTSMART MONSTERS\n" +
-            "   - COMPLETE ALL HALLS TO WIN!"
+            "   - COMPLETE ALL HALLS TO WIN!\n\n" +
+            "5. SAVE AND LOAD GAME:\n" +
+            "   - IN PLAY MODE, CLICK ON SAVE BUTTON AFTER PAUSING THE GAME\n" +
+            "   - CLICK ON LOAD GAME AT MAIN MENU AND SELECT THE SAVED GAME YOU WOULD LIKE TO LOAD"
+
             
         );
 

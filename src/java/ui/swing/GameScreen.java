@@ -216,10 +216,57 @@ public class GameScreen extends JFrame {
 
         saveButton.addActionListener(e -> {
             SoundPlayerUtil.playClickSound();
-            GameState gameState = hallController.createGameState(timerController.getHallTimes(),timeRemaining);
-            String saveName = "Save_" + System.currentTimeMillis();
-            SaveLoadUtil.saveGame(gameState, saveName);
-                });
+
+            while (true) {
+                String saveName = JOptionPane.showInputDialog(
+                        this,
+                        "Enter a name for your save:",
+                        "Save Game",
+                        JOptionPane.PLAIN_MESSAGE
+                );
+
+                if (saveName == null) { // cancel
+                    break;
+                }
+
+                saveName = saveName.trim();
+
+                if (saveName.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Save name cannot be empty.",
+                            "Save Failed",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else if (!saveName.matches("[a-zA-Z0-9_\\-]+")) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Save name can only contain letters, numbers, underscores, and hyphens.",
+                            "Invalid Save Name",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else if (saveName.length() < 3) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Save name must be at least 3 characters long.",
+                            "Invalid Save Name",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else {
+                    GameState gameState = hallController.createGameState(timerController.getHallTimes(), timeRemaining);
+                    SaveLoadUtil.saveGame(gameState, saveName);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Game saved successfully as: " + saveName,
+                            "Save Successful",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    break;
+                }
+            }
+        });
+
+
 
         pauseButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
