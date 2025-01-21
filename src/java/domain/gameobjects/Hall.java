@@ -132,6 +132,9 @@ public class Hall implements Serializable {
         Point position = new Point(x, y);
         if (gridElements.containsKey(position)) {
             gridElements.remove(position);
+            if(gridElements.get(position) instanceof Monster){
+                monsters.remove((Monster)gridElements.get(position));
+            }
             updateGrid(x, y, null);
             return true;
         }

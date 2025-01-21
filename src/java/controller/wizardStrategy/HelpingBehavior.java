@@ -28,8 +28,8 @@ public class HelpingBehavior implements WizardBehavior {
             }
 
             // Remove wizard after helping
-            hallController.getCurrentHall().removeGridElement(wizard.getX(), wizard.getY());
             wizard.setActive(false);
+            hallController.getCurrentHall().removeGridElement(wizard.getX(), wizard.getY());
             System.out.println("Wizard helped hero by teleporting them to safety");
         }
     }

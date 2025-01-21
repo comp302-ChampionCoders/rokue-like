@@ -98,11 +98,10 @@ public class SpawnController {
         Enchantment enchantment = SpawnFactory.createEnchantment(hall);
 
         // Start a one-time timer for this specific enchantment
-        Timer removalTimer = new Timer(6000, e -> {
-            removeEnchantment(hall);
-            ((Timer)e.getSource()).stop();  // Stop this timer after use
-        });
-        removalTimer.setRepeats(false);  // Only trigger once
+        Timer removalTimer = TimerController.getInstance().createOneTimeTimer(
+                TimerController.getEnchantmentRemoveDelay(),
+                () -> removeEnchantment(hall)
+        );
         removalTimer.start();
 
         return enchantment;

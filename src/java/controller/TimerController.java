@@ -153,5 +153,18 @@ public class TimerController {
         hallRemainingTimes.put(hallType, timeInSeconds);
         System.out.println("Set remaining time for " + hallType + ": " + timeInSeconds + " seconds.");
 }
+    public static int getEnchantmentRemoveDelay(){
+        return ENCHANTMENT_REMOVE_DELAY;
+    }
+    public Timer createOneTimeTimer(int delay, Runnable action){
+        Timer timer = new Timer(delay, e -> {
+            if (!isPaused) {
+                action.run();
+                ((Timer)e.getSource()).stop();
+            }
+        });
+        timer.setRepeats(false);
+        return timer;
+    }
     
 }
