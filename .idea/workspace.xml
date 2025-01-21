@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/Save_1737419944067.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/Save_1737419962147.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/Save_1737420042946.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/Save_1737420101935.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/Save_1737420150789.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/MainMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" afterDir="false" />
@@ -183,7 +177,7 @@
       <workItem from="1737120753716" duration="3494000" />
       <workItem from="1737287109071" duration="1534000" />
       <workItem from="1737289233448" duration="21310000" />
-      <workItem from="1737390837053" duration="25333000" />
+      <workItem from="1737390837053" duration="27288000" />
     </task>
     <servers />
   </component>

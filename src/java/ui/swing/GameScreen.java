@@ -214,9 +214,16 @@ public class GameScreen extends JFrame {
             }
         });
 
+        Font customFont;
+
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(20f);
+        } catch (FontFormatException | IOException e1) {
+            customFont = new Font("Arial", Font.BOLD, 16);
+            e1.printStackTrace();
+        }
         saveButton.addActionListener(e -> {
             SoundPlayerUtil.playClickSound();
-
             while (true) {
                 String saveName = JOptionPane.showInputDialog(
                         this,
@@ -224,11 +231,9 @@ public class GameScreen extends JFrame {
                         "Save Game",
                         JOptionPane.PLAIN_MESSAGE
                 );
-
                 if (saveName == null) { // cancel
                     break;
                 }
-
                 saveName = saveName.trim();
 
                 if (saveName.isEmpty()) {
@@ -265,6 +270,13 @@ public class GameScreen extends JFrame {
                 }
             }
         });
+        UIManager.put("OptionPane.background", new Color(66, 40, 53,255));
+        UIManager.put("Panel.background", new Color(66, 40, 53,255));
+        UIManager.put("OptionPane.messageForeground", Color.WHITE); //
+        UIManager.put("Button.background", new Color(139, 69, 19));
+        UIManager.put("Button.foreground", Color.BLACK);
+        UIManager.put("Button.font", customFont);
+        UIManager.put("OptionPane.messageFont", customFont);
 
 
 
