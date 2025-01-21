@@ -6,6 +6,7 @@ import domain.gameobjects.Rune;
 import domain.monsters.*;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
+import domain.behaviors.GridElement;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import javax.swing.Timer;
 
 public class SpawnController {
     private static SpawnController instance;
@@ -90,24 +92,44 @@ public class SpawnController {
         System.out.println("Monster spawned at: " + monster.getX() + ", " + monster.getY());
         return monster;
     }
-     
+
+    // In SpawnController when spawning enchantment
     public Enchantment spawnEnchantment(Hall hall) {
         Enchantment enchantment = SpawnFactory.createEnchantment(hall);
-        System.out.println("Enchantment spawned at: " + enchantment.getX() + ", " + enchantment.getY());
+
+        // Start a one-time timer for this specific enchantment
+        Timer removalTimer = new Timer(6000, e -> {
+            removeEnchantment(hall);
+            ((Timer)e.getSource()).stop();  // Stop this timer after use
+        });
+        removalTimer.setRepeats(false);  // Only trigger once
+        removalTimer.start();
+
         return enchantment;
     }
 
+    // In SpawnController
     public void removeEnchantment(Hall hall) {
-        Iterator<Enchantment> iterator = enchantments.iterator();
-        while (iterator.hasNext()) {
-            Enchantment enchantment = iterator.next();
-            if (enchantment.isAvailable() && enchantment.getTimeRemaining() <= 0) {
-                enchantment.disappear();
-                iterator.remove();
-                hall.removeGridElement(enchantment.getX(), enchantment.getY());
+        if (hall == null) return;
+
+        // Since there can only be 1 enchantment at a time, let's get the current enchantment from the hall
+        Map<Point, GridElement> gridElements = hall.getGridElements();
+
+        for (Map.Entry<Point, GridElement> entry : gridElements.entrySet()) {
+            GridElement element = entry.getValue();
+            if (element instanceof Enchantment) {
+                Enchantment enchantment = (Enchantment) element;
+                if (enchantment.isAvailable()) {
+                    enchantment.disappear();
+                    hall.removeGridElement(enchantment.getX(), enchantment.getY());
+                    enchantments.remove(enchantment);
+                    System.out.println("Enchantment removed after 6 seconds");
+                    break;  // Since there's only one enchantment, we can break after finding it
+                }
             }
         }
     }
+
     public List<Enchantment> getEnchantments(Hall hall) { //#TODO Enchantmentlar SpawnControllerda sadece bir liste olmaz, her Hall icin enchantmentlara ayri erismek lazim
         return enchantments;
     }

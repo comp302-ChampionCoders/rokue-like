@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/TimerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/TimerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/Enchantment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/Enchantment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TimerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
@@ -176,7 +181,7 @@
       <workItem from="1737287109071" duration="1534000" />
       <workItem from="1737289233448" duration="21310000" />
       <workItem from="1737390837053" duration="27288000" />
-      <workItem from="1737442876851" duration="3530000" />
+      <workItem from="1737442876851" duration="6461000" />
     </task>
     <servers />
   </component>

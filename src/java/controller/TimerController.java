@@ -18,7 +18,7 @@ public class TimerController {
     private static final int RUNE_TELEPORT_DELAY = 5000;
     private static final int ARCHER_ATTACK_DELAY = 1000;
     private static final int GAME_TIMER_DELAY = 1000;
-    private static final int ENCHANTMENT_SPAWN_DELAY = 4000;
+    private static final int ENCHANTMENT_SPAWN_DELAY = 12000;
     private static final int ENCHANTMENT_REMOVE_DELAY = 6000;
 
     private static final int DEFAULT_GAME_TIME = 50;
@@ -80,15 +80,23 @@ public class TimerController {
         }));
         remainingTimes.put("gameTimer", GAME_TIMER_DELAY);
 
+        // Spawn timer (every 12 seconds)
         timers.put("enchantmentSpawn", new Timer(ENCHANTMENT_SPAWN_DELAY, e -> {
-            if (!isPaused) enchantmentSpawnAction.run();
+            if (!isPaused) {
+                enchantmentSpawnAction.run();
+                // Start removal timer when spawning
+                Timer removalTimer = new Timer(ENCHANTMENT_REMOVE_DELAY, e2 -> {
+                    if (!isPaused) enchantmentRemoveAction.run();
+                });
+                removalTimer.setRepeats(false);  // One-time use
+                removalTimer.start();
+            }
         }));
-        remainingTimes.put("enchantmentSpawn", ENCHANTMENT_SPAWN_DELAY);
 
-        timers.put("enchantmentRemove", new Timer(ENCHANTMENT_REMOVE_DELAY, e -> {
-            if (!isPaused) enchantmentRemoveAction.run();
-        }));
-        remainingTimes.put("enchantmentRemove", ENCHANTMENT_REMOVE_DELAY);
+//        timers.put("enchantmentRemove", new Timer(ENCHANTMENT_REMOVE_DELAY, e -> {
+//            if (!isPaused) enchantmentRemoveAction.run();
+//        }));
+//        remainingTimes.put("enchantmentRemove", ENCHANTMENT_REMOVE_DELAY);
     }
 
     public void startTimers() {
