@@ -66,6 +66,7 @@ public class GameScreen extends JFrame {
     private int timeRemaining;
 
     private final ScreenTransition returnToGameOverScreen;
+    private final ScreenTransition onToWinScreen;
 
     private GamePanel gamePanel;
     private JPanel sidePanel; 
@@ -80,9 +81,10 @@ public class GameScreen extends JFrame {
 
 
 
-    public GameScreen(ScreenTransition returnToGameOverScreen, HallController hallController) {
+    public GameScreen(ScreenTransition returnToGameOverScreen, ScreenTransition onToWinScreen,HallController hallController) {
 
         this.returnToGameOverScreen = returnToGameOverScreen;
+        this.onToWinScreen = onToWinScreen;
         this.hallController = hallController;
 
         monsters = new ArrayList<>();
@@ -1434,12 +1436,12 @@ public class GameScreen extends JFrame {
                     repaint();
                     return;
                 }
-                /*if (hallController.getCurrentHall().getHallType() == Hall.HallType.AIR &&
+                if (hallController.getCurrentHall().getHallType() == Hall.HallType.AIR &&
                         rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 8 && hero.getY() == 11) || (hero.getX() == 9 && hero.getY() == 11))) {
-                    //SUCESFULL FINISHED EKLENECEK
-                    repaint();
+                    TimerController.getInstance().reset();
+                    onToWinScreen.execute();
                     return;
-                }*/
+                }
 
 
                 if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !hallController.getCurrentHall().isPositionOccupied(newX, newY)) {

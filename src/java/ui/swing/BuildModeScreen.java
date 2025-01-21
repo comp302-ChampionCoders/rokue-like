@@ -1,21 +1,7 @@
 package ui.swing;
 
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Taskbar;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -24,13 +10,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import controller.HallController;
 import controller.ScreenTransition;
@@ -226,7 +206,8 @@ public class BuildModeScreen extends JFrame {
         addGrid(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y, background); // Top-right grid
         addGrid(GRID_START_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, background); // Bottom-left grid
         addGrid(GRID_START_X + RIGHT_GRID_START_FROM_X, GRID_START_Y + RIGHT_GRID_START_FROM_X, background); // Bottom-right grid
-        addObjectSection(background); 
+        addObjectSection(background);
+        addStatusPanel(background);
         addTopWallAndSideWalls(background); 
         addBottomWalls(background);
     }
@@ -423,6 +404,91 @@ public class BuildModeScreen extends JFrame {
         gridPanel.setOpaque(false);
         parent.add(gridPanel);
     }
+
+    private Font loadCustomFont() {
+        try {
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf"));
+            return customFont.deriveFont(18f); // Font boyutunu ayarlayın
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Font("Arial", Font.PLAIN, 18); // Yükleme başarısız olursa varsayılan font
+        }
+    }
+
+
+    private void addStatusPanel(JPanel parent) {
+        int statusPanelWidth = OBJECT_SECTION_WIDTH;
+        int statusPanelHeight = OBJECT_SECTION_HEIGHT;
+        int statusPanelX = OBJECT_SECTION_START_X + OBJECT_SECTION_WIDTH + 50;
+        int statusPanelY = OBJECT_SECTION_START_Y + (OBJECT_SECTION_HEIGHT - statusPanelHeight) / 2;
+
+        JPanel statusPanel = new JPanel();
+        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS)); // BoxLayout ile dikey hizalama
+        statusPanel.setBounds(statusPanelX, statusPanelY, statusPanelWidth, statusPanelHeight);
+        statusPanel.setBackground(new Color(48, 56, 67));
+        statusPanel.setBorder(BorderFactory.createLineBorder(new Color(165, 120, 85), 6));
+
+
+        Font customFont = loadCustomFont();
+
+        JLabel waterStatus = createStatusLabel("Water", customFont);
+        JLabel earthStatus = createStatusLabel("Earth", customFont);
+        JLabel fireStatus = createStatusLabel("Fire", customFont);
+        JLabel airStatus = createStatusLabel("Air", customFont);
+
+        statusPanel.add(Box.createVerticalGlue());
+        statusPanel.add(waterStatus);
+        statusPanel.add(Box.createVerticalStrut(100));
+        statusPanel.add(earthStatus);
+        statusPanel.add(Box.createVerticalStrut(100));
+        statusPanel.add(fireStatus);
+        statusPanel.add(Box.createVerticalStrut(100));
+        statusPanel.add(airStatus);
+        statusPanel.add(Box.createVerticalGlue());
+
+        parent.add(statusPanel);
+
+        new Timer(500, e -> {
+            updateStatusLabel(waterStatus, "Water", Hall.HallType.WATER);
+            updateStatusLabel(earthStatus, "Earth", Hall.HallType.EARTH);
+            updateStatusLabel(fireStatus, "Fire", Hall.HallType.FIRE);
+            updateStatusLabel(airStatus, "Air", Hall.HallType.AIR);
+        }).start();
+    }
+
+    private JLabel createStatusLabel(String hallName, Font font) {
+        JLabel label = new JLabel();
+        label.setFont(font);
+        label.setForeground(new Color(255, 99, 71));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return label;
+    }
+
+    private void updateStatusLabel(JLabel label, String hallName, Hall.HallType hallType) {
+        Hall hall = hallController.getHall(hallType);
+        int currentObjects = hall.getObjects().size();
+        int minObjects = hall.getHallType().getMinObjects();
+        int remaining = Math.max(0, minObjects - currentObjects);
+
+        String formattedText = String.format(
+                "<html><div style='text-align: center;'>"
+                        + "<span style='font-size: 20px;'>%s:</span><br>"
+                        + "<span style='font-size: 18px;'>%d OBJECTS</span>"
+                        + "</div></html>",
+                hallName, remaining
+        );
+
+        if (remaining == 0) {
+            label.setForeground(new Color(60, 179, 113));
+        } else {
+            label.setForeground(new Color(255, 99, 71));
+        }
+
+        label.setText(formattedText);
+    }
+
+
 
     private boolean copyInProgress = false;
 

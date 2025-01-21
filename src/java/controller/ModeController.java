@@ -20,6 +20,7 @@ public class ModeController {
     private GameScreen gameScreen;
     private MainMenu mainMenu;
     private GameOverScreen gameOverScreen;
+    private GameWinScreen gameWinScreen;
     private LoadGameScreen loadGameScreen;
     private HallController hallController;
     private MinObjectController minObjectController;
@@ -61,7 +62,7 @@ public class ModeController {
         }else{
             closeActiveScreens();
             if (gameScreen == null) {
-                gameScreen = new GameScreen(this::switchToGameOverScreen, hallController);
+                gameScreen = new GameScreen(this::switchToGameOverScreen, this::switchToGameWinScreen,hallController);
         }
             gameScreen.setVisible(true);
         }
@@ -128,6 +129,14 @@ public class ModeController {
         gameOverScreen.setVisible(true);
     }
 
+    public void switchToGameWinScreen() {
+        closeActiveScreens();
+        if (gameWinScreen == null) {
+            gameWinScreen = new GameWinScreen(this::showMainMenu);
+        }
+        gameWinScreen.setVisible(true);
+    }
+
     private void closeActiveScreens() {
         if (mainMenu != null) {
             mainMenu.dispose();
@@ -149,6 +158,11 @@ public class ModeController {
         if (loadGameScreen != null) {
             loadGameScreen.dispose();
             loadGameScreen = null;
+        }
+
+        if(gameOverScreen != null) {
+            gameOverScreen.dispose();
+            gameOverScreen = null;
         }
     }
 }

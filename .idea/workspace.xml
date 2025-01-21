@@ -5,17 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/java/ui/swing/GameWinScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/TimerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/TimerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/Enchantment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/Enchantment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/a.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/archertest.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/archertest2.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/arda.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/earth-norune.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/earth-rune.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/fire-rune-cop.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/hall1-door-exit.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/hall1-no-rune.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/hall2-no-rune.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/water-rune.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ModeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ModeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SpawnController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TimerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/ModeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/ModeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,34 +57,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "JUnit.CloakOfProtectionTest.executor": "Run",
-    "JUnit.InventoryTest.executor": "Run",
-    "JUnit.MinObjectControllerTest.executor": "Run",
-    "JUnit.MoveHeroTest.executor": "Run",
-    "JUnit.ResetToBuildModeTest.executor": "Run",
-    "JUnit.RuneTest.executor": "Run",
-    "JUnit.SpawnControllerTest.executor": "Run",
-    "JUnit.addGridElementTest.executor": "Run",
-    "JUnit.createEnchantmentTest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CloakOfProtectionTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.InventoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MinObjectControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MoveHeroTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ResetToBuildModeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RuneTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SpawnControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.addGridElementTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.createEnchantmentTest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -182,6 +197,7 @@
       <workItem from="1737289233448" duration="21310000" />
       <workItem from="1737390837053" duration="27288000" />
       <workItem from="1737442876851" duration="6461000" />
+      <workItem from="1737457449118" duration="7789000" />
     </task>
     <servers />
   </component>
@@ -193,7 +209,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/java/ui/swing/GameScreen.java</url>
-          <line>573</line>
+          <line>575</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
