@@ -474,7 +474,8 @@ public class GameScreen extends JFrame {
             () -> moveMonsters(),
                 //() -> spawnController.spawnMonster(hallController.getCurrentHall())
                 () -> spawnMonster(),
-            () -> teleportRune(),
+//            () -> teleportRune(),
+                () -> handleWizardTeleportAction(),
             () -> checkArcherAttacks(),
             () -> updateTime(),
             () -> spawnEnchantment(),
@@ -617,6 +618,22 @@ public class GameScreen extends JFrame {
                 runePosition.setLocation(randomPosition); // Update runePosition to reflect the new location
                 System.out.println("Rune teleported to an object at position: X=" + randomPosition.x + ", Y=" + randomPosition.y);
             }
+            repaint(); // Update the game screen
+        }
+    }
+
+    private void handleWizardTeleportAction() {
+        boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
+        if (wizardExists) {
+            // Find the wizard monster
+            WizardMonster wizard = (WizardMonster) monsters.stream()
+                    .filter(m -> m instanceof WizardMonster)
+                    .findFirst()
+                    .get();
+
+            // Let the wizard's behavior handle the action
+            wizard.performAction(hero);
+
             repaint(); // Update the game screen
         }
     }

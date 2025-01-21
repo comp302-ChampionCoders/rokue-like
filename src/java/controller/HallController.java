@@ -19,9 +19,18 @@ public class HallController {
     int i;
     private int currentHallRemainingTime;
     private SpawnController spawnController;;
+    private static HallController instance;
 
     public HallController() {
         initializeHalls();
+    }
+
+    public static HallController getInstance() {
+        if (instance == null) {
+            instance = new HallController();
+
+        }
+        return instance;
     }
 
     private void initializeHalls() {
