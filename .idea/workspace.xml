@@ -5,32 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/java/ui/swing/GameWinScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/a.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/archertest.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/archertest2.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/arda.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/earth-norune.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/earth-rune.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/fire-rune-cop.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/hall1-door-exit.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/hall1-no-rune.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/hall2-no-rune.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/water-rune.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/ModeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ModeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/ModeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/ModeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest$MockGameObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/ResetToBuildModeTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/SpawnControllerTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/createEnchantmentTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/enchantments/CloakOfProtectionTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/InventoryTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/RuneTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/addGridElementTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +35,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -84,7 +76,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -198,6 +190,7 @@
       <workItem from="1737390837053" duration="27288000" />
       <workItem from="1737442876851" duration="6461000" />
       <workItem from="1737457449118" duration="7789000" />
+      <workItem from="1737468554163" duration="618000" />
     </task>
     <servers />
   </component>
