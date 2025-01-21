@@ -1,9 +1,11 @@
 package domain.monsters;
 
 import domain.gameobjects.*;
+
+import java.io.Serializable;
 // import domain.behaviors.Direction;
 
-public class ArcherMonster extends Monster {
+public class ArcherMonster extends Monster implements Serializable {
     private static final int SHOOT_RANGE = 4;
     private int moveCounter = 0;
 

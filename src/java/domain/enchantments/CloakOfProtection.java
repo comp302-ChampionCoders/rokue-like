@@ -1,7 +1,10 @@
 package domain.enchantments;
 
 import domain.gameobjects.*;
-public class CloakOfProtection extends Enchantment {
+
+import java.io.Serializable;
+
+public class CloakOfProtection extends Enchantment implements Serializable {
     private static final int DURATION = 20000; // duration in seconds
 
     public CloakOfProtection() {

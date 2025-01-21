@@ -2,7 +2,9 @@ package domain.enchantments;
 
 import domain.gameobjects.*;
 
-public class ExtraTime extends Enchantment {
+import java.io.Serializable;
+
+public class ExtraTime extends Enchantment implements Serializable {
     private static final long EFFECT_DURATION = 0; // This enchantment has no active duration
 
     public ExtraTime() {

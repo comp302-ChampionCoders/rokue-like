@@ -1,7 +1,9 @@
 package domain.enchantments;
 import domain.gameobjects.*;
 
-public class Reveal extends Enchantment {
+import java.io.Serializable;
+
+public class Reveal extends Enchantment implements Serializable {
     private static final long DURATION = 10000;
     private int highlightX;
     private int highlightY;

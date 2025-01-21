@@ -2,10 +2,13 @@ package domain.enchantments;
 
 import domain.gameobjects.Hero;
 
-public class ExtraLife extends Enchantment {
+import java.io.Serializable;
+
+public class ExtraLife extends Enchantment implements Serializable {
     private static final long EFFECT_DURATION = 0; // This enchantment has no active duration
 
     public ExtraLife() {
+
         super("Extra Life", "src/resources/images/chestheart32x32.png");
     }
 
@@ -29,4 +32,6 @@ public class ExtraLife extends Enchantment {
         // Define logic if needed to control when this enchantment can be collected
         return true; // For now, it can always be collected
     }
+
+
 }

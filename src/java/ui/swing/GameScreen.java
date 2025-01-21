@@ -1,11 +1,9 @@
 package ui.swing;
 
-import controller.HallController;
-import controller.ScreenTransition;
-import controller.TimerController;
-import controller.SpawnController;
+import controller.*;
 import domain.behaviors.Collectible;
 import domain.behaviors.Direction;
+import domain.behaviors.GridElement;
 import domain.enchantments.*;
 import domain.gameobjects.GameObject;
 import domain.gameobjects.Hall;
@@ -45,6 +43,7 @@ import javax.swing.Timer;
 import ui.utils.CursorUtils;
 import ui.utils.SoundPlayerUtil;
 import ui.utils.TaskBarIconUtil;
+import utils.SaveLoadUtil;
 
 
 public class GameScreen extends JFrame {
@@ -76,6 +75,7 @@ public class GameScreen extends JFrame {
     private Font timerFont;
     private HallController hallController;
     private boolean isPaused = false;
+    public static boolean isLoaded = false;
 
 
 
@@ -84,12 +84,38 @@ public class GameScreen extends JFrame {
 
         this.returnToGameOverScreen = returnToGameOverScreen;
         this.hallController = hallController;
+
+        monsters = new ArrayList<>();
+        enchantments = new ArrayList<>();
+
+        Map<Point, GridElement> objects = hallController.getCurrentHall().getGridElements();
+
+        for (Map.Entry<Point, GridElement> entry : objects.entrySet()) {
+            Point position = entry.getKey();
+            GridElement element = entry.getValue();
+
+            if (element instanceof Enchantment) {
+                Enchantment enchantment = (Enchantment) element;
+                enchantments.add(enchantment);
+            }
+            else if (element instanceof Monster){
+                Monster monster = (Monster) element;
+                monsters.add(monster);
+            }
+        }
+
         initializeHeroPosition();
         initializeRunePosition();
         this.timerController = TimerController.getInstance();
         this.spawnController = SpawnController.getInstance();
         initializeTimers();
-        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
+
+        if(!isLoaded){
+            timeRemaining = hallController.getCurrentHall().getInitialTime();
+        }else{
+            timeRemaining = hallController.getCurrentHallRemainingTime();
+        }
+
 
         try {
             timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(34f);
@@ -115,9 +141,7 @@ public class GameScreen extends JFrame {
 
         setLocationRelativeTo(null);
         setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
-        monsters = new ArrayList<>();
         random = new Random();
-        enchantments = new ArrayList<>();
         loadHall();
 
        //loadRuneImage();
@@ -190,9 +214,71 @@ public class GameScreen extends JFrame {
             }
         });
 
+        Font customFont;
+
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(20f);
+        } catch (FontFormatException | IOException e1) {
+            customFont = new Font("Arial", Font.BOLD, 16);
+            e1.printStackTrace();
+        }
         saveButton.addActionListener(e -> {
             SoundPlayerUtil.playClickSound();
-                });
+            while (true) {
+                String saveName = JOptionPane.showInputDialog(
+                        this,
+                        "Enter a name for your save:",
+                        "Save Game",
+                        JOptionPane.PLAIN_MESSAGE
+                );
+                if (saveName == null) { // cancel
+                    break;
+                }
+                saveName = saveName.trim();
+
+                if (saveName.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Save name cannot be empty.",
+                            "Save Failed",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else if (!saveName.matches("[a-zA-Z0-9_\\-]+")) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Save name can only contain letters, numbers, underscores, and hyphens.",
+                            "Invalid Save Name",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else if (saveName.length() < 3) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Save name must be at least 3 characters long.",
+                            "Invalid Save Name",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else {
+                    GameState gameState = hallController.createGameState(timerController.getHallTimes(), timeRemaining);
+                    SaveLoadUtil.saveGame(gameState, saveName);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Game saved successfully as: " + saveName,
+                            "Save Successful",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    break;
+                }
+            }
+        });
+        UIManager.put("OptionPane.background", new Color(66, 40, 53,255));
+        UIManager.put("Panel.background", new Color(66, 40, 53,255));
+        UIManager.put("OptionPane.messageForeground", Color.WHITE); //
+        UIManager.put("Button.background", new Color(139, 69, 19));
+        UIManager.put("Button.foreground", Color.BLACK);
+        UIManager.put("Button.font", customFont);
+        UIManager.put("OptionPane.messageFont", customFont);
+
+
 
         pauseButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
@@ -217,6 +303,7 @@ public class GameScreen extends JFrame {
         exitButton.addActionListener(e -> {
             stopGame();
             SoundPlayerUtil.playClickSound();
+            TimerController.getInstance().reset();
             returnToGameOverScreen.execute();
         });
 
@@ -397,7 +484,6 @@ public class GameScreen extends JFrame {
     private void initializeHeroPosition() {
         hallController.updateHero();
         hero = hallController.getHero();
-        //terminaldeki H gride yazılacak farklı bi classta yapılıp buraya çekilmeli
     }
 
     private void updateTime() {
@@ -428,7 +514,10 @@ public class GameScreen extends JFrame {
         repaint(); 
     }
 
-    private void goNextHall(){ 
+
+
+    private void goNextHall(){
+        isLoaded = false;
         hallController.goNextHall();
         timerController.cleanup();
         timerController.resetGameTime();
@@ -437,7 +526,7 @@ public class GameScreen extends JFrame {
         initializeRunePosition();
         updateInventory();
         updateHearts();
-        timeRemaining = timerController.getRemainingGameTime(hallController.getCurrentHall().getHallType());
+        timeRemaining = hallController.getCurrentHall().getInitialTime();
 
         monsters = new ArrayList<>();
         random = new Random();
@@ -447,7 +536,9 @@ public class GameScreen extends JFrame {
     }
     
     private void initializeRunePosition() {
-        hallController.updateRune();
+        if(!isLoaded){
+            hallController.updateRune();
+        }
         rune = hallController.getRune();
         Point point = new Point(rune.getX(), rune.getY());
         runePosition = point;

@@ -5,12 +5,13 @@ import domain.behaviors.GridElement;
 import domain.enchantments.Enchantment;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.*;
 
 
 import controller.SpawnController;
 
-public class Hall {
+public class Hall implements Serializable {
     // Hall type enumeration
     public enum HallType {
         EARTH(6), AIR(9), WATER(13), FIRE(17);
@@ -40,6 +41,7 @@ public class Hall {
     private boolean isLocked;
     private boolean isActive;
     private SpawnController spawnController;
+    private int initialTime;
 
     public Hall(int width, int height,HallType hallType) {
         this.width = width;
@@ -69,6 +71,14 @@ public class Hall {
                 grid[i][j] = null;
             }
         }
+    }
+
+    public void updateInitialTime(){
+        initialTime = objects.size() * 5;
+    }
+
+    public int getInitialTime(){
+        return initialTime;
     }
 
     public Rune getRune(){

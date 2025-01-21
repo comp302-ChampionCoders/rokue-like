@@ -70,7 +70,7 @@ class ResetToBuildModeTest {
         HallController hallController = new HallController();
 
         Hall currentHall = hallController.getCurrentHall();
-        GameObject gameObject = new GameObject(0, 0, null);
+        GameObject gameObject = new GameObject(0, 0, null,null);
         currentHall.addGridElement(gameObject, 0, 0);
 
         hallController.resetToBuildModeVersions();

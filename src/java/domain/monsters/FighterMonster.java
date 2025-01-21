@@ -3,7 +3,9 @@ package domain.monsters;
 import domain.gameobjects.*;
 import domain.behaviors.Direction;
 
-public class FighterMonster extends Monster {
+import java.io.Serializable;
+
+public class FighterMonster extends Monster implements Serializable {
     private static final int DETECTION_RANGE = 5;
     private boolean isLured;
     private int lureX, lureY;

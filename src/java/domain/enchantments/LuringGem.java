@@ -3,7 +3,9 @@ package domain.enchantments;
 import domain.behaviors.Direction;
 import domain.gameobjects.*;
 
-public class LuringGem extends Enchantment {
+import java.io.Serializable;
+
+public class LuringGem extends Enchantment implements Serializable {
     private int throwX;
     private int throwY;
     private boolean hasThrowLocation;

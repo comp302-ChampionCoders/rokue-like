@@ -3,7 +3,9 @@ package domain.gameobjects;
 import domain.behaviors.Collectible;
 import domain.behaviors.GridElement;
 
-public class Rune implements Collectible, GridElement {
+import java.io.Serializable;
+
+public class Rune implements Collectible, GridElement, Serializable {
     private int x;
     private int y;
     private boolean isCollected;

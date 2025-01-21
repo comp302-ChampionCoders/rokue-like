@@ -110,9 +110,24 @@ public class TimerController {
         timers.values().forEach(Timer::start); // Tüm timer'lar tekrar başlatılır
     }
 
+    public Map<HallType, Integer> getHallTimes() {
+        if (hallRemainingTimes == null) {
+            hallRemainingTimes = new HashMap<>();
+        }
+        return new HashMap<>(hallRemainingTimes);
+    }
+
+
     public void cleanup() {
         stopTimers();
         timers.clear();
+    }
+
+    public void reset() {
+        cleanup();
+        remainingTimes.clear();
+        lastPausedTimes.clear();
+        isPaused = false;
     }
 
     public void resetGameTime() {
@@ -121,27 +136,6 @@ public class TimerController {
 
     public int getRemainingGameTime(HallType hall) {
         return hallRemainingTimes.get(hall);
-    }
-
-    public void initializeHeroTimer(Runnable moveAction) {
-        this.heroMoveAction = moveAction;
-        heroMoveTimer = new Timer(HERO_MOVE_DELAY, e -> {
-            if (!isPaused && heroMoveAction != null) {
-                heroMoveAction.run();
-            }
-        });
-    }
-    
-    public void startHeroTimer() {
-        if (heroMoveTimer != null) {
-            heroMoveTimer.start();
-        }
-    }
-    
-    public void stopHeroTimer() {
-        if (heroMoveTimer != null) {
-            heroMoveTimer.stop();
-        }
     }
 
     public void setRemainingTimeForHall(HallType hallType, int timeInSeconds) {
