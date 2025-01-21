@@ -20,9 +20,17 @@ public class WizardMonster extends Monster implements Serializable {
     private static final long TELEPORT_COOLDOWN = 5000; // 5 seconds in milliseconds
     private WizardBehavior behavior;
 
+    private Hall currentHall;
+    private int currentTimeRemaining;
+
     public WizardMonster(int x, int y) {
         super(x, y, "Wizard", TELEPORT_RANGE);
         this.lastTeleportTime = System.currentTimeMillis();
+    }
+
+    public void setTimeInfo(Hall hall, int remainingTime) {
+        this.currentHall = hall;
+        this.currentTimeRemaining = remainingTime;
     }
 
 //    @Override
@@ -82,20 +90,54 @@ public class WizardMonster extends Monster implements Serializable {
     public void moveTowardsHero(Hero hero) {
         // Wizard monsters don't move
     }
-
     protected double calculateRemainingTimePercentage() {
-        TimerController timerController = TimerController.getInstance();
+        int totalGameTime = currentHall.getInitialTime();  // This gets the time based on objects
 
-        // Get default total game time
-        int totalGameTime = 100;
-        // int totalGameTime = TimerController.DEFAULT_GAME_TIME;
+        System.out.println("=== Time Calculation Debug ===");
+        System.out.println("Total Game Time (based on objects): " + totalGameTime);
+        System.out.println("Current Remaining Time: " + currentTimeRemaining);
 
-        // Get remaining time - hardcoded for now, should be retrieved from TimerController
-        int remainingTime = 10;  // This should be replaced with actual timer value
+        double percentage = (currentTimeRemaining / (double) totalGameTime) * 100;
+        System.out.println("Calculated Percentage: " + percentage + "%");
+        System.out.println("Current Wizard State: " +
+                (percentage > 70 ? "CHALLENGING" :
+                        percentage < 30 ? "HELPING" :
+                                "INDECISIVE"));
+        System.out.println("===========================");
 
-        // Calculate and return the percentage
-        return (remainingTime / (double) totalGameTime) * 100;
+        return percentage;
     }
+
+//    protected double calculateRemainingTimePercentage() {
+//        TimerController timerController = TimerController.getInstance();
+//
+//        // Get default total game time
+//        // int totalGameTime = 100;
+//        int totalGameTime = TimerController.getDefaultGameTime();
+//        int remainingTime = TimerController.getRemainingTime();
+//
+//        // Get remaining time - hardcoded for now, should be retrieved from TimerController
+//        // TEST CASES
+//        // int totalGameTime = 100;
+//        // int remainingTime = 10;  // HERO DOES TP, WIZARD DOESNT disappear on grid [CONDITION TIME < 0.3]
+//        // int remainingTime = 50; // CONDITION [TIME 0.3 < 0.7] Doesn't do anything, doesn't disappear
+//        // int remainingTime = 90; // CONDITION [TIME > 0.7] does nothing
+//
+//        double percentage = (remainingTime / (double) totalGameTime) * 100;
+//
+//        // Debug output
+//        System.out.println("=== Time Calculation Debug ===");
+//        System.out.println("Total Game Time: " + totalGameTime);
+//        System.out.println("Remaining Time: " + remainingTime);
+//        System.out.println("Calculated Percentage: " + percentage + "%");
+//        System.out.println("Current Wizard State: " +
+//                (percentage > 70 ? "CHALLENGING" :
+//                        percentage < 30 ? "HELPING" :
+//                                "INDECISIVE"));
+//        System.out.println("===========================");
+//
+//        return percentage;
+//    }
 
     private void updateBehavior(double remainingTimePercentage) {
         if (remainingTimePercentage > 70) {

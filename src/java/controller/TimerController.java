@@ -156,6 +156,12 @@ public class TimerController {
     public static int getEnchantmentRemoveDelay(){
         return ENCHANTMENT_REMOVE_DELAY;
     }
+    public static int getDefaultGameTime(){
+        return DEFAULT_GAME_TIME;
+    }
+    public static int getRemainingTime() {
+        return getInstance().remainingTime;
+    }
     public Timer createOneTimeTimer(int delay, Runnable action){
         Timer timer = new Timer(delay, e -> {
             if (!isPaused) {

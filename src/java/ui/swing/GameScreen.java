@@ -632,6 +632,7 @@ public class GameScreen extends JFrame {
                     .get();
 
             // Let the wizard's behavior handle the action
+            wizard.setTimeInfo(hallController.getCurrentHall(), timeRemaining);
             wizard.performAction(hero);
 
             repaint(); // Update the game screen
