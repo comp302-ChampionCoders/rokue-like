@@ -63,6 +63,10 @@ public abstract class Enchantment implements Collectible, GridElement, Serializa
         this.spawnTime = System.currentTimeMillis();
     }
 
+    public long getSpawnTime() {
+        return spawnTime;
+    }
+
     @Override
     public void disappear() {
         this.isActive = false;

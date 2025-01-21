@@ -724,8 +724,10 @@ public class GameScreen extends JFrame {
         }
     }
 
-    private void removeEnchantment(){
-        spawnController.removeEnchantment(null);
+    private void removeEnchantment() {
+        spawnController.removeEnchantment(hallController.getCurrentHall());
+        enchantments.clear(); // to remove from ui
+        repaint();
     }
 
     private void stopGame() {
