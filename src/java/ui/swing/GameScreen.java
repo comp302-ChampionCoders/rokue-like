@@ -578,6 +578,17 @@ public class GameScreen extends JFrame {
                     }
                 }
             }
+            else if (monster instanceof ArcherMonster) {
+                Direction randomDirection = directions[random.nextInt(directions.length)];
+                int newX = monster.getX() + randomDirection.getDx();
+                int newY = monster.getY() + randomDirection.getDy();
+                // ArcherMonster always moves randomly
+                if (newX >= 0 && newX < GRID_COLUMNS && newY >= 0 && newY < GRID_ROWS && !hallController.getCurrentHall().isPositionOccupied(newX, newY)) {
+                    hallController.getCurrentHall().removeGridElement(monster.getX(), monster.getY());
+                    monster.move(randomDirection);
+                    hallController.getCurrentHall().addGridElement(monster, monster.getX(), monster.getY());
+                }
+            }
         }
         checkHeroMonsterCollision();
         repaint();
