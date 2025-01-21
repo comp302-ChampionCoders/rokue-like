@@ -1470,6 +1470,7 @@ public class GameScreen extends JFrame {
                 if (hallController.getCurrentHall().getHallType() == Hall.HallType.AIR &&
                         rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 8 && hero.getY() == 11) || (hero.getX() == 9 && hero.getY() == 11))) {
                     TimerController.getInstance().reset();
+                    SoundPlayerUtil.playWinSound();
                     onToWinScreen.execute();
                     return;
                 }
