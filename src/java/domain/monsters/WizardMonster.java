@@ -148,4 +148,10 @@ public class WizardMonster extends Monster implements Serializable {
             behavior = new IndecisiveBehavior();
         }
     }
+    public Hall getCurrentHall() {
+        return this.currentHall;  // Make sure currentHall is set when wizard is created/spawned
+    }
+    public int getCurrentTimeRemaining(){
+        return this.currentTimeRemaining;
+    }
 }

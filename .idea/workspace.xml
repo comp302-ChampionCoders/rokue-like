@@ -6,12 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/TimerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/TimerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/wizardStrategy/ChallengingBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/wizardStrategy/ChallengingBehavior.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/WizardMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/WizardMonster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/MinObjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MinObjectController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TimerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/ChallengingBehavior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/ChallengingBehavior.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/domain/monsters/WizardMonster.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/monsters/WizardMonster.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +190,7 @@
       <workItem from="1737473365036" duration="106000" />
       <workItem from="1737473477199" duration="2737000" />
       <workItem from="1737497479788" duration="2970000" />
-      <workItem from="1737502100347" duration="1690000" />
+      <workItem from="1737502100347" duration="4229000" />
     </task>
     <servers />
   </component>

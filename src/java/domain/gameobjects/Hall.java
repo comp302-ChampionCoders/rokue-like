@@ -81,6 +81,7 @@ public class Hall implements Serializable {
         return initialTime;
     }
 
+
     public Rune getRune(){
         return rune;
     }
