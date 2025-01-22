@@ -7,11 +7,12 @@ import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
 import domain.gameobjects.Rune;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HallController {
+public class HallController implements Serializable {
     private List<Hall> halls;
     private Hero hero;
     private Rune rune;

@@ -3,9 +3,11 @@ package controller.wizardStrategy;
 import domain.gameobjects.Hero;
 import domain.monsters.WizardMonster;
 import controller.HallController;
+
+import java.io.Serializable;
 import java.util.Random;
 
-public class HelpingBehavior implements WizardBehavior {
+public class HelpingBehavior implements WizardBehavior, Serializable {
     private static final Random random = new Random();
 
     @Override
@@ -30,6 +32,7 @@ public class HelpingBehavior implements WizardBehavior {
             // Remove wizard after helping
             wizard.setActive(false);
             hallController.getCurrentHall().removeGridElement(wizard.getX(), wizard.getY());
+            hallController.getCurrentHall().removeMonster(wizard);
             System.out.println("Wizard helped hero by teleporting them to safety");
         }
     }

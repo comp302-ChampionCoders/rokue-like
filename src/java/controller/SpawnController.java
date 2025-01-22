@@ -9,6 +9,7 @@ import domain.gameobjects.Hall;
 import domain.behaviors.GridElement;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.Random;
 import javax.swing.Timer;
 
-public class SpawnController {
+public class SpawnController implements Serializable {
     private static SpawnController instance;
     private List<Enchantment> enchantments; // Hall bazli degil artik, enchantmentsi method icine verilen hallu kullanarak hero uzerinden almamiz gerekli, bunu silebiliriz
     private Random random;

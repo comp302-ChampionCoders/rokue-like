@@ -1,34 +1,35 @@
 package controller.wizardStrategy;
 
+import controller.HallController;
 import domain.gameobjects.Hero;
 import domain.monsters.WizardMonster;
 import domain.gameobjects.Hall;
 import domain.gameobjects.Rune;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import domain.gameobjects.GameObject;
 
-public class ChallengingBehavior implements WizardBehavior {
+public class ChallengingBehavior implements WizardBehavior, Serializable {
     private static final int TELEPORT_INTERVAL = 3000; // 3 seconds
-    private long lastTeleportTime;
+    private HallController hallController;
 
     public ChallengingBehavior() {
-        this.lastTeleportTime = 0;
+        hallController = HallController.getInstance();
     }
 
     @Override
     public void execute(int stateId, WizardMonster wizard, Hero hero) {
         if (stateId == CHALLENGING_STATE) {
             wizard.setActive(true);
-            int currentGameTime = wizard.getCurrentTimeRemaining();
-
-            // Check if it's time to teleport (every 3 seconds)
-            if (Math.abs(currentGameTime - lastTeleportTime) >= TELEPORT_INTERVAL) {
-                teleportRune(wizard.getCurrentHall());
-                lastTeleportTime = currentGameTime;  // Use currentGameTime instead of currentTime
-                System.out.println("Wizard in challenging mode - Teleporting rune every 3 seconds");
+            System.out.println("Wizard in challenging mode - Teleporting rune every 3 seconds");
+            Rune rune = teleportRune(wizard.getCurrentHall());
+            if(rune != null) {
+                hallController.getCurrentHall().setRune(rune);
+            }else{
+                System.out.println("No rune found to teleport");
             }
         }
     }
@@ -62,16 +63,16 @@ public class ChallengingBehavior implements WizardBehavior {
 //        }
 //    }
 
-    private void teleportRune(Hall hall) {
+    private Rune teleportRune(Hall hall) {
         if (hall == null) {
             System.out.println("DEBUG: Hall is null in teleportRune");
-            return;
+            return null;
         }
 
         Map<Point, GameObject> objects = hall.getObjects();
         if (objects.isEmpty()) {
             System.out.println("DEBUG: No objects available in hall to teleport rune");
-            return;
+            return null;
         }
 
         // Get the rune from the hall
@@ -93,16 +94,17 @@ public class ChallengingBehavior implements WizardBehavior {
 
             // Update rune position
             try {
-                hall.removeGridElement(rune.getX(), rune.getY());
                 rune.setPosition(randomPosition.x, randomPosition.y);
-                hall.addGridElement(rune, randomPosition.x, randomPosition.y);
                 System.out.println("DEBUG: Successfully teleported rune to: (" +
                         randomPosition.x + "," + randomPosition.y + ")");
+                return rune;
             } catch (Exception e) {
                 System.out.println("DEBUG: Error during rune teleportation: " + e.getMessage());
+                return null;
             }
         } else {
             System.out.println("DEBUG: Rune is either null or already collected");
+            return null;
         }
     }
 }

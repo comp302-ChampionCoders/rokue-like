@@ -39,6 +39,7 @@ public class SpawnFactory {
 
         hall.addMonster(newMonster);
         hall.addGridElement(newMonster, x, y);
+        System.out.println("monster size at spawnfactory: "+hall.getMonsters().size());
         return newMonster;
     }
 
