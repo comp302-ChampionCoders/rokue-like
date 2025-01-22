@@ -7,19 +7,31 @@
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/LAST-HALL-TEST.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/aa1.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/cop.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/lasthall.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/lastsave-archer-wizard.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/HallController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/HallController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/TimerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/TimerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/wizardStrategy/ChallengingBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/wizardStrategy/ChallengingBehavior.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/wizardStrategy/HelpingBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/wizardStrategy/HelpingBehavior.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/wizardStrategy/IndecisiveBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/wizardStrategy/IndecisiveBehavior.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/monsters/FighterMonster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest$MockGameObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MinObjectControllerTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/MoveHeroTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/ResetToBuildModeTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/SpawnControllerTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/controller/createEnchantmentTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/enchantments/CloakOfProtectionTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/InventoryTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/RuneTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/domain/gameobjects/addGridElementTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SpawnFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TimerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/ChallengingBehavior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/ChallengingBehavior.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/HelpingBehavior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/HelpingBehavior.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/IndecisiveBehavior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/IndecisiveBehavior.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +41,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -63,7 +76,7 @@
     &quot;JUnit.createEnchantmentTest.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;wizardStrategy-v1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -73,10 +86,11 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
       <module name="rokue-like" />
@@ -190,19 +204,49 @@
       <workItem from="1737390837053" duration="27288000" />
       <workItem from="1737442876851" duration="6461000" />
       <workItem from="1737457449118" duration="7789000" />
-      <workItem from="1737468554163" duration="618000" />
+      <workItem from="1737468554163" duration="954000" />
+      <workItem from="1737469534585" duration="6000" />
+      <workItem from="1737469550033" duration="1118000" />
+      <workItem from="1737473365036" duration="106000" />
+      <workItem from="1737473477199" duration="2737000" />
+      <workItem from="1737497479788" duration="2970000" />
+      <workItem from="1737502100347" duration="4229000" />
+      <workItem from="1737506892465" duration="10425000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/wizardStrategy-v1" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/java/ui/swing/GameScreen.java</url>
-          <line>575</line>
+          <line>576</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

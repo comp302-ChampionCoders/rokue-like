@@ -15,19 +15,19 @@ public class Hall implements Serializable {
     // Hall type enumeration
     public enum HallType {
         EARTH(6), AIR(9), WATER(13), FIRE(17);
-        
+
         private final int minObjects;
-        
+
         HallType(int minObjects) {
             this.minObjects = minObjects;
         }
-        
+
         public int getMinObjects() {
             return minObjects;
         }
     }
 
-    private final HallType hallType; 
+    private final HallType hallType;
 
     private final int width;
     private final int height;
@@ -52,7 +52,7 @@ public class Hall implements Serializable {
         this.monsters = new ArrayList<>();
         this.objects = new HashMap<>();
         this.isLocked = true;
-        this.hero = null; 
+        this.hero = null;
         this.rune = null;
         initializeGrid();
     }
@@ -80,6 +80,7 @@ public class Hall implements Serializable {
     public int getInitialTime(){
         return initialTime;
     }
+
 
     public Rune getRune(){
         return rune;
@@ -136,6 +137,10 @@ public class Hall implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public void removeMonster(Monster monster){
+        monsters.remove(monster);
     }
 
     public boolean isValidPosition(int x, int y) {

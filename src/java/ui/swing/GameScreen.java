@@ -474,7 +474,8 @@ public class GameScreen extends JFrame {
             () -> moveMonsters(),
                 //() -> spawnController.spawnMonster(hallController.getCurrentHall())
                 () -> spawnMonster(),
-            () -> teleportRune(),
+//            () -> teleportRune(),
+                () -> handleWizardTeleportAction(),
             () -> checkArcherAttacks(),
             () -> updateTime(),
             () -> spawnEnchantment(),
@@ -617,6 +618,28 @@ public class GameScreen extends JFrame {
                 runePosition.setLocation(randomPosition); // Update runePosition to reflect the new location
                 System.out.println("Rune teleported to an object at position: X=" + randomPosition.x + ", Y=" + randomPosition.y);
             }
+            repaint(); // Update the game screen
+        }
+    }
+
+    private void handleWizardTeleportAction() {
+        boolean wizardExists = monsters.stream().anyMatch(m -> m instanceof WizardMonster);
+        if (wizardExists) {
+            // Find the wizard monster
+            WizardMonster wizard = (WizardMonster) monsters.stream()
+                    .filter(m -> m instanceof WizardMonster)
+                    .findFirst()
+                    .get();
+
+            // Let the wizard's behavior handle the action
+            wizard.setTimeInfo(hallController.getCurrentHall(), timeRemaining);
+            wizard.performAction(hero);
+
+            Rune rune = hallController.getCurrentHall().getRune();
+            Point position = new Point(rune.getX(), rune.getY());
+            runePosition = position;
+
+            monsters = hallController.getCurrentHall().getMonsters();
             repaint(); // Update the game screen
         }
     }
@@ -775,14 +798,14 @@ public class GameScreen extends JFrame {
             int offsetX = (panelWidth - (GRID_COLUMNS * CELL_SIZE)) / 2; 
             int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2; 
 
-            drawGrid(g, offsetX, offsetY);
+           // drawGrid(g, offsetX, offsetY);
             drawTopAndSideWalls(g, offsetX, offsetY);
             drawBottomWall(g, offsetX, offsetY);
             drawArcherRanges(g, offsetX, offsetY);
             drawHallObjects(g, offsetX, offsetY);
             drawHero(g, offsetX, offsetY);
             drawMonsters(g, offsetX, offsetY);
-            drawRune(g, offsetX, offsetY);
+            //drawRune(g, offsetX, offsetY);
             drawEnchantments(g, offsetX, offsetY);
             drawReveal(g, offsetX, offsetY);
         }
@@ -1398,24 +1421,28 @@ public class GameScreen extends JFrame {
                 // Luring gem throw using WASD keys
                 case KeyEvent.VK_W:
                     if (hero.isThrowing()) {
+                        SoundPlayerUtil.playThrowSound();
                         activateLuringGem("up");
                         hero.setThrowing(false);
                     }
                     break;
                 case KeyEvent.VK_A:
                     if (hero.isThrowing()) {
+                        SoundPlayerUtil.playThrowSound();
                         activateLuringGem("left");
                         hero.setThrowing(false);
                     }
                     break;
                 case KeyEvent.VK_S:
                     if (hero.isThrowing()) {
+                        SoundPlayerUtil.playThrowSound();
                         activateLuringGem("down");
                         hero.setThrowing(false);
                     }
                     break;
                 case KeyEvent.VK_D:
                     if (hero.isThrowing()) {
+                        SoundPlayerUtil.playThrowSound();
                         activateLuringGem("right");
                         hero.setThrowing(false);
                     }
@@ -1453,6 +1480,7 @@ public class GameScreen extends JFrame {
                 if (hallController.getCurrentHall().getHallType() == Hall.HallType.AIR &&
                         rune != null && rune.isCollected() &&  direction == Direction.DOWN && ((hero.getX() == 8 && hero.getY() == 11) || (hero.getX() == 9 && hero.getY() == 11))) {
                     TimerController.getInstance().reset();
+                    SoundPlayerUtil.playWinSound();
                     onToWinScreen.execute();
                     return;
                 }

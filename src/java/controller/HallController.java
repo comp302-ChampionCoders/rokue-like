@@ -7,11 +7,12 @@ import domain.gameobjects.Hall;
 import domain.gameobjects.Hero;
 import domain.gameobjects.Rune;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HallController {
+public class HallController implements Serializable {
     private List<Hall> halls;
     private Hero hero;
     private Rune rune;
@@ -19,9 +20,18 @@ public class HallController {
     int i;
     private int currentHallRemainingTime;
     private SpawnController spawnController;;
+    private static HallController instance;
 
     public HallController() {
         initializeHalls();
+    }
+
+    public static HallController getInstance() {
+        if (instance == null) {
+            instance = new HallController();
+
+        }
+        return instance;
     }
 
     private void initializeHalls() {

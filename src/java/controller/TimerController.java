@@ -15,7 +15,7 @@ public class TimerController {
     // Timer constants
     private static final int MONSTER_MOVE_DELAY = 500;
     private static final int MONSTER_SPAWN_DELAY = 8000;
-    private static final int RUNE_TELEPORT_DELAY = 5000;
+    private static final int RUNE_TELEPORT_DELAY = 3000;
     private static final int ARCHER_ATTACK_DELAY = 1000;
     private static final int GAME_TIMER_DELAY = 1000;
     private static final int ENCHANTMENT_SPAWN_DELAY = 12000;
@@ -153,5 +153,24 @@ public class TimerController {
         hallRemainingTimes.put(hallType, timeInSeconds);
         System.out.println("Set remaining time for " + hallType + ": " + timeInSeconds + " seconds.");
 }
+    public static int getEnchantmentRemoveDelay(){
+        return ENCHANTMENT_REMOVE_DELAY;
+    }
+    public static int getDefaultGameTime(){
+        return DEFAULT_GAME_TIME;
+    }
+    public static int getRemainingTime() {
+        return getInstance().remainingTime;
+    }
+    public Timer createOneTimeTimer(int delay, Runnable action){
+        Timer timer = new Timer(delay, e -> {
+            if (!isPaused) {
+                action.run();
+                ((Timer)e.getSource()).stop();
+            }
+        });
+        timer.setRepeats(false);
+        return timer;
+    }
     
 }

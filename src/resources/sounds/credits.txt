@@ -51,3 +51,11 @@ Game Over sound:
 Author: Kenney
 License: Creative Commons Zero, CC0
 URL: https://kenney.nl/assets/music-jingles
+
+
+
+Win Sound:
+
+Author: FunWithSound
+License: Content License (Pixabay)
+URL: https://pixabay.com/sound-effects/success-fanfare-trumpets-6185/

@@ -132,7 +132,7 @@ public class ModeController {
     public void switchToGameWinScreen() {
         closeActiveScreens();
         if (gameWinScreen == null) {
-            gameWinScreen = new GameWinScreen(this::showMainMenu);
+            gameWinScreen = new GameWinScreen(this::showMainMenu, hallController);
         }
         gameWinScreen.setVisible(true);
     }
