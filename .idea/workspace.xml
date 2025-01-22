@@ -5,33 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/LAST-HALL-TEST.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/aa1.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/cop.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/lasthall.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/lastsave-archer-wizard.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/HallController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/HallController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/SpawnFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/SpawnFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/TimerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/TimerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/wizardStrategy/ChallengingBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/wizardStrategy/ChallengingBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/wizardStrategy/HelpingBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/wizardStrategy/HelpingBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/wizardStrategy/IndecisiveBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/wizardStrategy/IndecisiveBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/Hall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/SpawnFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/SpawnFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/TimerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TimerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/ChallengingBehavior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/ChallengingBehavior.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/HelpingBehavior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/HelpingBehavior.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/IndecisiveBehavior.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/wizardStrategy/IndecisiveBehavior.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/Hall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +185,8 @@
       <workItem from="1737473477199" duration="2737000" />
       <workItem from="1737497479788" duration="2970000" />
       <workItem from="1737502100347" duration="4229000" />
-      <workItem from="1737506892465" duration="10425000" />
+      <workItem from="1737506892465" duration="12838000" />
+      <workItem from="1737540809400" duration="4501000" />
     </task>
     <servers />
   </component>
