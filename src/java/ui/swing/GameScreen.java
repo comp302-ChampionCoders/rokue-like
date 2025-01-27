@@ -142,7 +142,7 @@ public class GameScreen extends JFrame {
         GraphicsDevice gd = ge.getDefaultScreenDevice();
 
         setLocationRelativeTo(null);
-        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
+
         random = new Random();
         loadHall();
 
@@ -166,6 +166,7 @@ public class GameScreen extends JFrame {
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         TaskBarIconUtil.setMacTaskbarIcon();
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
     }
 
     public void configureForWindows(){
@@ -174,6 +175,7 @@ public class GameScreen extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         TaskBarIconUtil.setWindowsTaskbarIcon(this);
+        setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0168.png"));
     }
 
     public void configureForOther(){
@@ -765,6 +767,7 @@ public class GameScreen extends JFrame {
         private BufferedImage archerImage;
         private BufferedImage fighterImage;
         private BufferedImage wizardImage;
+        private BufferedImage backgroundImage;
         private boolean isKeyPressed = false; 
 
         public GamePanel() {
@@ -781,6 +784,7 @@ public class GameScreen extends JFrame {
                 archerImage = ImageIO.read(new File("src/resources/images/archer.png"));
                 fighterImage = ImageIO.read(new File("src/resources/images/fighter.png"));
                 wizardImage = ImageIO.read(new File("src/resources/images/wizard.png"));
+                backgroundImage = ImageIO.read(new File("src/resources/images/background.png"));
             } catch (IOException | NullPointerException e) {
                 System.err.println("Failed to load images.");
                 e.printStackTrace();
@@ -796,7 +800,22 @@ public class GameScreen extends JFrame {
             int panelHeight = getHeight();
 
             int offsetX = (panelWidth - (GRID_COLUMNS * CELL_SIZE)) / 2; 
-            int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2; 
+            int offsetY = (panelHeight - (GRID_ROWS * CELL_SIZE)) / 2;
+
+            if (backgroundImage != null) {
+                for (int row = 0; row < GRID_ROWS; row++) {
+                    for (int col = 0; col < GRID_COLUMNS; col++) {
+                        g.drawImage(
+                                backgroundImage,
+                                offsetX + col * CELL_SIZE,
+                                offsetY + row * CELL_SIZE,
+                                CELL_SIZE,
+                                CELL_SIZE,
+                                this
+                        );
+                    }
+                }
+            }
 
            // drawGrid(g, offsetX, offsetY);
             drawTopAndSideWalls(g, offsetX, offsetY);
