@@ -81,7 +81,7 @@ class MinObjectControllerTest {
     // Mock GameObject class
     static class MockGameObject extends GameObject {
         public MockGameObject(int x, int y) {
-            super(x, y, null);
+            super(x, y, null, null);
         }
     }
 }
