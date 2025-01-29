@@ -11,6 +11,7 @@ import ui.utils.TaskBarIconUtil;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.*;
 
@@ -48,7 +49,7 @@ public class GameOverScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
+        setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/pointer_scifi_a.png")));
     }
 
     private void configureForMacOS(){
@@ -70,8 +71,9 @@ public class GameOverScreen extends JFrame {
                 g.setColor(new Color(66, 40, 53,255));
                 g.fillRect(0, 0, getWidth(), getHeight());
 
+                InputStream fontStream = getClass().getResourceAsStream("/fonts/FantasyRPGtext.ttf");
                 try {
-                    customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/FantasyRPGtext.ttf")) .deriveFont(60f);
+                    customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(60f);
                 } catch (FontFormatException | IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -129,8 +131,10 @@ public class GameOverScreen extends JFrame {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(250, 60));
         button.setMaximumSize(new Dimension(250, 60));
+
+        InputStream fontStream = getClass().getResourceAsStream("/fonts/FantasyRPGtext.ttf");
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/FantasyRPGtext.ttf")) .deriveFont(24f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream) .deriveFont(24f);
         } catch (FontFormatException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

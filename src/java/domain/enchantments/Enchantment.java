@@ -28,10 +28,9 @@ public abstract class Enchantment implements Collectible, GridElement, Serializa
 
     private void loadImage(String imagePath) {
         try {
-            this.image = ImageIO.read(new File(imagePath));
-        } catch (IOException e) {
-            System.err.println("Failed to load image for enchantment: " + name);
-            e.printStackTrace();
+            this.image = ImageIO.read(getClass().getResourceAsStream(imagePath));
+        } catch (IOException | NullPointerException e) {
+            System.err.println("Failed to load image for enchantment: " + name + " - " + e.getMessage());
         }
     }
 

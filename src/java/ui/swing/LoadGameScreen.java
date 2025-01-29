@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import utils.SaveLoadUtil;
 import ui.utils.SoundPlayerUtil;
@@ -89,8 +90,9 @@ public class LoadGameScreen extends JFrame {
         add(mainPanel);
     }
     private void loadCustomFont() {
+        InputStream fontStream = getClass().getResourceAsStream("/fonts/ThaleahFat.ttf");
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")).deriveFont(24f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(24f);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
             customFont = new Font("Arial", Font.BOLD, 16);

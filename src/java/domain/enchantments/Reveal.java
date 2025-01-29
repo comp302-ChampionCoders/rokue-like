@@ -10,7 +10,7 @@ public class Reveal extends Enchantment implements Serializable {
     private boolean hasHighlight;
 
     public Reveal() {
-        super("Reveal", "src/resources/images/reveal32x32.png");
+        super("Reveal", "/images/reveal32x32.png");
         this.hasHighlight = false;
     }
 

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import controller.HallController;
 import controller.TimerController;
@@ -47,7 +48,7 @@ public class GameWinScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
+        setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/pointer_scifi_a.png")));
     }
 
     private void configureForMacOS() {
@@ -62,8 +63,9 @@ public class GameWinScreen extends JFrame {
     }
 
     private void loadCustomFont() {
+        InputStream fontStream = getClass().getResourceAsStream("/fonts/FantasyRPGtext.ttf");
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/FantasyRPGtext.ttf")).deriveFont(36f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(36f);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
             customFont = new Font("Arial", Font.BOLD, 36);
