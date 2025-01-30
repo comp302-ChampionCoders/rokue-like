@@ -104,7 +104,7 @@ public class GameOverScreen extends JFrame {
 
 
         restartButton.addActionListener(e -> {
-            hallController.resetToBuildModeVersions();
+            hallController.restartGame();
             SoundPlayerUtil.playClickSound();
             TimerController.getInstance().reset();
             GameScreen.isLoaded = false;
