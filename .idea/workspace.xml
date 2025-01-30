@@ -10,77 +10,316 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0d2aff8-74b1-48a5-a48d-50c934b1743b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/rokue_like_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/rokue_like_jar/rokue-like.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/rokue_like_jar/saves/1hpandcloakatinv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/rokue_like_jar/saves/fullhp.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/rokue_like_jar/saves/revealSave.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/rokue_like_jar/saves/runetaken.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/rokue_like_jar/saves/ss11.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rokue-like.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rokue-like.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/save2.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/wizard2.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/wizardindec.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/wizardsave.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/wizhelp.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/CloakOfProtection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/CloakOfProtection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/Enchantment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/Enchantment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/ExtraLife.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/ExtraLife.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/ExtraTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/ExtraTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/Lure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/Lure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/LuringGem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/LuringGem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/enchantments/Reveal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/enchantments/Reveal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/domain/gameobjects/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/domain/gameobjects/GameObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/BuildModeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameOverScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameOverScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/GameWinScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/GameWinScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/LoadGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/LoadGameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/swing/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/swing/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/utils/CursorUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/utils/CursorUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/utils/SoundPlayerUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/ui/utils/TaskBarIconUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/ui/utils/TaskBarIconUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/CloakOfProtection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/CloakOfProtection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/Enchantment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/ExtraLife.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/ExtraLife.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/ExtraTime.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/ExtraTime.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Lure.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/Lure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/LuringGem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/LuringGem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/enchantments/Reveal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/enchantments/Reveal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/domain/gameobjects/GameObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/domain/gameobjects/GameObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/BuildModeScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameOverScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen$GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameWinScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameWinScreen$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameWinScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameWinScreen$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/GameWinScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/GameWinScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/LoadGameScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/LoadGameScreen$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/LoadGameScreen$CustomScrollBarUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/LoadGameScreen$CustomScrollBarUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/LoadGameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/LoadGameScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/swing/MainMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/CursorUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/utils/CursorUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/SoundPlayerUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/utils/SoundPlayerUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ui/utils/TaskBarIconUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ui/utils/TaskBarIconUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/SaveLoadUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/SaveLoadUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/MacOS/RokueLike" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/PkgInfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/Resources/RokueLike.icns" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/app/.jpackage.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/app/RokueLike.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/app/rokue-like.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/app/saves/save1.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/jaxp-strict.properties.template" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/jaxp.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/logging.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/management/jmxremote.access" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/management/jmxremote.password.template" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/management/management.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/net.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/java.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/java.security" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/policy/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/policy/limited/default_US_export.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/policy/limited/default_local.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/policy/limited/exempt_local.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/policy/unlimited/default_US_export.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/security/policy/unlimited/default_local.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/conf/sound.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/aes.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/asm.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/c-libutl.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/cldr.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/icu.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/public_suffix.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/siphash.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/unicode.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.base/zlib.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.compiler/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.compiler/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.compiler/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.datatransfer/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.datatransfer/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.datatransfer/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/colorimaging.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/freetype.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/giflib.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/harfbuzz.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/jpeg.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/lcms.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/libpng.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/mesa3d.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/pipewire.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.desktop/xwd.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.instrument/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.instrument/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.instrument/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.logging/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.logging/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.logging/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.management.rmi/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.management.rmi/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.management.rmi/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.management/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.management/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.management/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.naming/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.naming/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.naming/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.net.http/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.net.http/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.net.http/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.prefs/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.prefs/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.prefs/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.rmi/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.rmi/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.rmi/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.scripting/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.scripting/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.scripting/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.security.jgss/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.security.jgss/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.security.jgss/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.security.sasl/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.security.sasl/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.security.sasl/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.smartcardio/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.smartcardio/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.smartcardio/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.smartcardio/pcsclite.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.sql.rowset/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.sql.rowset/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.sql.rowset/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.sql/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.sql/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.sql/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.transaction.xa/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.transaction.xa/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.transaction.xa/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml.crypto/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml.crypto/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml.crypto/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml.crypto/santuario.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/bcel.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/dom.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/jcup.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/xalan.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/java.xml/xerces.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.accessibility/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.accessibility/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.accessibility/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.attach/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.attach/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.attach/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.charsets/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.charsets/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.charsets/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.compiler/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.compiler/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.compiler/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.crypto.cryptoki/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.crypto.cryptoki/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.crypto.cryptoki/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.crypto.cryptoki/pkcs11cryptotoken.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.crypto.cryptoki/pkcs11wrapper.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.dynalink/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.dynalink/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.dynalink/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.dynalink/dynalink.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.editpad/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.editpad/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.editpad/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.httpserver/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.httpserver/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.httpserver/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.incubator.vector/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.incubator.vector/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.incubator.vector/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.ed/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.ed/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.ed/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.jvmstat/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.jvmstat/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.jvmstat/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.le/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.le/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.le/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.le/jline.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.md/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.md/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.md/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.md/commonmark.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.opt/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.opt/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.opt/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.internal.opt/jopt-simple.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jartool/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jartool/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jartool/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.javadoc/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.javadoc/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.javadoc/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.javadoc/dejavufonts.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.javadoc/jquery.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.javadoc/jqueryUI.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jconsole/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jconsole/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jconsole/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdeps/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdeps/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdeps/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdi/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdi/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdi/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdwp.agent/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdwp.agent/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jdwp.agent/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jfr/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jfr/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jfr/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jlink/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jlink/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jlink/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jpackage/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jpackage/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jpackage/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jshell/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jshell/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jshell/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jsobject/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jsobject/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jsobject/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jstatd/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jstatd/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.jstatd/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.localedata/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.localedata/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.localedata/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.localedata/cldr.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.localedata/thaidict.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management.agent/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management.agent/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management.agent/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management.jfr/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management.jfr/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management.jfr/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.management/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.naming.dns/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.naming.dns/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.naming.dns/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.naming.rmi/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.naming.rmi/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.naming.rmi/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.net/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.net/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.net/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.nio.mapmode/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.nio.mapmode/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.nio.mapmode/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.sctp/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.sctp/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.sctp/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.security.auth/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.security.auth/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.security.auth/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.security.jgss/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.security.jgss/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.security.jgss/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.unsupported.desktop/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.unsupported.desktop/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.unsupported.desktop/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.unsupported/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.unsupported/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.unsupported/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.xml.dom/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.xml.dom/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.xml.dom/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.zipfs/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.zipfs/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/legal/jdk.zipfs/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/classlist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/ct.sym" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/fontconfig.bfc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/fontconfig.properties.src" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/jfr/default.jfc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/jfr/profile.jfc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/jrt-fs.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/jspawnhelper" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/jvm.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libattach.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libawt.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libawt_lwawt.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libdt_socket.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libextnet.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libfontmanager.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libfreetype.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libinstrument.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libj2gss.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libj2pcsc.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libj2pkcs11.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjaas.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjava.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjavajpeg.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjawt.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjdwp.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjimage.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjli.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjsig.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libjsound.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/liblcms.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libmanagement.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libmanagement_agent.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libmanagement_ext.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libmlib_image.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libnet.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libnio.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libosx.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libosxapp.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libosxkrb5.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libosxsecurity.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libosxui.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libprefs.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/librmi.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libsplashscreen.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libsyslookup.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libverify.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/libzip.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/modules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/psfont.properties.ja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/psfontj2d.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/security/blocked.certs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/security/cacerts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/security/default.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/security/public_suffix_list.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/server/libjsig.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/server/libjvm.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/shaders.metallib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/lib/tzdb.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Home/release" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/MacOS/libjli.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RokueLike.app/Contents/runtime/Contents/_CodeSignature/CodeResources" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,35 +350,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "JUnit.CloakOfProtectionTest.executor": "Run",
-    "JUnit.InventoryTest.executor": "Run",
-    "JUnit.MinObjectControllerTest.executor": "Run",
-    "JUnit.MoveHeroTest.executor": "Run",
-    "JUnit.ResetToBuildModeTest.executor": "Run",
-    "JUnit.RuneTest.executor": "Run",
-    "JUnit.SpawnControllerTest.executor": "Run",
-    "JUnit.addGridElementTest.executor": "Run",
-    "JUnit.createEnchantmentTest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "rokueLikeJar",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CloakOfProtectionTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.InventoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MinObjectControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MoveHeroTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ResetToBuildModeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RuneTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SpawnControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.addGridElementTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.createEnchantmentTest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;rokueLikeJar&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.application.Main" />
@@ -264,7 +503,8 @@
       <workItem from="1737506892465" duration="10425000" />
       <workItem from="1738009050348" duration="10356000" />
       <workItem from="1738089131926" duration="4496000" />
-      <workItem from="1738096146909" duration="12794000" />
+      <workItem from="1738096146909" duration="17582000" />
+      <workItem from="1738226839339" duration="878000" />
     </task>
     <servers />
   </component>

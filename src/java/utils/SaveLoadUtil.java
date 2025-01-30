@@ -7,8 +7,18 @@ import java.util.List;
 
 public class SaveLoadUtil {
 
-    private static final String SAVE_DIRECTORY = "saves/";
+    private static final String SAVE_DIRECTORY;
 
+    static {
+        String jarPath;
+        try {
+            jarPath = new File(SaveLoadUtil.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
+        } catch (Exception e) {
+            jarPath = "/RokueLike.app/Contents/app";
+        }
+
+        SAVE_DIRECTORY = jarPath + "/saves/";
+    }
     public static void saveGame(GameState gameState, String saveName) {
         try {
             new File(SAVE_DIRECTORY).mkdirs();
