@@ -35,6 +35,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -120,7 +121,7 @@ public class GameScreen extends JFrame {
 
 
         try {
-            timerFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(34f);
+            timerFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/ThaleahFat.ttf")).deriveFont(34f);
         } catch (FontFormatException | IOException e1) {
             timerFont = new Font("Arial", Font.BOLD, 24);
             e1.printStackTrace();
@@ -166,7 +167,7 @@ public class GameScreen extends JFrame {
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         TaskBarIconUtil.setMacTaskbarIcon();
-        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_a.png"));
+        setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/pointer_a.png")));
     }
 
     public void configureForWindows(){
@@ -175,7 +176,7 @@ public class GameScreen extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         TaskBarIconUtil.setWindowsTaskbarIcon(this);
-        setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0168.png"));
+        setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0168.png")));
     }
 
     public void configureForOther(){
@@ -204,14 +205,23 @@ public class GameScreen extends JFrame {
         buttonPanel.setBackground(new Color(100, 70, 83));
 
 
-        JButton saveButton = createButton("src/resources/images/save_button.png");
+        BufferedImage exitImg;
+        BufferedImage saveImg;
+        try {
+            exitImg = ImageIO.read(getClass().getResourceAsStream("/images/exit_button.png"));
+            saveImg = ImageIO.read(getClass().getResourceAsStream("/images/save_button.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        JButton saveButton = createButton(saveImg);
         saveButton.setEnabled(false);
 
         JButton pauseButton = createPauseResumeButton(saveButton);
 
         saveButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
-                saveButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                saveButton.setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0137.png")));
             }
             public void mouseExited(MouseEvent e) {
                 saveButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -221,7 +231,7 @@ public class GameScreen extends JFrame {
         Font customFont;
 
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf")) .deriveFont(20f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/ThaleahFat.ttf")).deriveFont(20f);
         } catch (FontFormatException | IOException e1) {
             customFont = new Font("Arial", Font.BOLD, 16);
             e1.printStackTrace();
@@ -286,18 +296,18 @@ public class GameScreen extends JFrame {
 
         pauseButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
-                pauseButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                pauseButton.setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0137.png")));
             }
             public void mouseExited(MouseEvent e) {
                 pauseButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
     
-        JButton exitButton = createButton("src/resources/images/exit_button.png");
+        JButton exitButton = createButton(exitImg);
 
         exitButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
-                exitButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                exitButton.setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0137.png")));
             }
             public void mouseExited(MouseEvent e) {
                 exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -317,8 +327,8 @@ public class GameScreen extends JFrame {
 
         // Timer display
         JLabel timerHeader = new JLabel();
-        timerHeader.setIcon(resizeIcon(new ImageIcon("src/resources/images/clock_icon.png"), 32, 32));
-        
+        timerHeader.setIcon(resizeIcon(new ImageIcon(getClass().getResource("/images/clock_icon.png")), 32, 32));
+
         timerHeader.setText("TIME: ");
         timerHeader.setFont(timerFont); 
         timerHeader.setForeground(Color.WHITE); 
@@ -338,7 +348,7 @@ public class GameScreen extends JFrame {
         heartsPanel.setBackground(new Color(100, 70, 83));
         heartLabels = new JLabel[4];
         for (int i = 0; i < heartLabels.length; i++) {
-            heartLabels[i] = new JLabel(new ImageIcon("src/resources/images/heart_full.png"));
+            heartLabels[i] = new JLabel(new ImageIcon(getClass().getResource("/images/heart_full.png")));
             heartsPanel.add(heartLabels[i]);
         }
         updateHearts();
@@ -347,8 +357,14 @@ public class GameScreen extends JFrame {
         inventoryLayeredPane.setPreferredSize(new Dimension(250, 150)); // Adjust size to match the inventory design
         inventoryLayeredPane.setLayout(null); // Use null layout for absolute positioning
 
+        BufferedImage chestImage;
         // Inventory chest icon
-        JLabel chestIcon = new JLabel(new ImageIcon("src/resources/images/Inventory2x_3.png"));
+        try {
+            chestImage = ImageIO.read(getClass().getResourceAsStream("/images/Inventory2x_3.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        JLabel chestIcon = new JLabel(new ImageIcon(chestImage));
         chestIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
         inventoryLayeredPane.add(chestIcon, Integer.valueOf(0));
 
@@ -382,7 +398,7 @@ public class GameScreen extends JFrame {
     }
 
     private JButton createPauseResumeButton(JButton saveButton) {
-        JButton button = new JButton(new ImageIcon("src/resources/images/pause_button.png"));
+        JButton button = new JButton(new ImageIcon(getClass().getResource("/images/pause_button.png")));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setFocusPainted(false);
         button.setBorderPainted(false);
@@ -403,7 +419,7 @@ public class GameScreen extends JFrame {
     private void pauseGame(JButton pauseButton, JButton saveButton) {
         SoundPlayerUtil.playClickSound();
         isPaused = true;
-        pauseButton.setIcon(new ImageIcon("src/resources/images/play_button.png"));
+        pauseButton.setIcon(new ImageIcon(getClass().getResource("/images/play_button.png")));
         timerController.pauseTimers();
         saveButton.setEnabled(true);
         System.out.println("Game paused.");
@@ -412,22 +428,26 @@ public class GameScreen extends JFrame {
     private void resumeGame(JButton pauseButton, JButton saveButton) {
         SoundPlayerUtil.playClickSound();
         isPaused = false;
-        pauseButton.setIcon(new ImageIcon("src/resources/images/pause_button.png"));
+        pauseButton.setIcon(new ImageIcon(getClass().getResource("/images/pause_button.png")));
         timerController.resumeTimers();
         gamePanel.requestFocusInWindow();
         saveButton.setEnabled(false);
         System.out.println("Game resumed.");
     }
 
-    private JButton createButton(String imagePath) {
-        Icon resizedIcon = resizeIcon(new ImageIcon(imagePath), 32, 32);
-        JButton button = new JButton(resizedIcon);
+    private JButton createButton(BufferedImage image) {
+        Image scaledImage = image.getScaledInstance(32 ,32, Image.SCALE_SMOOTH);
+
+        JButton button = new JButton(new ImageIcon(scaledImage));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
+
         return button;
     }
+
+
 
     private Icon resizeIcon(Icon icon, int width, int height) {
         Image img = ((ImageIcon) icon).getImage();
@@ -447,29 +467,42 @@ public class GameScreen extends JFrame {
             Collectible item = inventoryItems.get(i);
             String type = item.getType();
             String imagePath = switch (type) {
-                case "Cloak of Protection" -> "src/resources/images/cloak30x30.png";
-                case "Luring Gem" -> "src/resources/images/lure30x30.png";
-                case "Reveal" -> "src/resources/images/reveal30x30.png";
+                case "Cloak of Protection" -> "/images/cloak30x30.png";
+                case "Luring Gem" -> "/images/lure30x30.png";
+                case "Reveal" -> "/images/reveal30x30.png";
                 default -> null;
             };
 
             if (imagePath != null) {
-                enchantmentLabels[i].setIcon(new ImageIcon(imagePath));
+                try {
+                    BufferedImage label = ImageIO.read(getClass().getResourceAsStream(imagePath));
+                    enchantmentLabels[i].setIcon(new ImageIcon(label));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         }
     }
 
-    // heart controller eklenmeli
     private void updateHearts() {
         int lives = hero.getLives();
         for (int i = 0; i < heartLabels.length; i++) {
-            if (i < lives) {
-                heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_full.png"));
-            } else { 
-                heartLabels[i].setIcon(new ImageIcon("src/resources/images/heart_empty.png")); 
+            try {
+                if (i < lives) {
+                    BufferedImage heartFull = ImageIO.read(getClass().getResourceAsStream("/images/heart_full.png"));
+                    heartLabels[i].setIcon(new ImageIcon(heartFull));
+                } else {
+                    BufferedImage heartEmpty = ImageIO.read(getClass().getResourceAsStream("/images/heart_empty.png"));
+                    heartLabels[i].setIcon(new ImageIcon(heartEmpty));
+                }
+            } catch (IOException e) {
+                System.err.println("Failed to load heart images: " + e.getMessage());
             }
         }
     }
+
+
     // usage of Timer Controller, instead of declaring all the time variables we have that class
     private void initializeTimers() {
         timerController.initializeGameTimers(
@@ -548,16 +581,7 @@ public class GameScreen extends JFrame {
         Point point = new Point(rune.getX(), rune.getY());
         runePosition = point;
     }
-    
 
-    private void loadRuneImage() {
-        try {
-            runeImage = ImageIO.read(new File("src/resources/images/rune.png"));
-        } catch (IOException | NullPointerException e) {
-            System.err.println("Failed to load rune image.");
-            e.printStackTrace();
-        }
-    }
 
     private void moveMonsters() {
         Direction[] directions = Direction.values();
@@ -780,11 +804,11 @@ public class GameScreen extends JFrame {
 
         private void loadImages() {
             try {
-                heroImage = ImageIO.read(new File("src/resources/images/player.png"));
-                archerImage = ImageIO.read(new File("src/resources/images/archer.png"));
-                fighterImage = ImageIO.read(new File("src/resources/images/fighter.png"));
-                wizardImage = ImageIO.read(new File("src/resources/images/wizard.png"));
-                backgroundImage = ImageIO.read(new File("src/resources/images/background.png"));
+                heroImage = ImageIO.read(getClass().getResourceAsStream("/images/player.png"));
+                archerImage = ImageIO.read(getClass().getResourceAsStream("/images/archer.png"));
+                fighterImage = ImageIO.read(getClass().getResourceAsStream("/images/fighter.png"));
+                wizardImage = ImageIO.read(getClass().getResourceAsStream("/images/wizard.png"));
+                backgroundImage = ImageIO.read(getClass().getResourceAsStream("/images/background.png"));
             } catch (IOException | NullPointerException e) {
                 System.err.println("Failed to load images.");
                 e.printStackTrace();
@@ -881,31 +905,52 @@ public class GameScreen extends JFrame {
         }
 
         private void updateHeroImage() {
-            try {
-                if (hero.isDamaged()) { // Hero hasar aldıysa
-                    if (hero.getDirection().equals("RIGHT")) {
-                        heroImage = ImageIO.read(new File("src/resources/images/playerDamaged.png"));
-                    } else {
-                        heroImage = ImageIO.read(new File("src/resources/images/playerDamagedReversed.png"));
+            if (hero.isDamaged()) { // Hero hasar aldıysa
+                if (hero.getDirection().equals("RIGHT")) {
+                    try {
+                        heroImage = ImageIO.read(getClass().getResourceAsStream("/images/playerDamaged.png"));
+                    } catch (IOException e) {
+                        System.err.println("Failed to load hero image: " + e.getMessage());
                     }
-                } else if (hero.isCloaked()) { // Hero cloak etkisindeyse
-                    if (hero.getDirection().equals("RIGHT")) {
-                        heroImage = ImageIO.read(new File("src/resources/images/playerCloak2.png"));
-                    } else {
-                        heroImage = ImageIO.read(new File("src/resources/images/playerCloak2_reversed.png"));
+                } else {
+                    try {
+                        heroImage = ImageIO.read(getClass().getResourceAsStream("/images/playerDamagedReversed.png"));
+                    } catch (IOException e) {
+                        System.err.println("Failed to load hero image: " + e.getMessage());
                     }
-                } else { // Normal durumda
-                    if (hero.getDirection().equals("RIGHT")) {
-                        heroImage = ImageIO.read(new File("src/resources/images/player.png"));
-                    } else {
-                        heroImage = ImageIO.read(new File("src/resources/images/playerReversed.png"));
+
+                }
+            } else if (hero.isCloaked()) { // Hero cloak etkisindeyse
+                if (hero.getDirection().equals("RIGHT")) {
+                    try {
+                        heroImage = ImageIO.read(getClass().getResourceAsStream("/images/playerCloak2.png"));
+                    } catch (IOException e) {
+                        System.err.println("Failed to load hero image: " + e.getMessage());
+                    }
+                } else {
+                    try {
+                        heroImage = ImageIO.read(getClass().getResourceAsStream("/images/playerCloak2_reversed.png"));
+                    } catch (IOException e) {
+                        System.err.println("Failed to load hero image: " + e.getMessage());
                     }
                 }
-                repaint(); // Görseli yeniden çiz
-            } catch (IOException e) {
-                System.err.println("Failed to update hero image.");
-                e.printStackTrace();
+
+            } else { // Normal durumda
+                if (hero.getDirection().equals("RIGHT")) {
+                    try {
+                        heroImage = ImageIO.read(getClass().getResourceAsStream("/images/player.png"));
+                    } catch (IOException e) {
+                        System.err.println("Failed to load hero image: " + e.getMessage());
+                    }
+                } else {
+                    try {
+                        heroImage = ImageIO.read(getClass().getResourceAsStream("/images/playerReversed.png"));
+                    } catch (IOException e) {
+                        System.err.println("Failed to load hero image: " + e.getMessage());
+                    }
+                }
             }
+            repaint(); // Görseli yeniden çiz
         }
         
 
@@ -965,31 +1010,12 @@ public class GameScreen extends JFrame {
             int sideWallHeight = GRID_ROWS * CELL_SIZE + (int)(1.5 * CELL_SIZE) - 20;
         
             try {
-                BufferedImage sideWallImage = ImageIO.read(new File("src/resources/images/sidewall.png"));
-                BufferedImage topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
+                BufferedImage sideWallImage = ImageIO.read(getClass().getResourceAsStream("/images/sidewall.png"));
+                BufferedImage topWallImage = ImageIO.read(getClass().getResourceAsStream("/images/topwall.png"));
         
                 Hall currentHall = hallController.getCurrentHall();
                 Hall.HallType hallType = currentHall.getHallType();
-        
-                // Adjust wall properties based on hall type if needed
-                Color hallColor;
-                switch (hallType) {
-                    case EARTH:
-                        hallColor = new Color(34, 139, 34);
-                        break;
-                    case WATER:
-                        hallColor = new Color(30, 144, 255);
-                        break;
-                    case FIRE:
-                        hallColor = new Color(255, 69, 0);
-                        break;
-                    case AIR:
-                        hallColor = new Color(135, 206, 250);
-                        break;
-                    default:
-                        hallColor = Color.GRAY;
-                }
-        
+
                 // Top wall positions
                 int[][] topWallPositions = {
                     {offsetX, offsetY - CELL_SIZE},
@@ -1000,7 +1026,6 @@ public class GameScreen extends JFrame {
                     {offsetX - wallOffset, offsetY - CELL_SIZE}, // Extended upward to align with top wall
                     {offsetX + GRID_COLUMNS * CELL_SIZE, offsetY - CELL_SIZE} // Extended upward to align with top wall
                 };
-        
         
                 // Draw top walls
                 for (int[] pos : topWallPositions) {
@@ -1021,25 +1046,24 @@ public class GameScreen extends JFrame {
             int bottomWallWidth = GRID_COLUMNS * CELL_SIZE + 35; // Alt duvarın genişliği
             int bottomWallHeight = CELL_SIZE + 20;
             String bottomWallImagePath;
-            // Hall tipine göre uygun görseli seç
             switch (hallController.getCurrentHall().getHallType()) {
                 case EARTH:
-                    bottomWallImagePath = "src/resources/images/bottomearth.png";
+                    bottomWallImagePath = "/images/bottomearth.png";
                     break;
                 case WATER:
-                    bottomWallImagePath = "src/resources/images/bottomwater.png";
+                    bottomWallImagePath = "/images/bottomwater.png";
                     break;
                 case FIRE:
-                    bottomWallImagePath = "src/resources/images/bottomfire.png";
+                    bottomWallImagePath = "/images/bottomfire.png";
                     break;
                 case AIR:
-                    bottomWallImagePath = "src/resources/images/bottomair.png";
+                    bottomWallImagePath = "/images/bottomair.png";
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid hall type.");
             }
             try {
-                BufferedImage bottomWallImage = ImageIO.read(new File(bottomWallImagePath));
+                BufferedImage bottomWallImage = ImageIO.read(getClass().getResourceAsStream(bottomWallImagePath));
                 g.drawImage(bottomWallImage, offsetX-18, bottomWallY, bottomWallWidth, bottomWallHeight, null);
             } catch (IOException e) {
                 System.err.println("Failed to load bottom wall image: " + e.getMessage());

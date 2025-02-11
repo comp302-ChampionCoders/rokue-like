@@ -9,7 +9,7 @@ public class ExtraLife extends Enchantment implements Serializable {
 
     public ExtraLife() {
 
-        super("Extra Life", "src/resources/images/chestheart32x32.png");
+        super("Extra Life", "/images/chestheart32x32.png");
     }
 
     @Override

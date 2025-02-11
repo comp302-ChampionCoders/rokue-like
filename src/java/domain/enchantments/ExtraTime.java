@@ -8,7 +8,7 @@ public class ExtraTime extends Enchantment implements Serializable {
     private static final long EFFECT_DURATION = 0; // This enchantment has no active duration
 
     public ExtraTime() {
-        super("Extra Time", "src/resources/images/clock_icon.png");
+        super("Extra Time", "/images/clock_icon.png");
     }
 
     @Override

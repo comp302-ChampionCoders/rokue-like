@@ -2,10 +2,7 @@ package domain.gameobjects;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
 
 import domain.behaviors.GridElement;
 
@@ -33,12 +30,17 @@ public class GameObject implements GridElement, Serializable {
 
     public void loadImage(String path) {
         try {
-            this.image = ImageIO.read(new File(path)); // Görsel yükleme
+            InputStream inputStream = getClass().getResourceAsStream(path);
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + path);
+            }
+            this.image = ImageIO.read(inputStream);
         } catch (IOException e) {
-            System.err.println("Failed to load image: " + path);
+            System.err.println("Failed to load image: " + path + " - " + e.getMessage());
             this.image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB); // Varsayılan boş görsel
         }
     }
+
 
     @Override
     public int getX() {

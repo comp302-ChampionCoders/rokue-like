@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class MainMenu extends JFrame {
     private static final int SCREEN_WIDTH = 800;
@@ -51,7 +52,7 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        setCursor(CursorUtils.createCustomCursor("src/resources/images/pointer_scifi_a.png"));
+        setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/pointer_scifi_a.png")));
     }
 
     private void configureForMacOS(){
@@ -67,12 +68,16 @@ public class MainMenu extends JFrame {
 
     private void loadImages() {
         try {
-            // backgroundImage = ImageIO.read(new File("src/resources/images/menu-background.png"));
-            logoImage = ImageIO.read(new File("src/resources/images/Rokue-likelogo4.png"));
+            InputStream logoStream = getClass().getResourceAsStream("/images/Rokue-likelogo4.png");
+            if (logoStream == null) {
+                throw new IOException("Logo image not found!");
+            }
+            logoImage = ImageIO.read(logoStream);
         } catch (IOException e) {
             System.err.println("Failed to load images: " + e.getMessage());
         }
     }
+
 
     private void createMainPanel() {
         mainPanel = new JPanel(null) { // Using null layout for absolute positioning
@@ -159,12 +164,15 @@ public class MainMenu extends JFrame {
         button.setPreferredSize(new Dimension(250, 60));
         button.setMaximumSize(new Dimension(250, 60));
 
+        InputStream fontStream = getClass().getResourceAsStream("/fonts/FantasyRPGtext.ttf");
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/FantasyRPGtext.ttf")) .deriveFont(24f);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-            customFont = new Font("Arial", Font.BOLD, 16);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(24f);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
 
         button.setFont(customFont);
         button.setBackground(new Color(139, 69, 19));
@@ -199,8 +207,9 @@ public class MainMenu extends JFrame {
         helpText.setLineWrap(true);
         helpText.setBackground(new Color(66, 40, 53,255));
         helpText.setMargin(new Insets(10, 10, 10, 10));
+        InputStream fontStream = getClass().getResourceAsStream("/fonts/FantasyRPGtext.ttf");
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/FantasyRPGtext.ttf")) .deriveFont(20f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(20f);
             helpText.setFont(customFont);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();

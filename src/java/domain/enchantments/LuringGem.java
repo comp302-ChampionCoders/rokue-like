@@ -12,7 +12,7 @@ public class LuringGem extends Enchantment implements Serializable {
     private static final long DURATION = 5000;
 
     public LuringGem() {
-        super("Luring Gem", "src/resources/images/lure32x32.png");
+        super("Luring Gem", "/images/lure32x32.png");
     }
 
     public void throwGem(Direction direction, int distance) {

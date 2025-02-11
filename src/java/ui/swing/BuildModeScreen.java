@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -45,13 +46,13 @@ public class BuildModeScreen extends JFrame {
     private boolean gridVisible = false; 
 
     private final String[] spriteFiles = {
-            "src/resources/images/chest_50x50.png",
-            "src/resources/images/skull_50x50.png",
-            "src/resources/images/box_50x50_nbg.png",
-            "src/resources/images/pipe_50x50.png",
-            "src/resources/images/stair_50x50.png",
-            "src/resources/images/object_50x50.png",
-            "src/resources/images/elixir_50x50.png"
+            "/images/chest_50x50.png",
+            "/images/skull_50x50.png",
+            "/images/box_50x50_nbg.png",
+            "/images/pipe_50x50.png",
+            "/images/stair_50x50.png",
+            "/images/object_50x50.png",
+            "/images/elixir_50x50.png"
     };
 
     private BufferedImage topWallImage; 
@@ -111,8 +112,8 @@ public class BuildModeScreen extends JFrame {
     // Load images for the object section and top wall
     private void loadImages() {
         try {
-            chestImage = ImageIO.read(new File("src/resources/images/Buildmodechest.png"));
-            topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
+            chestImage = ImageIO.read(getClass().getResourceAsStream("/images/Buildmodechest.png"));
+            topWallImage = ImageIO.read(getClass().getResourceAsStream("/images/topwall.png"));
         } catch (IOException e) {
             System.err.println("Failed to load chest image: " + e.getMessage());
             e.printStackTrace();
@@ -128,13 +129,12 @@ public class BuildModeScreen extends JFrame {
         background.setBackground(new Color(66, 40, 53,255)); 
         add(background);
         addRandomizeButtonWithImage(background);
-        setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0168.png"));
+        setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0168.png")));
 
         // Add exit button
         try {
-            BufferedImage exitImg = ImageIO.read(new File("src/resources/images/exit_button.png"));
-            BufferedImage playImg = ImageIO.read(new File("src/resources/images/play_button.png"));
-
+            BufferedImage exitImg = ImageIO.read(getClass().getResourceAsStream("/images/exit_button.png"));
+            BufferedImage playImg = ImageIO.read(getClass().getResourceAsStream("/images/play_button.png"));
 
             Image scaledExitImg = exitImg.getScaledInstance(EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE, Image.SCALE_SMOOTH);
             Image scaledPlayImg = playImg.getScaledInstance(EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE, Image.SCALE_SMOOTH);
@@ -156,21 +156,20 @@ public class BuildModeScreen extends JFrame {
             playButton.setBorderPainted(false);
             playButton.setContentAreaFilled(false);
             playButton.setFocusPainted(false);
-            
-            
+
             playButton.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
-                    playButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                    playButton.setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0137.png")));
                 }
                 public void mouseExited(MouseEvent e) {
                     playButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                } 
+                }
             });
 
             // Add hover effect
             exitButton.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
-                    exitButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                    exitButton.setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0137.png")));
                 }
                 public void mouseExited(MouseEvent e) {
                     exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -214,7 +213,7 @@ public class BuildModeScreen extends JFrame {
 
     private void addRandomizeButtonWithImage(JPanel parent) {
         try {
-            BufferedImage randomizeImg = ImageIO.read(new File("src/resources/images/randomize_button.png"));
+            BufferedImage randomizeImg = ImageIO.read(getClass().getResourceAsStream("/images/randomize_button.png"));;
             Image scaledRandomizeImg = randomizeImg.getScaledInstance(144, 40, Image.SCALE_DEFAULT);
     
             JButton randomizeButton = new JButton(new ImageIcon(scaledRandomizeImg));
@@ -225,7 +224,7 @@ public class BuildModeScreen extends JFrame {
 
             randomizeButton.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
-                    randomizeButton.setCursor(CursorUtils.createCustomCursor("src/resources/images/tile_0137.png"));;
+                    randomizeButton.setCursor(CursorUtils.createCustomCursor(getClass().getResourceAsStream("/images/tile_0137.png")));
                 }
                 public void mouseExited(MouseEvent e) {
                     randomizeButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -271,7 +270,7 @@ public class BuildModeScreen extends JFrame {
                 if (hall.isValidPosition(x, y)) {
                     try {
                         String randomImagePath = spriteFiles[random.nextInt(spriteFiles.length)];
-                        BufferedImage randomObjectImage = ImageIO.read(new File(randomImagePath));
+                        BufferedImage randomObjectImage = ImageIO.read(getClass().getResourceAsStream(randomImagePath));
                         GameObject randomObject = new GameObject(x, y, randomObjectImage, randomImagePath);
                         hallController.addObjectToHall(hall.getHallType(), randomObject);
                         currentObjectCount++;
@@ -305,16 +304,15 @@ public class BuildModeScreen extends JFrame {
         };
 
         String[] bottomWallImages = {
-            "src/resources/images/bottomwater.png", 
-            "src/resources/images/bottomearth.png",  
-            "src/resources/images/bottomfire.png",   
-            "src/resources/images/bottomair.png"     
-    };
+                "/images/bottomwater.png",
+                "/images/bottomearth.png",
+                "/images/bottomfire.png",
+                "/images/bottomair.png"
+        };
     
         try {
             for (int i = 0; i < hallPositions.length; i++) {
-                BufferedImage bottomWallImage = ImageIO.read(new File(bottomWallImages[i]));
-
+                BufferedImage bottomWallImage = ImageIO.read(getClass().getResourceAsStream(bottomWallImages[i]));
                 JLabel bottomWall = new JLabel(new ImageIcon(
                         bottomWallImage.getScaledInstance(wallWidth, GRID_CELL_SIZE + 17, Image.SCALE_SMOOTH)));
                 bottomWall.setBounds(hallPositions[i][0] - 1, hallPositions[i][1], wallWidth, GRID_CELL_SIZE + 16);
@@ -335,9 +333,9 @@ public class BuildModeScreen extends JFrame {
         int sideWallHeight = GRID_ROWS * GRID_CELL_SIZE + 40;
     
         try {
-            BufferedImage sideWallImage = ImageIO.read(new File("src/resources/images/sidewall.png"));
-            BufferedImage topWallImage = ImageIO.read(new File("src/resources/images/topwall.png"));
-    
+            BufferedImage sideWallImage = ImageIO.read(getClass().getResourceAsStream("/images/sidewall.png"));
+            BufferedImage topWallImage = ImageIO.read(getClass().getResourceAsStream("/images/topwall.png"));
+
             // Top wall positions (tam grid başlangıcından başlıyor)
             int[][] topWallPositions = {
                     {GRID_START_X, GRID_START_Y - GRID_CELL_SIZE},           // Top-left
@@ -407,7 +405,7 @@ public class BuildModeScreen extends JFrame {
 
     private Font loadCustomFont() {
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/fonts/ThaleahFat.ttf"));
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/ThaleahFat.ttf"));
             return customFont.deriveFont(18f); // Font boyutunu ayarlayın
         } catch (Exception e) {
             e.printStackTrace();
@@ -524,26 +522,26 @@ public class BuildModeScreen extends JFrame {
 
         for (String spriteFile : spriteFiles) {
             try {
-                BufferedImage sprite = ImageIO.read(new File(spriteFile));
+                BufferedImage sprite = ImageIO.read(getClass().getResourceAsStream(spriteFile));
                 Image resizedImage = sprite.getScaledInstance(GRID_CELL_SIZE, GRID_CELL_SIZE, Image.SCALE_SMOOTH);
                 Image resizedImageChest = sprite.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
                 int gameModeCellSize = 50;
 
                 Image gameModeVersion = sprite.getScaledInstance(gameModeCellSize, gameModeCellSize, Image.SCALE_SMOOTH);
-    
+
                 JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT + OBJECT_SECTION_WIDTH, 15, 5));
                 itemPanel.setOpaque(false);
-    
+
                 JLabel itemLabel = new JLabel(new ImageIcon(resizedImageChest));
                 JButton addButton = new JButton();
-                addButton.setPreferredSize(new Dimension(16, 16)); 
+                addButton.setPreferredSize(new Dimension(16, 16));
                 addButton.setMargin(new Insets(0, 0, 0, 0));
                 addButton.setBackground(new Color(200, 200, 200));
                 addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
                 try {
-                    ImageIcon addIcon = new ImageIcon("src/resources/images/blueAdd4.png");
+                    ImageIcon addIcon = new ImageIcon(getClass().getResource("/images/blueAdd4.png"));
                     Image scaledImage = addIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
                     addButton.setIcon(new ImageIcon(scaledImage));
                 } catch (Exception ex) {
@@ -559,12 +557,12 @@ public class BuildModeScreen extends JFrame {
                     }
                 });
 
-               
+
                 itemPanel.add(itemLabel);
-                itemPanel.add(addButton); 
+                itemPanel.add(addButton);
 
                 objectSection.add(itemPanel);
-    
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -585,12 +583,12 @@ public class BuildModeScreen extends JFrame {
                 {getGridStart("fireHall")[0] , getGridStart("fireHall")[1] + GRID_ROWS * GRID_CELL_SIZE + 40},  // Hall Of Fire
                 {getGridStart("airHall")[0], getGridStart("airHall")[1]+ GRID_ROWS * GRID_CELL_SIZE+40} // Hall Of Air
         };
-    
+
         String[] labelFiles = {
-                "src/resources/images/waterlabel.png",
-                "src/resources/images/earthlabel.png",
-                "src/resources/images/firelabel.png",
-                "src/resources/images/airlabel.png"
+                "/images/waterlabel.png",
+                "/images/earthlabel.png",
+                "/images/firelabel.png",
+                "/images/airlabel.png"
         };
     
         int labelWidth = 200; 
@@ -598,7 +596,7 @@ public class BuildModeScreen extends JFrame {
     
         for (int i = 0; i < labelFiles.length; i++) {
             try {
-                BufferedImage labelImage = ImageIO.read(new File(labelFiles[i]));
+                BufferedImage labelImage = ImageIO.read(getClass().getResourceAsStream(labelFiles[i]));
                 Image resizedLabel = labelImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
     
                 JLabel label = new JLabel(new ImageIcon(resizedLabel));

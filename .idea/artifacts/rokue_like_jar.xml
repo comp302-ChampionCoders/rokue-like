@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="rokue-like:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/rokue_like_jar</output-path>
+    <root id="archive" name="rokue-like.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="rokue-like" />
+      <element id="module-source" name="rokue-like" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/resources" />
+      <element id="dir-copy" path="$PROJECT_DIR$/out/artifacts/rokue_like_jar/saves" />
+    </root>
+  </artifact>
+</component>

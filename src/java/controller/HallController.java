@@ -112,6 +112,12 @@ public class HallController implements Serializable {
         initializeHalls();
     }
 
+    public void restartGame(){
+        resetToBuildModeVersions();
+        i = 0;
+        currentHall = halls.get(i);
+    }
+
     public boolean addObjectToHall(Hall.HallType type, GameObject object) {
         return getHall(type).addObject(object, object.getX(), object.getY());
     }

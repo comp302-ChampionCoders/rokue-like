@@ -8,7 +8,7 @@ public class CloakOfProtection extends Enchantment implements Serializable {
     private static final int DURATION = 20000; // duration in seconds
 
     public CloakOfProtection() {
-        super("Cloak of Protection", "src/resources/images/cloak32x32.png");
+        super("Cloak of Protection", "/images/cloak32x32.png");
     }
 
     @Override
